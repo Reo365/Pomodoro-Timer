@@ -8,6 +8,7 @@
     --glass-border: rgba(255, 255, 255, 0.2);
     --button-active-bg: rgba(255, 255, 255, 0.25);
     --font-family: 'Plus Jakarta Sans', sans-serif;
+    --digit-height: clamp(4rem, 20vw, 6rem);
 }
 
 * {
@@ -36,8 +37,8 @@ body {
     z-index: -1;
     background: linear-gradient(45deg, var(--bg-color-1), var(--bg-color-2), var(--bg-color-3), var(--bg-color-4));
     background-size: 400% 400%;
-    animation: gradient-flow 20s ease infinite;
-    transition: filter 1s ease;
+    animation: gradient-flow 30s ease infinite; /* Slower animation */
+    transition: background 2s ease;
 }
 
 @keyframes gradient-flow {
@@ -73,21 +74,26 @@ body {
 .timer-display {
     display: flex;
     align-items: center;
-    font-size: clamp(4rem, 20vw, 6rem);
+    font-size: var(--digit-height);
     font-weight: 700;
     letter-spacing: -2px;
     margin: 1rem 0 1.5rem;
-}
-
-.time-roller {
-    height: clamp(4rem, 20vw, 6rem);
+    height: var(--digit-height);
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
 }
 
-.time-roller .digit {
-    transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+.digit-container {
+    height: 100%;
+}
+
+.digit-reel {
+    transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.digit-reel span {
+    display: block;
+    height: var(--digit-height);
+    line-height: var(--digit-height);
 }
 
 .divider {
