@@ -183,7 +183,7 @@ body {
     height: 0;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-left: 18px solid var(--text-color);
+    border-left: 18px solid rgb(255, 255, 255);
     margin-left: 5px; /* Nudge for optical centering of triangle */
     transition: all 0.2s ease;
 }
@@ -192,8 +192,8 @@ body {
     border: none;
     width: 16px;
     height: 18px;
-    border-left: 6px solid var(--text-color);
-    border-right: 6px solid var(--text-color);
+    border-left: 6px solid rgb(255, 255, 255);
+    border-right: 6px solid rgb(255, 255, 255);
     margin-left: 0; /* Reset nudge for pause icon */
 }
 
@@ -207,7 +207,7 @@ body {
     display: block;
     width: 20px;
     height: 20px;
-    border: 3px solid rgba(255, 255, 255, 0.7);
+    border: 3px solid rgb(255, 255, 255);
     border-radius: 50%;
     border-right-color: transparent;
     transition: transform 0.4s ease;
