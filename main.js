@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const startButton = document.getElementById('start-btn');
     const resetButton = document.getElementById('reset-btn');
     const totalFocusDisplay = document.getElementById('total-focus-display');
-    const background = document.querySelector('.background');
+    const backgroundPomodoro = document.querySelector('.background-pomodoro');
+    const backgroundShortBreak = document.querySelector('.background-short-break');
 
     // --- State Variables ---
     let totalSeconds = 25 * 60;
@@ -124,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pauseTimer();
         totalSeconds = DURATIONS[currentMode];
         updateDisplay();
-        updateBackground(true);
+        updateBackgroundClass(true);
     }
 
     function switchMode(mode) {
@@ -141,28 +142,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Performance Optimizations ---
 
-    /**
-     * Updates background colors. Called only on mode change/reset.
-     * The gradual change is handled by a CSS transition, saving resources.
-     */
-    function updateBackground(isReset = false) {
-        const palette = {
-            pomodoro: ['#ffafbd', '#a1c4fd'],
-            shortBreak: ['#d4fc79', '#a18cd1']
-        };
-        const [color1, color2] = palette[currentMode];
-        
-        // If it's a reset, we apply the transition class to make it smooth
-        if (isReset) {
-            background.style.transition = 'background 2s ease';
-        } else {
-            background.style.transition = 'none'; // No transition on initial load
-        }
-        
-        document.documentElement.style.setProperty('--bg-color-1', color1);
-        document.documentElement.style.setProperty('--bg-color-2', color2);
+    function updateBackgroundClass(isReset = false) {
+        backgroundPomodoro.classList.toggle('active', currentMode === 'pomodoro');
+        backgroundShortBreak.classList.toggle('active', currentMode === 'shortBreak');
     }
 
+    // --- Performance Optimizations ---
     /**
      * Subtle background interaction with mouse movement.
      * Uses requestAnimationFrame for efficiency.
@@ -179,7 +164,11 @@ document.addEventListener('DOMContentLoaded', () => {
         function animate() {
             targetX += (mouseX - targetX) * 0.02; // Reduced multiplier for less sensitivity
             const bgX = 50 + (targetX * 10); // Max 10% movement
-            background.style.backgroundPosition = `${bgX}% 50%`;
+            
+            // Apply to both background layers
+            backgroundPomodoro.style.backgroundPosition = `${bgX}% 50%`;
+            backgroundShortBreak.style.backgroundPosition = `${bgX}% 50%`;
+
             requestAnimationFrame(animate);
         }
         
@@ -210,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
         createDigitReels();
         updateDisplay();
         updateTotalFocusDisplay();
-        updateBackground(false); // Initial background without transition
+        updateBackgroundClass(false); // Initial background without transition
         setupEventListeners();
         handleMouseInteraction();
     }
