@@ -4,8 +4,8 @@
     --bg-color-3: #c2e59c;
     --bg-color-4: #a1c4fd;
     --text-color: #ffffff;
-    --glass-bg: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-bg: rgba(255, 255, 255, 0.15); /* Slightly more opaque */
+    --glass-border: rgba(255, 255, 255, 0.25);
     --button-active-bg: rgba(255, 255, 255, 0.25);
     --font-family: 'Plus Jakarta Sans', sans-serif;
     --digit-height: clamp(4rem, 20vw, 6rem);
@@ -25,7 +25,7 @@ body {
     align-items: center;
     min-height: 100vh;
     overflow: hidden;
-    background: #333; /* Fallback */
+    background: #1a1a1a; /* Darker fallback */
 }
 
 .background {
@@ -37,9 +37,23 @@ body {
     z-index: -1;
     background: linear-gradient(45deg, var(--bg-color-1), var(--bg-color-2), var(--bg-color-3), var(--bg-color-4));
     background-size: 400% 400%;
-    animation: gradient-flow 30s ease infinite; /* Slower animation */
+    animation: gradient-flow 45s ease infinite; /* Even slower animation for a calmer feel */
     transition: background 2s ease;
 }
+
+.background::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    filter: blur(100px); /* Creates a soft, hazy overlay */
+    opacity: 0.8;
+    transform: scale(1.1);
+}
+
 
 @keyframes gradient-flow {
     0% { background-position: 0% 50%; }
@@ -59,16 +73,16 @@ body {
 
 .timer-card {
     background: var(--glass-bg);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
+    backdrop-filter: blur(30px); /* Increased blur */
+    -webkit-backdrop-filter: blur(30px);
     border: 1px solid var(--glass-border);
-    border-radius: 24px;
-    padding: 2rem;
+    border-radius: 28px; /* Slightly more rounded */
+    padding: 2.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
-    width: clamp(300px, 90vw, 400px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255,255,255,0.1); /* Deeper shadow + inner highlight */
+    width: clamp(320px, 90vw, 420px);
 }
 
 .timer-display {
@@ -77,7 +91,7 @@ body {
     font-size: var(--digit-height);
     font-weight: 700;
     letter-spacing: -2px;
-    margin: 1rem 0 1.5rem;
+    margin: 1rem 0 2rem;
     height: var(--digit-height);
     overflow: hidden;
 }
@@ -111,7 +125,7 @@ body {
     background-color: rgba(0,0,0,0.1);
     border-radius: 20px;
     padding: 0.4rem;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
 }
 
 .mode-btn {
@@ -134,27 +148,34 @@ body {
 .timer-controls {
     display: flex;
     align-items: center;
+    gap: 1.5rem; /* Use gap for consistent spacing */
 }
 
 .control-btn {
-    background: transparent;
-    border: 2px solid var(--glass-border);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
     border-radius: 50%;
     width: 70px;
     height: 70px;
     cursor: pointer;
     transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease;
-    position: relative;
+    
+    /* Flex properties for centering content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .control-btn:hover {
     background-color: var(--glass-border);
+    transform: scale(1.05);
 }
 
 .control-btn:active {
-    transform: scale(0.9);
+    transform: scale(0.95);
 }
 
+/* Primary Play/Pause Button */
 .play-btn::before {
     content: '';
     display: block;
@@ -163,42 +184,38 @@ body {
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     border-left: 18px solid var(--text-color);
-    margin: 0 auto 0 5px;
+    margin-left: 5px; /* Nudge for optical centering of triangle */
+    transition: all 0.2s ease;
 }
 
 .play-btn.paused::before {
-    content: '';
     border: none;
     width: 16px;
     height: 18px;
     border-left: 6px solid var(--text-color);
     border-right: 6px solid var(--text-color);
-    margin: 0 auto;
+    margin-left: 0; /* Reset nudge for pause icon */
 }
 
-
+/* Secondary Reset Button - Consistent size, different style */
 .reset-btn {
-    width: 50px;
-    height: 50px;
-    margin-left: 1.5rem;
+    background: transparent; /* Less prominent */
 }
 
 .reset-btn::before {
     content: '';
     display: block;
-    width: 18px;
-    height: 18px;
-    border: 3px solid var(--text-color);
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.7);
     border-radius: 50%;
     border-right-color: transparent;
-    margin: 0 auto;
     transition: transform 0.4s ease;
 }
 
 .reset-btn:hover::before {
     transform: rotate(-180deg);
 }
-
 
 .total-focus-time {
     position: fixed;
