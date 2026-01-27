@@ -1,14 +1,47 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>초집중 뽀모도로 타이머</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <div class="background"></div>
+
+    <main class="app-container">
+        <div class="timer-card">
+            <div class="timer-display">
+                <div class="time-roller">
+                    <span class="digit">2</span>
+                    <span class="digit">5</span>
+                </div>
+                <span class="divider">:</span>
+                <div class="time-roller">
+                    <span class="digit">0</span>
+                    <span class="digit">0</span>
+                </div>
+            </div>
+
+            <div class="timer-modes">
+                <button class="mode-btn active" data-mode="pomodoro">집중</button>
+                <button class="mode-btn" data-mode="shortBreak">휴식</button>
+            </div>
+
+            <div class="timer-controls">
+                <button id="start-btn" class="control-btn play-btn"></button>
+                <button id="reset-btn" class="control-btn reset-btn"></button>
+            </div>
+        </div>
+
+        <div class="total-focus-time">
+            <p>오늘 총 집중 시간: <span id="total-focus-display">0분</span></p>
+        </div>
+    </main>
+
+    <script src="main.js"></script>
 </body>
 </html>
