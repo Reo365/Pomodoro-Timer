@@ -55,10 +55,10 @@ body {
     font-family: var(--font-family);
     color: var(--text-color);
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Changed to column to allow content flow */
+    justify-content: flex-start; /* Changed to flex-start for normal content flow */
     align-items: center;
     min-height: 100vh;
-    overflow: hidden;
     background: #1a1a1a; /* Darker fallback */
     transition: color 0.3s ease; /* Smooth transition for text color */
 }
