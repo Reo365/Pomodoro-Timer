@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let totalSeconds = 25 * 60;
     let intervalId = null;
     let isPaused = true;
-    let currentMode = 'pomodoro';
+    let currentMode = localStorage.getItem('currentMode') || 'pomodoro'; // Load from localStorage
     let totalFocusedSeconds = parseInt(localStorage.getItem('totalFocusedSeconds')) || 0;
     let lastResetDate = localStorage.getItem('lastResetDate') || '';
 
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let i = 0; i < limit; i++) {
                 const digit = document.createElement('span');
                 digit.textContent = i;
-                reel.appendChild(digit);
+                reel.appendChild(reel);
             }
             container.appendChild(reel);
         });
@@ -196,6 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function switchMode(mode) {
         currentMode = mode;
+        localStorage.setItem('currentMode', currentMode); // Save to localStorage
         modeButtons.forEach(btn => {
             btn.classList.toggle('active', btn.dataset.mode === mode);
         });
@@ -211,8 +212,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Performance Optimizations ---
 
     function updateBackgroundClass(isReset = false) {
+        console.log('updateBackgroundClass called. currentMode:', currentMode);
         backgroundPomodoro.classList.toggle('active', currentMode === 'pomodoro');
         backgroundShortBreak.classList.toggle('active', currentMode === 'shortBreak');
+        console.log('backgroundPomodoro active:', backgroundPomodoro.classList.contains('active'));
+        console.log('backgroundShortBreak active:', backgroundShortBreak.classList.contains('active'));
     }
 
     // --- Performance Optimizations ---
