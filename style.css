@@ -29,6 +29,10 @@
     --digit-height: clamp(4rem, 20vw, 6rem);
 }
 
+html {
+    height: 100%; /* Ensure html takes full height */
+}
+
 html[data-theme="light"] {
     --text-color: var(--primary-text-color-light);
     --glass-bg: var(--card-bg-light);
@@ -42,7 +46,6 @@ html[data-theme="dark"] {
     --text-color: var(--primary-text-color-dark);
     --glass-bg: var(--card-bg-dark);
     --glass-border: var(--card-border-dark);
-    --button-bg: var(--button-bg-dark);
     --button-active-bg: var(--button-active-bg-dark);
     background-color: var(--bg-dark);
 }
@@ -61,6 +64,8 @@ body {
     justify-content: flex-start;
     align-items: center;
     min-height: 100vh;
+    /* Remove explicit background from body, let html[data-theme] handle it */
+    /* background: #1a1a1a;  */
     transition: color 0.3s ease, background-color 0.3s ease;
     padding-bottom: 1rem; /* Reduced padding */
     padding-top: 1rem; /* Reduced padding */
@@ -144,13 +149,13 @@ body {
     flex-grow: 1; /* Distribute space evenly */
     background: transparent; /* Background will be handled by indicator */
     border: none;
-    color: var(--text-color);
+    color: var(--text-color); /* Default text color */
     font-family: var(--font-family);
     font-size: 0.95rem;
     padding: 0 1.2rem; /* No vertical padding, let container handle it */
     border-radius: 25px; /* Rounder */
     cursor: pointer;
-    transition: color 0.2s ease; /* Only color transition now */
+    transition: color 0.2s ease;
     font-weight: 700;
     z-index: 1; /* Above the indicator */
     display: flex;
@@ -158,6 +163,11 @@ body {
     align-items: center; /* Center vertically */
     min-width: 80px; /* Ensure minimum width */
 }
+
+.mode-btn.active {
+    color: #333; /* Dark text for active button, visible against white indicator */
+}
+
 
 /* Floating White Pill Indicator */
 .mode-indicator {
@@ -176,7 +186,7 @@ body {
     cursor: grabbing;
     /* Optional: Add a subtle visual feedback when dragging, e.g., a slight scale or shadow change */
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 0 0 0.5px rgba(255, 255, 255, 0.5);
-    transform: scale(1.02);
+    transform: scale(1.02); /* Slight scale for liquid glass effect */
 }
 
 
