@@ -61,6 +61,7 @@ body {
     min-height: 100vh;
     background: #1a1a1a; /* Darker fallback */
     transition: color 0.3s ease; /* Smooth transition for text color */
+    padding-bottom: 8rem; /* Added padding to prevent content from being hidden by fixed footer */
 }
 
 /* Base style for both background layers */
@@ -376,8 +377,11 @@ body {
 
 /* Footer Styling */
 footer {
+    position: fixed; /* Changed to fixed */
+    bottom: 0; /* Pin to bottom */
+    left: 0;
+    right: 0;
     width: 100%;
-    margin-top: 4rem; /* Space from main content */
     padding: 2rem 1rem;
     background: var(--glass-bg);
     backdrop-filter: blur(10px);
@@ -386,6 +390,7 @@ footer {
     color: var(--text-color);
     text-align: center;
     font-size: 0.85rem;
+    z-index: 1000; /* Ensure it stays on top */
     transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
