@@ -62,6 +62,7 @@ body {
     background: #1a1a1a; /* Darker fallback */
     transition: color 0.3s ease; /* Smooth transition for text color */
     padding-bottom: 8rem; /* Added padding to prevent content from being hidden by fixed footer */
+    padding-top: 5rem; /* Added padding to push content down from the top */
 }
 
 /* Base style for both background layers */
@@ -258,7 +259,7 @@ body {
 
 .total-focus-time {
     position: fixed;
-    bottom: 20px;
+    bottom: 100px; /* Adjusted to be above the fixed footer */
     right: 20px;
     background: var(--glass-bg);
     backdrop-filter: blur(10px);
