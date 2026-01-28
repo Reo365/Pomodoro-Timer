@@ -152,7 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- State Variables ---
-    let totalSeconds = 25 * 60;
     let intervalId = null;
     let isPaused = true;
     let currentMode = localStorage.getItem('currentMode') || 'pomodoro'; // Load from localStorage
@@ -222,6 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startTimer() {
+        console.log('startTimer called. Initial totalSeconds:', totalSeconds);
         if (isPaused === false) return;
         isPaused = false;
         startButton.classList.add('paused');
@@ -232,6 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
         intervalId = setTimeout(step, 1000);
 
         function step() {
+            console.log('step executed. totalSeconds before decrement:', totalSeconds);
             // Simplified: remove drift compensation for testing
             if (currentMode === 'pomodoro') {
                 totalFocusedSeconds++;
@@ -375,8 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function init() {
         checkAndResetDaily(); // Check and reset total focus time daily
         createDigitReels();
-        updateDisplay();
-        // updateTotalFocusDisplay(); // Call after language is set
+        resetTimer(); // Initialize totalSeconds and update display based on currentMode
 
         updateBackgroundClass(false); // Initial background without transition
         setupEventListeners();
