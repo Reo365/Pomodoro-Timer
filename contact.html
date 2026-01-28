@@ -14,8 +14,16 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 </head>
 <body>
+    <div class="background background-pomodoro active"></div>
+    <div class="background background-short-break"></div>
     <div class="header-controls">
         <a href="index.html" class="about-link">홈</a>
+        <button id="theme-toggle-btn" class="theme-toggle-btn">테마 전환</button>
+        <button id="lang-toggle-btn" class="lang-toggle-btn">🌐</button>
+        <div id="language-selector" class="language-selector">
+            <button class="lang-option-btn" data-lang="ko">한국어</button>
+            <button class="lang-option-btn" data-lang="en">English</button>
+        </div>
     </div>
     <main class="app-container">
         <section class="content-section about-section">
@@ -58,6 +66,7 @@
             </p>
         </section>
     </main>
+    <script src="main.js"></script>
     <footer>
         <nav class="footer-nav">
             <a href="about.html">소개</a>
