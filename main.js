@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const startButton = document.getElementById('start-btn');
     const resetButton = document.getElementById('reset-btn');
     const totalFocusDisplay = document.getElementById('total-focus-display');
-    const background = document.querySelector('.background'); // Changed to single background
 
     // --- App State ---
     let intervalId = null;
@@ -209,7 +208,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function pauseTimer() {
-        if (!startButton || !resetButton) return; // Only run if timer controls exist
         if (isPaused) return;
         isPaused = true;
         clearInterval(intervalId);
@@ -243,28 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
         totalFocusDisplay.textContent = `${minutes}${TRANSLATIONS[lang]['minutes']} ${seconds}${TRANSLATIONS[lang]['seconds']}`;
     }
 
-    function handleMouseInteraction() {
-        let mouseX = 0;
-        let targetX = 0;
-        const windowHalfX = window.innerWidth / 2;
-        const singleBackground = document.querySelector('.background'); // Target the single background element
-
-        if (!singleBackground) return; // Exit if no background element found
-
-        function onMouseMove(e) {
-            mouseX = (e.clientX - windowHalfX) / windowHalfX;
-        }
-
-        function animate() {
-            targetX += (mouseX - targetX) * 0.02;
-            const bgX = 50 + (targetX * 10);
-            singleBackground.style.backgroundPosition = `${bgX}% 50%`; // Apply to the single background
-            requestAnimationFrame(animate);
-        }
-
-        document.addEventListener('mousemove', onMouseMove);
-        animate();
-    }
+    // Removed handleMouseInteraction function
 
     function setupEventListeners() {
         if (startButton) {
@@ -335,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         createDigitReels();
         setupEventListeners();
-        handleMouseInteraction();
+        // Removed handleMouseInteraction() call
 
         // Apply initial settings
         applyTheme(savedTheme);

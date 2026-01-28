@@ -1,6 +1,6 @@
 :root {
-    --bg-gradient-1: #89f7fe; /* Soft Blue */
-    --bg-gradient-2: #66a6ff; /* Slightly Deeper Blue */
+    --bg-light: #f0f2f5; /* A light grey background */
+    --bg-dark: #2c2c2c; /* A dark grey background */
 
     /* Light Theme Variables */
     --primary-text-color-light: #333333;
@@ -33,6 +33,7 @@ html[data-theme="light"] {
     --glass-bg: var(--card-bg-light);
     --glass-border: var(--card-border-light);
     --button-active-bg: var(--button-active-bg-light);
+    background-color: var(--bg-light);
 }
 
 html[data-theme="dark"] {
@@ -40,6 +41,7 @@ html[data-theme="dark"] {
     --glass-bg: var(--card-bg-dark);
     --glass-border: var(--card-border-dark);
     --button-active-bg: var(--button-active-bg-dark);
+    background-color: var(--bg-dark);
 }
 
 * {
@@ -56,25 +58,14 @@ body {
     justify-content: flex-start; /* Changed to flex-start for normal content flow */
     align-items: center;
     min-height: 100vh;
-    background: #1a1a1a; /* Darker fallback */
+    /* Background now set by html[data-theme] */
     transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transition for text color and background */
     padding-bottom: 8rem; /* Added padding to prevent content from being hidden by fixed footer */
     padding-top: 5rem; /* Added padding to push content down from the top */
 }
 
-/* Base style for both background layers */
-.background {
-    position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    z-index: -1;
-    background: linear-gradient(45deg, var(--bg-gradient-1), var(--bg-gradient-2));
-    background-size: 400% 400%;
-    animation: gradient-flow 45s ease infinite; /* Slower animation for a calmer feel */
-    opacity: 1; /* Always visible */
-}
+/* Remove .background styles */
+
 
 @keyframes gradient-flow {
     0% { background-position: 0% 50%; }
