@@ -290,3 +290,60 @@ body {
 .theme-toggle-btn:hover {
     background-color: var(--button-active-bg);
 }
+
+/* About Section Styling */
+.about-section {
+    width: 90%;
+    max-width: 600px;
+    margin: 3rem auto 2rem auto; /* Top margin for spacing, auto for horizontal centering */
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 18px;
+    padding: 2rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.about-section h2,
+.about-section h3 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.about-section h2 {
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+.about-section h3 {
+    font-size: 1.3rem;
+    margin-top: 1.5rem;
+}
+
+.about-section p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.about-section ul {
+    list-style: inside;
+    margin-bottom: 1rem;
+    padding-left: 1.2rem;
+}
+
+.about-section ul li {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.about-section ul li strong {
+    color: var(--text-color); /* Ensure strong tags inherit text color */
+}
