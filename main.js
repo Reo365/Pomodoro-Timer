@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let i = 0; i < limit; i++) {
                 const digit = document.createElement('span');
                 digit.textContent = i;
-                reel.appendChild(reel);
+                reel.appendChild(digit); // Corrected line
             }
             container.appendChild(reel);
         });
