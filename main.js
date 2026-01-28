@@ -256,6 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function pauseTimer() {
+        console.log('pauseTimer called. totalSeconds:', totalSeconds, 'isPaused:', isPaused);
         if (isPaused === true) return;
         isPaused = true;
         clearTimeout(intervalId);
@@ -271,6 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function switchMode(mode) {
+        console.log('switchMode called. New mode:', mode, 'totalSeconds:', totalSeconds);
         currentMode = mode;
         localStorage.setItem('currentMode', currentMode); // Save to localStorage
         modeButtons.forEach(btn => {
