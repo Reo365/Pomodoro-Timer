@@ -70,7 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let intervalId = null;
     let isPaused = true;
     let currentMode = 'pomodoro';
-    let totalFocusedMinutes = parseInt(localStorage.getItem('totalFocusedMinutes')) || 0;
+    let totalFocusedSeconds = parseInt(localStorage.getItem('totalFocusedSeconds')) || 0;
+    let lastResetDate = localStorage.getItem('lastResetDate') || '';
 
     const DURATIONS = {
         pomodoro: 25 * 60,
@@ -78,6 +79,21 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- Core Functions ---
+
+    function getTodayDateString() {
+        const today = new Date();
+        return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    }
+
+    function checkAndResetDaily() {
+        const todayDateString = getTodayDateString();
+        if (lastResetDate !== todayDateString) {
+            totalFocusedSeconds = 0;
+            localStorage.setItem('totalFocusedSeconds', totalFocusedSeconds);
+            lastResetDate = todayDateString;
+            localStorage.setItem('lastResetDate', lastResetDate);
+        }
+    }
 
     /**
      * Creates the number reels (0-9) inside the digit containers.
@@ -135,23 +151,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 // If the tab was inactive, account for the drift
                 const missedSeconds = Math.round(drift / 1000);
                  if (currentMode === 'pomodoro') {
-                    totalFocusedMinutes += Math.floor(missedSeconds / 60);
+                    totalFocusedSeconds += missedSeconds;
+                    localStorage.setItem('totalFocusedSeconds', totalFocusedSeconds);
                 }
                 totalSeconds -= missedSeconds;
             } else {
                  if (currentMode === 'pomodoro') {
-                    // Increment focus time every minute that passes
-                    if ( (DURATIONS.pomodoro - totalSeconds) % 60 === 0 && (DURATIONS.pomodoro - totalSeconds) > 0) {
-                         totalFocusedMinutes++;
-                         localStorage.setItem('totalFocusedMinutes', totalFocusedMinutes);
-                         updateTotalFocusDisplay();
-                    }
+                    totalFocusedSeconds++;
+                    localStorage.setItem('totalFocusedSeconds', totalFocusedSeconds);
                 }
                 totalSeconds--;
             }
 
 
             updateDisplay();
+            updateTotalFocusDisplay(); // Update total focus display every second
 
             if (totalSeconds < 0) {
                 pauseTimer();
@@ -189,7 +203,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateTotalFocusDisplay() {
-        totalFocusDisplay.textContent = `${totalFocusedMinutes}분`;
+        const minutes = Math.floor(totalFocusedSeconds / 60);
+        const seconds = totalFocusedSeconds % 60;
+        totalFocusDisplay.textContent = `${minutes}분 ${seconds}초`;
     }
 
     // --- Performance Optimizations ---
@@ -255,6 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Initialization ---
     function init() {
+        checkAndResetDaily(); // Check and reset total focus time daily
         createDigitReels();
         updateDisplay();
         updateTotalFocusDisplay();
@@ -269,4 +286,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     init();
 });
+
 
