@@ -272,9 +272,7 @@ body {
 }
 
 .theme-toggle-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
+    position: relative; /* Change to relative within flex container */
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     color: var(--text-color);
@@ -288,6 +286,34 @@ body {
 }
 
 .theme-toggle-btn:hover {
+    background-color: var(--button-active-bg);
+}
+
+.header-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    z-index: 1000;
+}
+
+.about-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.about-link:hover {
     background-color: var(--button-active-bg);
 }
 
