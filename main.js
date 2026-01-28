@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Elements ---
+    const htmlElement = document.getElementById('app-html');
+    const themeToggleButton = document.getElementById('theme-toggle-btn');
     const M_TENS = document.getElementById('minutes-tens');
     const M_ONES = document.getElementById('minutes-ones');
     const S_TENS = document.getElementById('seconds-tens');
@@ -12,6 +14,56 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalFocusDisplay = document.getElementById('total-focus-display');
     const backgroundPomodoro = document.querySelector('.background-pomodoro');
     const backgroundShortBreak = document.querySelector('.background-short-break');
+
+    // --- Theme Variables ---
+    const THEMES = ['auto', 'light', 'dark'];
+    let currentThemePreference = 'auto'; // 'auto', 'light', 'dark'
+
+    // --- Theme Functions ---
+    function getSystemTheme() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    function applyTheme(themePreference) {
+        currentThemePreference = themePreference;
+        let themeToApply = themePreference;
+
+        if (themePreference === 'auto') {
+            themeToApply = getSystemTheme();
+        }
+
+        htmlElement.dataset.theme = themeToApply;
+        
+        // Update button text
+        let buttonText = '';
+        switch (themePreference) {
+            case 'auto':
+                buttonText = '테마: 자동';
+                break;
+            case 'light':
+                buttonText = '테마: 라이트';
+                break;
+            case 'dark':
+                buttonText = '테마: 다크';
+                break;
+        }
+        themeToggleButton.textContent = buttonText;
+        saveThemePreference(themePreference);
+    }
+
+    function saveThemePreference(themePreference) {
+        localStorage.setItem('themePreference', themePreference);
+    }
+
+    function getSavedThemePreference() {
+        return localStorage.getItem('themePreference');
+    }
+
+    function cycleTheme() {
+        const currentIndex = THEMES.indexOf(currentThemePreference);
+        const nextIndex = (currentIndex + 1) % THEMES.length;
+        applyTheme(THEMES[nextIndex]);
+    }
 
     // --- State Variables ---
     let totalSeconds = 25 * 60;
@@ -192,6 +244,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+
+        themeToggleButton.addEventListener('click', cycleTheme);
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            if (currentThemePreference === 'auto') {
+                applyTheme('auto');
+            }
+        });
     }
 
     // --- Initialization ---
@@ -202,7 +261,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updateBackgroundClass(false); // Initial background without transition
         setupEventListeners();
         handleMouseInteraction();
+
+        // Initial theme setup
+        const savedTheme = getSavedThemePreference();
+        applyTheme(savedTheme || 'auto');
     }
 
     init();
 });
+

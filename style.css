@@ -1,16 +1,48 @@
 :root {
-        --bg-pomodoro-1: #A7BFE8; /* Soft Blue */
-        --bg-pomodoro-2: #619AD6; /* Slightly Deeper Blue */
-    
-        --bg-break-1: #C9F0D2; /* Soft Mint Green */
-        --bg-break-2: #84D9A0; /* Slightly Deeper Green */
+    --bg-pomodoro-1: #A7BFE8; /* Soft Blue */
+    --bg-pomodoro-2: #619AD6; /* Slightly Deeper Blue */
 
-    --text-color: rgb(255, 255, 255);
-    --glass-bg: rgba(255, 255, 255, 0.15); /* Slightly more opaque */
-    --glass-border: rgba(255, 255, 255, 0.25);
-    --button-active-bg: rgba(255, 255, 255, 0.25);
+    --bg-break-1: #C9F0D2; /* Soft Mint Green */
+    --bg-break-2: #84D9A0; /* Slightly Deeper Green */
+
+    /* Light Theme Variables */
+    --primary-text-color-light: #333333;
+    --secondary-text-color-light: #666666;
+    --card-bg-light: rgba(255, 255, 255, 0.7);
+    --card-border-light: rgba(200, 200, 200, 0.5);
+    --button-bg-light: rgba(0, 0, 0, 0.1);
+    --button-active-bg-light: rgba(0, 0, 0, 0.25);
+
+    /* Dark Theme Variables */
+    --primary-text-color-dark: #E0E0E0;
+    --secondary-text-color-dark: #A0A0A0;
+    --card-bg-dark: rgba(0, 0, 0, 0.5);
+    --card-border-dark: rgba(70, 70, 70, 0.5);
+    --button-bg-dark: rgba(255, 255, 255, 0.1);
+    --button-active-bg-dark: rgba(255, 255, 255, 0.25);
+
+    /* General Variables mapped to current theme */
+    --text-color: var(--primary-text-color-light);
+    --glass-bg: var(--card-bg-light);
+    --glass-border: var(--card-border-light);
+    --button-active-bg: var(--button-active-bg-light);
+
     --font-family: 'Pretendard', sans-serif;
     --digit-height: clamp(4rem, 20vw, 6rem);
+}
+
+html[data-theme="light"] {
+    --text-color: var(--primary-text-color-light);
+    --glass-bg: var(--card-bg-light);
+    --glass-border: var(--card-border-light);
+    --button-active-bg: var(--button-active-bg-light);
+}
+
+html[data-theme="dark"] {
+    --text-color: var(--primary-text-color-dark);
+    --glass-bg: var(--card-bg-dark);
+    --glass-border: var(--card-border-dark);
+    --button-active-bg: var(--button-active-bg-dark);
 }
 
 * {
@@ -28,6 +60,7 @@ body {
     min-height: 100vh;
     overflow: hidden;
     background: #1a1a1a; /* Darker fallback */
+    transition: color 0.3s ease; /* Smooth transition for text color */
 }
 
 /* Base style for both background layers */
@@ -86,6 +119,7 @@ body {
     align-items: center;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255,255,255,0.1); /* Deeper shadow + inner highlight */
     width: clamp(320px, 90vw, 420px);
+    transition: background 0.3s ease, border-color 0.3s ease; /* Smooth transition */
 }
 
 .timer-display {
@@ -125,10 +159,11 @@ body {
 
 .timer-modes {
     display: flex;
-    background-color: rgba(0,0,0,0.1);
+    background-color: var(--button-bg); /* Use theme variable */
     border-radius: 20px;
     padding: 0.4rem;
     margin-bottom: 2.5rem;
+    transition: background-color 0.3s ease; /* Smooth transition */
 }
 
 .mode-btn {
@@ -140,7 +175,7 @@ body {
     padding: 0.6rem 1.2rem;
     border-radius: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
     font-weight: 700;
 }
 
@@ -161,7 +196,7 @@ body {
     width: 70px;
     height: 70px;
     cursor: pointer;
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease, border-color 0.3s ease; /* Smooth transition */
     
     /* Flex properties for centering content */
     display: flex;
@@ -186,7 +221,7 @@ body {
     height: 0;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-left: 18px solid rgb(255, 255, 255);
+    border-left: 18px solid var(--text-color); /* Use theme variable */
     margin-left: 5px; /* Nudge for optical centering of triangle */
     transition: all 0.2s ease;
 }
@@ -195,8 +230,8 @@ body {
     border: none;
     width: 16px;
     height: 18px;
-    border-left: 6px solid rgb(255, 255, 255);
-    border-right: 6px solid rgb(255, 255, 255);
+    border-left: 6px solid var(--text-color); /* Use theme variable */
+    border-right: 6px solid var(--text-color); /* Use theme variable */
     margin-left: 0; /* Reset nudge for pause icon */
 }
 
@@ -210,7 +245,7 @@ body {
     display: block;
     width: 20px;
     height: 20px;
-    border: 3px solid rgb(255, 255, 255);
+    border: 3px solid var(--text-color); /* Use theme variable */
     border-radius: 50%;
     border-right-color: transparent;
     transition: transform 0.4s ease;
@@ -232,4 +267,26 @@ body {
     font-size: 0.8rem;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     border: 1px solid var(--glass-border);
+    color: var(--text-color); /* Use theme variable */
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+.theme-toggle-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    z-index: 1000;
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    background-color: var(--button-active-bg);
 }
