@@ -323,6 +323,52 @@ body {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255,255,255,0.05); /* Softer, more diffuse shadow */
 }
 
+/* Language Selector Styles */
+.language-selector {
+    position: absolute;
+    top: 0; /* Position relative to header-controls */
+    right: 0;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    padding: 0.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255,255,255,0.05);
+    z-index: 1001; /* Above header-controls */
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 120px; /* Ensure buttons have enough space */
+    transform: translateY(calc(100% + 10px)); /* Position below the globe button */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+}
+
+.language-selector.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(calc(100% + 10px));
+}
+
+.lang-option-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    text-align: left;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.lang-option-btn:hover {
+    background-color: var(--button-bg);
+}
+
 .about-link {
     display: flex;
     align-items: center;

@@ -2,7 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Elements ---
     const htmlElement = document.getElementById('app-html');
     const themeToggleButton = document.getElementById('theme-toggle-btn');
-    const langToggleButton = document.getElementById('lang-toggle-btn'); // Add language toggle button
+    const langToggleButton = document.getElementById('lang-toggle-btn');
+    const languageSelector = document.getElementById('language-selector');
+    const langOptionButtons = document.querySelectorAll('.lang-option-btn');
     const M_TENS = document.getElementById('minutes-tens');
     const M_ONES = document.getElementById('minutes-ones');
     const S_TENS = document.getElementById('seconds-tens');
@@ -136,9 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Timer Controls
         // startButton.title = TRANSLATIONS[lang][isPaused ? 'start' : 'pause']; // This logic is more complex, handle in start/pause funcs
         resetButton.title = TRANSLATIONS[lang]['reset'];
-
-        // Total Focus Time
-        document.querySelector('.total-focus-time p').firstChild.textContent = TRANSLATIONS[lang]['totalFocusTime'];
 
         // Footer
         document.querySelector('footer nav a[href="about.html"]').textContent = TRANSLATIONS[lang]['about'];
@@ -294,7 +293,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const lang = htmlElement.lang;
         const minutes = Math.floor(totalFocusedSeconds / 60);
         const seconds = totalFocusedSeconds % 60;
-        totalFocusDisplay.textContent = `${minutes}${TRANSLATIONS[lang]['minutes']} ${seconds}${TRANSLATIONS[lang]['seconds']}`;
+        // Update the parent <p> element's text content, including the prefix
+        totalFocusDisplay.parentElement.textContent = `${TRANSLATIONS[lang]['totalFocusTime']} ${minutes}${TRANSLATIONS[lang]['minutes']} ${seconds}${TRANSLATIONS[lang]['seconds']}`;
     }
 
     // --- Performance Optimizations ---
@@ -354,7 +354,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         themeToggleButton.addEventListener('click', cycleTheme);
-        langToggleButton.addEventListener('click', toggleLanguage); // Add language toggle listener
+        
+        langToggleButton.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent immediate closing
+            languageSelector.classList.toggle('visible');
+        });
+
+        langOptionButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const lang = e.target.dataset.lang;
+                setLanguage(lang);
+                languageSelector.classList.remove('visible'); // Hide selector after selection
+            });
+        });
+
+        // Close language selector if clicking outside
+        document.addEventListener('click', (e) => {
+            if (!languageSelector.contains(e.target) && !langToggleButton.contains(e.target)) {
+                languageSelector.classList.remove('visible');
+            }
+        });
+
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
             if (currentThemePreference === 'auto') {
                 applyTheme('auto');
