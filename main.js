@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const langToggleButton = document.getElementById('lang-toggle-btn');
     const languageSelector = document.getElementById('language-selector');
     const langOptionButtons = document.querySelectorAll('.lang-option-btn');
-    const themeSelector = document.getElementById('theme-selector'); // New
-    const themeOptionButtons = document.querySelectorAll('.theme-option-btn'); // New
+    const themeSelector = document.getElementById('theme-selector');
+    const themeOptionButtons = document.querySelectorAll('.theme-option-btn');
 
     const M_TENS = document.getElementById('minutes-tens');
     const M_ONES = document.getElementById('minutes-ones');
@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startButton = document.getElementById('start-btn');
     const resetButton = document.getElementById('reset-btn');
     const totalFocusDisplay = document.getElementById('total-focus-display');
+    const modeIndicator = document.querySelector('.mode-indicator'); // New DOM element
 
     // --- App State ---
     let intervalId = null;
@@ -26,8 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let totalSeconds = 0;
     let totalFocusedSeconds = 0;
     let lastResetDate = '';
-    let currentThemePreference = 'auto'; // 'auto', 'light', 'dark'
-    // const THEMES = ['auto', 'light', 'dark']; // No longer needed for cycling
+    let currentThemePreference = 'auto';
 
     const DURATIONS = {
         pomodoro: 25 * 60,
@@ -38,9 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'ko': {
             'home': '홈',
             'themeToggle': '테마 전환',
-            'themeAuto': '자동', // Simplified for option button
-            'themeLight': '라이트', // Simplified for option button
-            'themeDark': '다크', // Simplified for option button
+            'themeAuto': '자동',
+            'themeLight': '라이트',
+            'themeDark': '다크',
             'pomodoro': '집중',
             'shortBreak': '휴식',
             'start': '시작',
@@ -59,9 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'en': {
             'home': 'Home',
             'themeToggle': 'Toggle Theme',
-            'themeAuto': 'Auto', // Simplified for option button
-            'themeLight': 'Light', // Simplified for option button
-            'themeDark': 'Dark', // Simplified for option button
+            'themeAuto': 'Auto',
+            'themeLight': 'Light',
+            'themeDark': 'Dark',
             'pomodoro': 'Focus',
             'shortBreak': 'Break',
             'start': 'Start',
@@ -90,10 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('themePreference', themePreference);
         const themeToApply = themePreference === 'auto' ? getSystemTheme() : themePreference;
         htmlElement.dataset.theme = themeToApply;
-        translateElements(htmlElement.lang); // Re-translate to update theme button text
+        translateElements(htmlElement.lang);
     }
-
-    // Removed cycleTheme function
 
     function setLanguage(lang) {
         htmlElement.lang = lang;
@@ -103,11 +101,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function translateElements(lang) {
         const t = TRANSLATIONS[lang];
-        // Header
         document.querySelector('.about-link').textContent = t.home;
-        themeToggleButton.textContent = t.themeToggle; // Base text for the toggle button
+        themeToggleButton.textContent = t.themeToggle;
 
-        // Update text for theme option buttons
         themeOptionButtons.forEach(button => {
             const themePref = button.dataset.themePref;
             if (themePref === 'auto') button.textContent = t.themeAuto;
@@ -115,8 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (themePref === 'dark') button.textContent = t.themeDark;
         });
         
-        // Timer
-        // These elements may not exist on subpages, so check first
         const pomodoroModeBtn = document.querySelector('.mode-btn[data-mode="pomodoro"]');
         if (pomodoroModeBtn) pomodoroModeBtn.textContent = t.pomodoro;
         const shortBreakModeBtn = document.querySelector('.mode-btn[data-mode="shortBreak"]');
@@ -125,7 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (resetButton) resetButton.title = t.reset;
         if (totalFocusDisplay) totalFocusDisplay.parentElement.firstChild.textContent = t.totalFocusTimePrefix;
 
-        // Footer & Page Title
         document.querySelector('footer nav a[href="about.html"]').textContent = t.about;
         document.querySelector('footer nav a[href="privacy.html"]').textContent = t.privacy;
         document.querySelector('footer nav a[href="terms.html"]').textContent = t.terms;
@@ -143,13 +136,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const specificTitle = pageSpecificTitles[filename];
         document.title = specificTitle ? `${specificTitle} | ${baseTitle}` : baseTitle;
 
-        // Update displays
         updateTotalFocusDisplay();
     }
 
-
     function createDigitReels() {
-        if (!M_TENS) return; // Only create reels if timer elements exist
+        if (!M_TENS) return;
         digitContainers.forEach(container => {
             const reel = document.createElement('div');
             reel.className = 'digit-reel';
@@ -164,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateDisplay(secondsValue) {
-        if (!M_TENS) return; // Only update display if timer elements exist
+        if (!M_TENS) return;
         const minutes = Math.floor(secondsValue / 60);
         const seconds = secondsValue % 60;
         const mTens = Math.floor(minutes / 10);
@@ -180,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startTimer() {
-        if (!startButton || !resetButton) return; // Only run if timer controls exist
+        if (!startButton || !resetButton) return;
         if (!isPaused) return;
         isPaused = false;
         startButton.classList.add('paused');
@@ -220,24 +211,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function resetTimer() {
-        if (!startButton || !resetButton) return; // Only run if timer controls exist
+        if (!startButton || !resetButton) return;
         pauseTimer();
         totalSeconds = DURATIONS[currentMode];
         updateDisplay(totalSeconds);
     }
 
+    function updateModeIndicatorPosition() {
+        if (!modeIndicator || modeButtons.length === 0) return;
+
+        const activeButton = document.querySelector(`.mode-btn[data-mode="${currentMode}"]`);
+        if (activeButton) {
+            const modeContainer = activeButton.closest('.timer-modes');
+            if (!modeContainer) return; // Should not happen if .mode-btn is inside .timer-modes
+
+            const containerRect = modeContainer.getBoundingClientRect();
+            const buttonRect = activeButton.getBoundingClientRect();
+
+            // Calculate position relative to the parent (.timer-modes)
+            const translateX = buttonRect.left - containerRect.left;
+            const indicatorWidth = buttonRect.width;
+
+            modeIndicator.style.transform = `translateX(${translateX}px)`;
+            modeIndicator.style.width = `${indicatorWidth}px`;
+
+            // Also manage active class on buttons for text color
+            modeButtons.forEach(btn => {
+                btn.classList.toggle('active', btn === activeButton);
+            });
+        }
+    }
+
+
     function switchMode(mode) {
-        if (!modeButtons.length) return; // Only run if mode buttons exist
+        if (!modeButtons.length) return;
         currentMode = mode;
         localStorage.setItem('currentMode', currentMode);
-        modeButtons.forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.mode === mode);
-        });
+        
+        // Update the indicator position immediately
+        updateModeIndicatorPosition();
+
         resetTimer();
     }
 
     function updateTotalFocusDisplay() {
-        if (!totalFocusDisplay) return; // Only update if element exists
+        if (!totalFocusDisplay) return;
         const lang = htmlElement.lang;
         const minutes = Math.floor(totalFocusedSeconds / 60);
         const seconds = totalFocusedSeconds % 60;
@@ -267,37 +285,33 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Theme Toggle Button
         themeToggleButton.addEventListener('click', (e) => {
             e.stopPropagation();
             themeSelector.classList.toggle('visible');
-            languageSelector.classList.remove('visible'); // Close language selector if open
+            languageSelector.classList.remove('visible');
         });
 
-        // Theme Option Buttons
         themeOptionButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 const themePref = e.target.dataset.themePref;
                 applyTheme(themePref);
-                themeSelector.classList.remove('visible'); // Hide selector after selection
+                themeSelector.classList.remove('visible');
             });
         });
-
 
         langToggleButton.addEventListener('click', (e) => {
             e.stopPropagation();
             languageSelector.classList.toggle('visible');
-            themeSelector.classList.remove('visible'); // Close theme selector if open
+            themeSelector.classList.remove('visible');
         });
 
         langOptionButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 setLanguage(e.target.dataset.lang);
-                languageSelector.classList.remove('visible'); // Hide selector after selection
+                languageSelector.classList.remove('visible');
             });
         });
 
-        // Close selectors if clicking outside
         document.addEventListener('click', (e) => {
             if (themeSelector && !themeSelector.contains(e.target) && !themeToggleButton.contains(e.target)) {
                 themeSelector.classList.remove('visible');
@@ -312,17 +326,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 applyTheme('auto');
             }
         });
+
+        // Recalculate indicator position on window resize to handle responsiveness
+        window.addEventListener('resize', () => {
+            if (document.getElementById('minutes-tens')) { // Only if timer elements are present
+                updateModeIndicatorPosition();
+            }
+        });
     }
 
     function init() {
-        // Load preferences
         currentMode = localStorage.getItem('currentMode') || 'pomodoro';
         totalFocusedSeconds = parseInt(localStorage.getItem('totalFocusedSeconds')) || 0;
         lastResetDate = localStorage.getItem('lastResetDate') || '';
         const savedTheme = localStorage.getItem('themePreference') || 'auto';
         const savedLang = localStorage.getItem('langPreference') || 'ko';
 
-        // Daily reset check
         const today = new Date().toISOString().slice(0, 10);
         if (lastResetDate !== today) {
             totalFocusedSeconds = 0;
@@ -334,15 +353,14 @@ document.addEventListener('DOMContentLoaded', () => {
         createDigitReels();
         setupEventListeners();
 
-        // Apply initial settings
         applyTheme(savedTheme);
-        setLanguage(savedLang); // This also calls translateElements and updates displays
+        setLanguage(savedLang);
 
-        // Only switch mode and update timer display if timer elements exist on the page
         if (document.getElementById('minutes-tens')) {
-            switchMode(currentMode); // This sets up the correct timer duration and initial display
+            switchMode(currentMode);
+            updateModeIndicatorPosition(); // Ensure indicator is positioned correctly on load
         }
-        updateTotalFocusDisplay(); // Final check on focus display
+        updateTotalFocusDisplay();
     }
 
     init();

@@ -1,27 +1,28 @@
 :root {
     --bg-light: #f0f2f5; /* A light grey background */
-    --bg-dark: #2c2c2c; /* A dark grey background */
+    --bg-dark: #1c1c1e; /* Darker grey background for a deeper contrast */
 
     /* Light Theme Variables */
     --primary-text-color-light: #333333;
     --secondary-text-color-light: #666666;
-    --card-bg-light: rgba(255, 255, 255, 0.8); /* Slightly more opaque */
-    --card-border-light: rgba(200, 200, 200, 0.6); /* Slightly more opaque */
+    --card-bg-light: rgba(255, 255, 255, 0.9); /* More opaque for stronger glass effect */
+    --card-border-light: rgba(200, 200, 200, 0.7); /* More opaque */
     --button-bg-light: rgba(0, 0, 0, 0.1);
-    --button-active-bg-light: rgba(0, 0, 0, 0.25);
+    --button-active-bg-light: rgba(0, 0, 0, 0.15); /* Slightly less opaque for active state */
 
     /* Dark Theme Variables */
     --primary-text-color-dark: #E0E0E0;
     --secondary-text-color-dark: #A0A0A0;
-    --card-bg-dark: rgba(30, 30, 30, 0.8); /* More opaque and slightly brighter for dark mode */
-    --card-border-dark: rgba(100, 100, 100, 0.8); /* More opaque and slightly brighter for dark mode */
+    --card-bg-dark: rgba(30, 30, 30, 0.9); /* More opaque and brighter for dark mode glass */
+    --card-border-dark: rgba(100, 100, 100, 0.7); /* More opaque */
     --button-bg-dark: rgba(255, 255, 255, 0.1);
-    --button-active-bg-dark: rgba(255, 255, 255, 0.25);
+    --button-active-bg-dark: rgba(255, 255, 255, 0.15); /* Slightly less opaque for active state */
 
     /* General Variables mapped to current theme */
     --text-color: var(--primary-text-color-light);
     --glass-bg: var(--card-bg-light);
     --glass-border: var(--card-border-light);
+    --button-bg: var(--button-bg-light);
     --button-active-bg: var(--button-active-bg-light);
 
     --font-family: 'Pretendard', sans-serif;
@@ -32,6 +33,7 @@ html[data-theme="light"] {
     --text-color: var(--primary-text-color-light);
     --glass-bg: var(--card-bg-light);
     --glass-border: var(--card-border-light);
+    --button-bg: var(--button-bg-light);
     --button-active-bg: var(--button-active-bg-light);
     background-color: var(--bg-light);
 }
@@ -40,6 +42,7 @@ html[data-theme="dark"] {
     --text-color: var(--primary-text-color-dark);
     --glass-bg: var(--card-bg-dark);
     --glass-border: var(--card-border-dark);
+    --button-bg: var(--button-bg-dark);
     --button-active-bg: var(--button-active-bg-dark);
     background-color: var(--bg-dark);
 }
@@ -60,7 +63,7 @@ body {
     min-height: 100vh;
     transition: color 0.3s ease, background-color 0.3s ease;
     padding-bottom: 1rem; /* Reduced padding */
-    padding-top: 2rem; /* Reduced padding */
+    padding-top: 1rem; /* Reduced padding */
 }
 
 .app-container {
@@ -75,15 +78,15 @@ body {
 
 .timer-card {
     background: var(--glass-bg);
-    backdrop-filter: blur(25px); /* Slightly less blur for a softer look */
-    -webkit-backdrop-filter: blur(25px);
+    backdrop-filter: blur(30px) saturate(180%); /* Deeper blur, more vibrant effect */
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
     border: 1px solid var(--glass-border);
-    border-radius: 30px; /* Rounder */
+    border-radius: 35px; /* Rounder */
     padding: 2.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2), inset 0 1px 0px rgba(255,255,255,0.05); /* More prominent shadow */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0px rgba(255,255,255,0.1); /* More prominent and liquid shadow */
     width: clamp(320px, 90vw, 420px);
     transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -97,6 +100,8 @@ body {
     margin: 1rem 0 2rem;
     height: var(--digit-height);
     overflow: hidden;
+    /* Adding subtle text shadow for depth */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .digit-container {
@@ -104,7 +109,7 @@ body {
 }
 
 .digit-reel {
-    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); /* Smoother bounce transition */
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smoother, less bouncy */
 }
 
 .digit-reel span {
@@ -124,40 +129,47 @@ body {
 }
 
 .timer-modes {
+    position: relative; /* For positioning the indicator */
     display: flex;
-    background-color: var(--button-bg);
-    border-radius: 25px; /* Rounder */
-    padding: 0.5rem; /* Slightly more padding */
+    background-color: var(--button-bg); /* Use base button bg for container */
+    border-radius: 30px; /* Rounder segmented control container */
+    padding: 0.4rem;
     margin-bottom: 2.5rem;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: inset 0 0 0 1px var(--glass-border); /* Subtle inner border/shadow */
+    box-shadow: inset 0 0 0 0.5px var(--glass-border), 0 2px 8px rgba(0,0,0,0.1); /* Subtle inner border/shadow */
+    height: 3.5rem; /* Fixed height for consistent look */
 }
 
 .mode-btn {
-    background: transparent;
+    flex-grow: 1; /* Distribute space evenly */
+    background: transparent; /* Background will be handled by indicator */
     border: none;
     color: var(--text-color);
     font-family: var(--font-family);
-    font-size: 0.95rem; /* Slightly larger font */
-    padding: 0.8rem 1.5rem; /* More padding */
-    border-radius: 20px; /* Rounder */
+    font-size: 0.95rem;
+    padding: 0 1.2rem; /* No vertical padding, let container handle it */
+    border-radius: 25px; /* Rounder */
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+    transition: color 0.2s ease; /* Only color transition now */
     font-weight: 700;
+    z-index: 1; /* Above the indicator */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 80px; /* Ensure minimum width */
 }
 
-.mode-btn.active {
-    background-color: var(--button-active-bg);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle lift */
-    transform: translateY(-1px);
-}
-.mode-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-.mode-btn:active {
-    transform: translateY(0);
-    box-shadow: none;
+/* Floating White Pill Indicator */
+.mode-indicator {
+    position: absolute;
+    top: 0.4rem; /* Match parent padding */
+    left: 0.4rem; /* Match parent padding */
+    height: calc(100% - 0.8rem); /* Adjust height to fill segmented control */
+    background-color: rgba(255, 255, 255, 0.95); /* White pill, slightly opaque */
+    border-radius: 25px; /* Pill shape */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 0 0 0.5px rgba(255, 255, 255, 0.4); /* Soft shadows, high gloss edge */
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 0; /* Behind the buttons */
 }
 
 
@@ -171,11 +183,11 @@ body {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: 50%; /* Keep circular */
-    width: 75px; /* Slightly larger */
-    height: 75px; /* Slightly larger */
+    width: 75px;
+    height: 75px;
     cursor: pointer;
     transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 0 0 0.5px rgba(255, 255, 255, 0.4); /* Enhanced shadow and gloss */
     
     display: flex;
     justify-content: center;
@@ -183,13 +195,13 @@ body {
 }
 
 .control-btn:hover {
-    background-color: var(--glass-border);
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* More prominent shadow on hover */
+    background-color: var(--glass-border); /* Hover effect using border color */
+    transform: scale(1.03); /* Subtle scale */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 0 0 0.5px rgba(255, 255, 255, 0.5); /* More prominent shadow on hover */
 }
 
 .control-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.97); /* Subtle press effect */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Flatter on active */
 }
 
@@ -239,19 +251,19 @@ body {
 }
 
 .reset-btn:hover::before {
-    transform: rotate(-180deg) scale(1.1); /* Spin and slightly grow */
+    transform: rotate(-180deg) scale(1.1);
 }
 
 .total-focus-time {
     margin-top: 2rem;
     background: var(--glass-bg);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid var(--glass-border);
-    border-radius: 25px; /* Rounder */
-    padding: 0.8rem 1.2rem; /* More padding */
-    font-size: 0.9rem; /* Slightly larger */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 30px; /* Rounder */
+    padding: 1rem 1.5rem; /* More padding */
+    font-size: 0.95rem; /* Slightly larger */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 0 0 0.5px rgba(255, 255, 255, 0.4);
     color: var(--text-color);
     transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -262,35 +274,42 @@ body {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     color: var(--text-color);
-    padding: 0.7rem 1.2rem; /* More padding */
+    padding: 0.6rem 1rem; /* Adjusted padding */
     border-radius: 20px; /* Rounder */
     cursor: pointer;
     font-family: var(--font-family);
     font-size: 0.9rem;
     z-index: 1000;
-    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 .theme-toggle-btn:hover,
 .lang-toggle-btn:hover {
     background-color: var(--button-active-bg);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Lift on hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Lift on hover */
+    transform: translateY(-1px);
 }
+.theme-toggle-btn:active,
+.lang-toggle-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
 
 .header-controls {
     position: sticky;
     top: 0;
-    right: 0;
+    left: 0; /* Add left:0 for full width sticky */
     width: 100%;
     display: flex;
     justify-content: flex-end;
-    gap: 15px; /* Increased gap */
+    gap: 10px; /* Adjusted gap */
     z-index: 1000;
     align-items: center;
-    padding: 0.8rem 1.5rem; /* Adjusted padding */
-    backdrop-filter: blur(12px); /* Slightly more blur */
-    -webkit-backdrop-filter: blur(12px);
+    padding: 0.5rem 1rem; /* Adjusted padding */
+    backdrop-filter: blur(15px) saturate(180%); /* Deeper blur */
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
     background: var(--glass-bg);
     border-bottom: 1px solid var(--glass-border);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -301,20 +320,20 @@ body {
 .theme-selector,
 .language-selector {
     position: absolute;
-    top: calc(100% + 10px); /* More space from button */
+    top: calc(100% + 8px); /* Adjusted space from button */
     right: 0;
     background: var(--glass-bg);
-    backdrop-filter: blur(15px); /* Slightly more blur */
-    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(20px) saturate(180%); /* Deeper blur */
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid var(--glass-border);
-    border-radius: 20px; /* Rounder */
-    padding: 0.8rem; /* More padding */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* More prominent shadow */
+    border-radius: 20px;
+    padding: 0.7rem; /* Adjusted padding */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* More prominent shadow */
     z-index: 1001;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem; /* Slightly more gap */
-    min-width: 130px; /* Slightly wider */
+    gap: 0.5rem; /* Adjusted gap */
+    min-width: 130px;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
@@ -333,11 +352,11 @@ body {
     background: transparent;
     border: none;
     color: var(--text-color);
-    padding: 0.7rem 1.2rem; /* More padding */
+    padding: 0.6rem 1rem; /* Adjusted padding */
     border-radius: 15px; /* Rounder */
     cursor: pointer;
     font-family: var(--font-family);
-    font-size: 0.95rem; /* Slightly larger */
+    font-size: 0.95rem;
     text-align: left;
     transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
 }
@@ -345,7 +364,7 @@ body {
 .theme-option-btn:hover,
 .lang-option-btn:hover {
     background-color: var(--button-bg);
-    transform: translateX(3px); /* Subtle slide on hover */
+    transform: translateX(5px); /* More pronounced slide on hover */
 }
 
 .about-link {
@@ -355,32 +374,33 @@ body {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     color: var(--text-color);
-    padding: 0.7rem 1.2rem; /* More padding */
-    border-radius: 20px; /* Rounder */
+    padding: 0.6rem 1rem; /* Adjusted padding */
+    border-radius: 20px;
     cursor: pointer;
     font-family: var(--font-family);
     font-size: 0.9rem;
-    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .about-link:hover {
     background-color: var(--button-active-bg);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
 }
 
 /* About Section Styling */
 .about-section {
     width: 90%;
-    max-width: 650px; /* Slightly wider content area */
-    margin: 3rem auto 2rem auto;
+    max-width: 650px;
+    margin: 2rem auto 1.5rem auto; /* Adjusted margins */
     background: var(--glass-bg);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
     border: 1px solid var(--glass-border);
-    border-radius: 30px;
-    padding: 2.5rem 3rem; /* Increased padding */
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255,255,255,0.05);
+    border-radius: 35px;
+    padding: 2rem 2.5rem; /* Adjusted padding */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255,255,255,0.1);
     color: var(--text-color);
     transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -393,20 +413,20 @@ body {
 }
 
 .about-section h2 {
-    font-size: 2rem; /* Slightly larger heading */
+    font-size: 2rem;
     text-align: center;
     margin-bottom: 1.5rem;
 }
 
 .about-section h3 {
-    font-size: 1.5rem; /* Slightly larger heading */
-    margin-top: 2rem;
-    margin-bottom: 0.8rem;
+    font-size: 1.5rem;
+    margin-top: 1.8rem; /* Adjusted margin */
+    margin-bottom: 0.7rem; /* Adjusted margin */
 }
 
 .about-section p {
     font-size: 1rem;
-    line-height: 1.7; /* Slightly more line height */
+    line-height: 1.7;
     margin-bottom: 1rem;
     color: var(--text-color);
 }
@@ -430,18 +450,18 @@ body {
 
 /* Footer Styling */
 footer {
-    padding: 1.5rem 1rem; /* Adjusted padding */
+    padding: 1rem 0.5rem; /* Adjusted padding */
     background: var(--glass-bg);
-    backdrop-filter: blur(12px); /* Slightly more blur */
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
     border-top: 1px solid var(--glass-border);
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Softer upward shadow */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1), inset 0 1px 0px rgba(255,255,255,0.05); /* Enhanced shadow */
     color: var(--text-color);
     text-align: center;
     font-size: 0.85rem;
     z-index: 1000;
-    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-    margin-top: 2rem; /* Adjusted margin from main content */
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+    margin-top: 1rem; /* Adjusted margin from main content */
     width: 100%;
 }
 
@@ -449,8 +469,8 @@ footer {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 1.5rem; /* Adjusted gap */
-    margin-bottom: 0.8rem; /* Adjusted margin */
+    gap: 1rem; /* Adjusted gap */
+    margin-bottom: 0.5rem; /* Adjusted margin */
 }
 
 .footer-nav a {
@@ -461,5 +481,5 @@ footer {
 
 .footer-nav a:hover {
     color: #A7BFE8;
-    transform: translateY(-2px); /* Subtle lift on hover */
+    transform: translateY(-1px); /* Subtle lift on hover */
 }
