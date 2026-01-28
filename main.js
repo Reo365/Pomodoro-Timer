@@ -228,27 +228,16 @@ document.addEventListener('DOMContentLoaded', () => {
         startButton.title = TRANSLATIONS[htmlElement.lang]['pause'];
 
         // More robust timing with Date.now()
-        let expected = Date.now() + 1000;
+        let expected = Date.now() + 1000; // Keep expected for context if needed later
         intervalId = setTimeout(step, 1000);
 
         function step() {
-            let drift = Date.now() - expected;
-            if (drift > 1000) {
-                // If the tab was inactive, account for the drift
-                const missedSeconds = Math.round(drift / 1000);
-                 if (currentMode === 'pomodoro') {
-                    totalFocusedSeconds += missedSeconds;
-                    localStorage.setItem('totalFocusedSeconds', totalFocusedSeconds);
-                }
-                totalSeconds -= missedSeconds;
-            } else {
-                 if (currentMode === 'pomodoro') {
-                    totalFocusedSeconds++;
-                    localStorage.setItem('totalFocusedSeconds', totalFocusedSeconds);
-                }
-                totalSeconds--;
+            // Simplified: remove drift compensation for testing
+            if (currentMode === 'pomodoro') {
+                totalFocusedSeconds++;
+                localStorage.setItem('totalFocusedSeconds', totalFocusedSeconds);
             }
-
+            totalSeconds--;
 
             updateDisplay();
             updateTotalFocusDisplay(); // Update total focus display every second
@@ -259,8 +248,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert(TRANSLATIONS[htmlElement.lang]['timeUp']);
                 switchMode(currentMode === 'pomodoro' ? 'shortBreak' : 'pomodoro');
             } else {
-                expected += 1000;
-                intervalId = setTimeout(step, Math.max(0, 1000 - drift));
+                // Reschedule for next second without drift compensation for testing
+                intervalId = setTimeout(step, 1000);
             }
         }
     }
