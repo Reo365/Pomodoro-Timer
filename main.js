@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const langToggleButton = document.getElementById('lang-toggle-btn');
     const languageSelector = document.getElementById('language-selector');
     const langOptionButtons = document.querySelectorAll('.lang-option-btn');
+    const themeSelector = document.getElementById('theme-selector'); // New
+    const themeOptionButtons = document.querySelectorAll('.theme-option-btn'); // New
+
     const M_TENS = document.getElementById('minutes-tens');
     const M_ONES = document.getElementById('minutes-ones');
     const S_TENS = document.getElementById('seconds-tens');
@@ -24,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let totalFocusedSeconds = 0;
     let lastResetDate = '';
     let currentThemePreference = 'auto'; // 'auto', 'light', 'dark'
-    const THEMES = ['auto', 'light', 'dark'];
+    // const THEMES = ['auto', 'light', 'dark']; // No longer needed for cycling
 
     const DURATIONS = {
         pomodoro: 25 * 60,
@@ -35,9 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'ko': {
             'home': '홈',
             'themeToggle': '테마 전환',
-            'themeAuto': '테마: 자동',
-            'themeLight': '테마: 라이트',
-            'themeDark': '테마: 다크',
+            'themeAuto': '자동', // Simplified for option button
+            'themeLight': '라이트', // Simplified for option button
+            'themeDark': '다크', // Simplified for option button
             'pomodoro': '집중',
             'shortBreak': '휴식',
             'start': '시작',
@@ -56,9 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'en': {
             'home': 'Home',
             'themeToggle': 'Toggle Theme',
-            'themeAuto': 'Theme: Auto',
-            'themeLight': 'Theme: Light',
-            'themeDark': 'Theme: Dark',
+            'themeAuto': 'Auto', // Simplified for option button
+            'themeLight': 'Light', // Simplified for option button
+            'themeDark': 'Dark', // Simplified for option button
             'pomodoro': 'Focus',
             'shortBreak': 'Break',
             'start': 'Start',
@@ -90,11 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         translateElements(htmlElement.lang); // Re-translate to update theme button text
     }
 
-    function cycleTheme() {
-        const currentIndex = THEMES.indexOf(currentThemePreference);
-        const nextIndex = (currentIndex + 1) % THEMES.length;
-        applyTheme(THEMES[nextIndex]);
-    }
+    // Removed cycleTheme function
 
     function setLanguage(lang) {
         htmlElement.lang = lang;
@@ -106,12 +105,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const t = TRANSLATIONS[lang];
         // Header
         document.querySelector('.about-link').textContent = t.home;
-        let themeKey;
-        if (currentThemePreference === 'auto') themeKey = 'themeAuto';
-        else if (currentThemePreference === 'light') themeKey = 'themeLight';
-        else themeKey = 'themeDark';
-        themeToggleButton.textContent = t[themeKey];
+        themeToggleButton.textContent = t.themeToggle; // Base text for the toggle button
 
+        // Update text for theme option buttons
+        themeOptionButtons.forEach(button => {
+            const themePref = button.dataset.themePref;
+            if (themePref === 'auto') button.textContent = t.themeAuto;
+            else if (themePref === 'light') button.textContent = t.themeLight;
+            else if (themePref === 'dark') button.textContent = t.themeDark;
+        });
+        
         // Timer
         // These elements may not exist on subpages, so check first
         const pomodoroModeBtn = document.querySelector('.mode-btn[data-mode="pomodoro"]');
@@ -241,8 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
         totalFocusDisplay.textContent = `${minutes}${TRANSLATIONS[lang]['minutes']} ${seconds}${TRANSLATIONS[lang]['seconds']}`;
     }
 
-    // Removed handleMouseInteraction function
-
     function setupEventListeners() {
         if (startButton) {
             startButton.addEventListener('click', () => {
@@ -266,22 +267,42 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        themeToggleButton.addEventListener('click', cycleTheme);
+        // Theme Toggle Button
+        themeToggleButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            themeSelector.classList.toggle('visible');
+            languageSelector.classList.remove('visible'); // Close language selector if open
+        });
+
+        // Theme Option Buttons
+        themeOptionButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const themePref = e.target.dataset.themePref;
+                applyTheme(themePref);
+                themeSelector.classList.remove('visible'); // Hide selector after selection
+            });
+        });
+
 
         langToggleButton.addEventListener('click', (e) => {
             e.stopPropagation();
             languageSelector.classList.toggle('visible');
+            themeSelector.classList.remove('visible'); // Close theme selector if open
         });
 
         langOptionButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 setLanguage(e.target.dataset.lang);
-                languageSelector.classList.remove('visible');
+                languageSelector.classList.remove('visible'); // Hide selector after selection
             });
         });
 
+        // Close selectors if clicking outside
         document.addEventListener('click', (e) => {
-            if (!languageSelector.contains(e.target) && !langToggleButton.contains(e.target)) {
+            if (themeSelector && !themeSelector.contains(e.target) && !themeToggleButton.contains(e.target)) {
+                themeSelector.classList.remove('visible');
+            }
+            if (languageSelector && !languageSelector.contains(e.target) && !langToggleButton.contains(e.target)) {
                 languageSelector.classList.remove('visible');
             }
         });
@@ -312,7 +333,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         createDigitReels();
         setupEventListeners();
-        // Removed handleMouseInteraction() call
 
         // Apply initial settings
         applyTheme(savedTheme);

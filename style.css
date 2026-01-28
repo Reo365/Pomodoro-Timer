@@ -64,14 +64,8 @@ body {
     padding-top: 5rem; /* Added padding to push content down from the top */
 }
 
-/* Remove .background styles */
+/* Removed .background styles and keyframes */
 
-
-@keyframes gradient-flow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
 
 .app-container {
     position: relative;
@@ -291,6 +285,8 @@ body {
     align-items: center;
 }
 
+/* Theme Selector Styles */
+.theme-selector,
 .language-selector {
     position: absolute;
     top: calc(100% + 5px);
@@ -313,12 +309,14 @@ body {
     transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
 }
 
+.theme-selector.visible,
 .language-selector.visible {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
+.theme-option-btn,
 .lang-option-btn {
     background: transparent;
     border: none;
@@ -332,6 +330,7 @@ body {
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+.theme-option-btn:hover,
 .lang-option-btn:hover {
     background-color: var(--button-bg);
 }
