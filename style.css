@@ -120,7 +120,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255,255,255,0.1); /* Deeper shadow + inner highlight */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255,255,255,0.05); /* Softer, more diffuse shadow */
     width: clamp(320px, 90vw, 420px);
     transition: background 0.3s ease, border-color 0.3s ease; /* Smooth transition */
 }
@@ -264,9 +264,9 @@ body {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     padding: 0.6rem 1rem;
-    border-radius: 12px;
+    border-radius: 20px; /* Consistent with timer-card */
     font-size: 0.8rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255,255,255,0.05); /* Softer, more diffuse shadow */
     border: 1px solid var(--glass-border);
     color: var(--text-color); /* Use theme variable */
     transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Smooth transition */
@@ -290,6 +290,23 @@ body {
     background-color: var(--button-active-bg);
 }
 
+.lang-toggle-btn {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    z-index: 1000;
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.lang-toggle-btn:hover {
+    background-color: var(--button-active-bg);
+}
+
 .header-controls {
     position: fixed;
     top: 20px;
@@ -297,6 +314,13 @@ body {
     display: flex;
     gap: 10px; /* Space between buttons */
     z-index: 1000;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px; /* Apply border-radius for consistency */
+    padding: 0.5rem 1rem; /* Add padding for better appearance */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255,255,255,0.05); /* Softer, more diffuse shadow */
 }
 
 .about-link {
@@ -327,9 +351,9 @@ body {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
-    border-radius: 18px;
+    border-radius: 28px; /* Consistent with timer-card */
     padding: 2rem;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255,255,255,0.05); /* Softer, more diffuse shadow */
     color: var(--text-color);
     transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
@@ -387,6 +411,7 @@ footer {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-top: 1px solid var(--glass-border);
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255,255,255,0.02); /* Upward softer shadow */
     color: var(--text-color);
     text-align: center;
     font-size: 0.85rem;
