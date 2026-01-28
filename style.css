@@ -1,9 +1,6 @@
 :root {
-    --bg-pomodoro-1: #A7BFE8; /* Soft Blue */
-    --bg-pomodoro-2: #619AD6; /* Slightly Deeper Blue */
-
-    --bg-break-1: #C9F0D2; /* Soft Mint Green */
-    --bg-break-2: #84D9A0; /* Slightly Deeper Green */
+    --bg-gradient-1: #89f7fe; /* Soft Blue */
+    --bg-gradient-2: #66a6ff; /* Slightly Deeper Blue */
 
     /* Light Theme Variables */
     --primary-text-color-light: #333333;
@@ -73,25 +70,11 @@ body {
     width: 200%;
     height: 200%;
     z-index: -1;
+    background: linear-gradient(45deg, var(--bg-gradient-1), var(--bg-gradient-2));
     background-size: 400% 400%;
     animation: gradient-flow 45s ease infinite; /* Slower animation for a calmer feel */
-    transition: opacity 1s ease-in-out; /* Smooth transition for opacity */
-    opacity: 0; /* Hidden by default */
+    opacity: 1; /* Always visible */
 }
-
-.background.active {
-    opacity: 1; /* Visible when active */
-}
-
-/* Specific gradients for each mode */
-.background-pomodoro {
-    background: linear-gradient(45deg, var(--bg-pomodoro-1), var(--bg-pomodoro-2), var(--bg-pomodoro-1), var(--bg-pomodoro-2));
-}
-
-.background-short-break {
-    background: linear-gradient(45deg, var(--bg-break-1), var(--bg-break-2), var(--bg-break-1), var(--bg-break-2));
-}
-
 
 @keyframes gradient-flow {
     0% { background-position: 0% 50%; }
@@ -475,4 +458,3 @@ footer {
 .footer-nav a:hover {
     color: #A7BFE8; /* A subtle highlight color */
 }
-

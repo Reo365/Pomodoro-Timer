@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Elements ---
     const htmlElement = document.getElementById('app-html');
@@ -16,8 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startButton = document.getElementById('start-btn');
     const resetButton = document.getElementById('reset-btn');
     const totalFocusDisplay = document.getElementById('total-focus-display');
-    const backgroundPomodoro = document.querySelector('.background-pomodoro');
-    const backgroundShortBreak = document.querySelector('.background-short-break');
+    const background = document.querySelector('.background'); // Changed to single background
 
     // --- App State ---
     let intervalId = null;
@@ -116,11 +114,14 @@ document.addEventListener('DOMContentLoaded', () => {
         themeToggleButton.textContent = t[themeKey];
 
         // Timer
-        document.querySelector('.mode-btn[data-mode="pomodoro"]').textContent = t.pomodoro;
-        document.querySelector('.mode-btn[data-mode="shortBreak"]').textContent = t.shortBreak;
-        startButton.title = isPaused ? t.start : t.pause;
-        resetButton.title = t.reset;
-        totalFocusDisplay.parentElement.firstChild.textContent = t.totalFocusTimePrefix;
+        // These elements may not exist on subpages, so check first
+        const pomodoroModeBtn = document.querySelector('.mode-btn[data-mode="pomodoro"]');
+        if (pomodoroModeBtn) pomodoroModeBtn.textContent = t.pomodoro;
+        const shortBreakModeBtn = document.querySelector('.mode-btn[data-mode="shortBreak"]');
+        if (shortBreakModeBtn) shortBreakModeBtn.textContent = t.shortBreak;
+        if (startButton) startButton.title = isPaused ? t.start : t.pause;
+        if (resetButton) resetButton.title = t.reset;
+        if (totalFocusDisplay) totalFocusDisplay.parentElement.firstChild.textContent = t.totalFocusTimePrefix;
 
         // Footer & Page Title
         document.querySelector('footer nav a[href="about.html"]').textContent = t.about;
@@ -146,6 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function createDigitReels() {
+        if (!M_TENS) return; // Only create reels if timer elements exist
         digitContainers.forEach(container => {
             const reel = document.createElement('div');
             reel.className = 'digit-reel';
@@ -160,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateDisplay(secondsValue) {
+        if (!M_TENS) return; // Only update display if timer elements exist
         const minutes = Math.floor(secondsValue / 60);
         const seconds = secondsValue % 60;
         const mTens = Math.floor(minutes / 10);
@@ -175,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startTimer() {
+        if (!startButton || !resetButton) return; // Only run if timer controls exist
         if (!isPaused) return;
         isPaused = false;
         startButton.classList.add('paused');
@@ -205,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function pauseTimer() {
+        if (!startButton || !resetButton) return; // Only run if timer controls exist
         if (isPaused) return;
         isPaused = true;
         clearInterval(intervalId);
@@ -214,13 +219,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function resetTimer() {
+        if (!startButton || !resetButton) return; // Only run if timer controls exist
         pauseTimer();
         totalSeconds = DURATIONS[currentMode];
         updateDisplay(totalSeconds);
-        updateBackground();
     }
 
     function switchMode(mode) {
+        if (!modeButtons.length) return; // Only run if mode buttons exist
         currentMode = mode;
         localStorage.setItem('currentMode', currentMode);
         modeButtons.forEach(btn => {
@@ -230,21 +236,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateTotalFocusDisplay() {
+        if (!totalFocusDisplay) return; // Only update if element exists
         const lang = htmlElement.lang;
         const minutes = Math.floor(totalFocusedSeconds / 60);
         const seconds = totalFocusedSeconds % 60;
         totalFocusDisplay.textContent = `${minutes}${TRANSLATIONS[lang]['minutes']} ${seconds}${TRANSLATIONS[lang]['seconds']}`;
     }
 
-    function updateBackground() {
-        backgroundPomodoro.classList.toggle('active', currentMode === 'pomodoro');
-        backgroundShortBreak.classList.toggle('active', currentMode === 'shortBreak');
-    }
-
     function handleMouseInteraction() {
         let mouseX = 0;
         let targetX = 0;
         const windowHalfX = window.innerWidth / 2;
+        const singleBackground = document.querySelector('.background'); // Target the single background element
+
+        if (!singleBackground) return; // Exit if no background element found
 
         function onMouseMove(e) {
             mouseX = (e.clientX - windowHalfX) / windowHalfX;
@@ -253,10 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function animate() {
             targetX += (mouseX - targetX) * 0.02;
             const bgX = 50 + (targetX * 10);
-            const activeBg = document.querySelector('.background.active');
-            if (activeBg) {
-                activeBg.style.backgroundPosition = `${bgX}% 50%`;
-            }
+            singleBackground.style.backgroundPosition = `${bgX}% 50%`; // Apply to the single background
             requestAnimationFrame(animate);
         }
 
@@ -265,21 +267,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setupEventListeners() {
-        startButton.addEventListener('click', () => {
-            if (isPaused) startTimer();
-            else pauseTimer();
-        });
-
-        resetButton.addEventListener('click', resetTimer);
-
-        modeButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                const mode = e.target.dataset.mode;
-                if (mode && mode !== currentMode) {
-                    switchMode(mode);
-}
+        if (startButton) {
+            startButton.addEventListener('click', () => {
+                if (isPaused) startTimer();
+                else pauseTimer();
             });
-        });
+        }
+
+        if (resetButton) {
+            resetButton.addEventListener('click', resetTimer);
+        }
+
+        if (modeButtons.length) {
+            modeButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const mode = e.target.dataset.mode;
+                    if (mode && mode !== currentMode) {
+                        switchMode(mode);
+                    }
+                });
+            });
+        }
 
         themeToggleButton.addEventListener('click', cycleTheme);
 
@@ -332,7 +340,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Apply initial settings
         applyTheme(savedTheme);
         setLanguage(savedLang); // This also calls translateElements and updates displays
-        switchMode(currentMode); // This sets up the correct timer duration and initial display
+
+        // Only switch mode and update timer display if timer elements exist on the page
+        if (document.getElementById('minutes-tens')) {
+            switchMode(currentMode); // This sets up the correct timer duration and initial display
+        }
         updateTotalFocusDisplay(); // Final check on focus display
     }
 
