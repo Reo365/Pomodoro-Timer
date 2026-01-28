@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const startButton = document.getElementById('start-btn');
     const resetButton = document.getElementById('reset-btn');
     const totalFocusDisplay = document.getElementById('total-focus-display');
-    const modeIndicator = document.querySelector('.mode-indicator'); // New DOM element
+    const modeIndicator = document.querySelector('.mode-indicator');
+    const timerModesContainer = document.querySelector('.timer-modes'); // Parent for mode buttons and indicator
 
     // --- App State ---
     let intervalId = null;
@@ -28,6 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let totalFocusedSeconds = 0;
     let lastResetDate = '';
     let currentThemePreference = 'auto';
+
+    // Drag state
+    let isDragging = false;
+    let dragStartX = 0;
+    let initialIndicatorX = 0;
+    let indicatorTranslateX = 0; // Current translateX value
 
     const DURATIONS = {
         pomodoro: 25 * 60,
@@ -217,25 +224,26 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDisplay(totalSeconds);
     }
 
-    function updateModeIndicatorPosition() {
-        if (!modeIndicator || modeButtons.length === 0) return;
+    function updateModeIndicatorPosition(animate = true) {
+        if (!modeIndicator || modeButtons.length === 0 || !timerModesContainer) return;
 
         const activeButton = document.querySelector(`.mode-btn[data-mode="${currentMode}"]`);
         if (activeButton) {
-            const modeContainer = activeButton.closest('.timer-modes');
-            if (!modeContainer) return; // Should not happen if .mode-btn is inside .timer-modes
-
-            const containerRect = modeContainer.getBoundingClientRect();
+            const modeContainerRect = timerModesContainer.getBoundingClientRect();
             const buttonRect = activeButton.getBoundingClientRect();
 
-            // Calculate position relative to the parent (.timer-modes)
-            const translateX = buttonRect.left - containerRect.left;
+            indicatorTranslateX = buttonRect.left - modeContainerRect.left;
             const indicatorWidth = buttonRect.width;
 
-            modeIndicator.style.transform = `translateX(${translateX}px)`;
+            if (animate) {
+                modeIndicator.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            } else {
+                modeIndicator.style.transition = 'none'; // Disable transition for instant positioning
+            }
+            modeIndicator.style.transform = `translateX(${indicatorTranslateX}px)`;
             modeIndicator.style.width = `${indicatorWidth}px`;
 
-            // Also manage active class on buttons for text color
+            // Update active class on buttons for text color
             modeButtons.forEach(btn => {
                 btn.classList.toggle('active', btn === activeButton);
             });
@@ -243,15 +251,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    function switchMode(mode) {
+    function switchMode(mode, fromDrag = false) {
         if (!modeButtons.length) return;
         currentMode = mode;
         localStorage.setItem('currentMode', currentMode);
         
-        // Update the indicator position immediately
-        updateModeIndicatorPosition();
-
-        resetTimer();
+        // Only trigger timer reset if not from drag and if modes actually changed
+        // Or if it's explicitly a click, always reset to ensure timer state is correct
+        if (!fromDrag || (fromDrag && mode !== currentMode)) {
+             resetTimer();
+        }
+        updateModeIndicatorPosition(); // Update indicator after mode change
     }
 
     function updateTotalFocusDisplay() {
@@ -261,6 +271,78 @@ document.addEventListener('DOMContentLoaded', () => {
         const seconds = totalFocusedSeconds % 60;
         totalFocusDisplay.textContent = `${minutes}${TRANSLATIONS[lang]['minutes']} ${seconds}${TRANSLATIONS[lang]['seconds']}`;
     }
+
+    // --- Drag functionality ---
+    function handlePointerDown(e) {
+        if (!modeIndicator || e.target !== modeIndicator) return;
+
+        isDragging = true;
+        modeIndicator.classList.add('dragging');
+        dragStartX = e.clientX;
+        // Get the current translateX value
+        const transformMatch = window.getComputedStyle(modeIndicator).transform.match(/translateX\(([^)]+)px\)/);
+        initialIndicatorX = transformMatch ? parseFloat(transformMatch[1]) : 0;
+        indicatorTranslateX = initialIndicatorX; // Initialize current translateX
+
+        modeIndicator.style.transition = 'none'; // Disable transition during drag
+        
+        document.addEventListener('pointermove', handlePointerMove);
+        document.addEventListener('pointerup', handlePointerUp);
+    }
+
+    function handlePointerMove(e) {
+        if (!isDragging) return;
+
+        e.preventDefault(); // Prevent text selection etc.
+        const dragDelta = e.clientX - dragStartX;
+        let newTranslateX = initialIndicatorX + dragDelta;
+
+        const modeContainerRect = timerModesContainer.getBoundingClientRect();
+        const indicatorWidth = modeIndicator.offsetWidth;
+
+        // Constrain movement within the parent (.timer-modes)
+        const minX = 0;
+        const maxX = modeContainerRect.width - indicatorWidth;
+
+        indicatorTranslateX = Math.max(minX, Math.min(newTranslateX, maxX));
+        modeIndicator.style.transform = `translateX(${indicatorTranslateX}px)`;
+    }
+
+    function handlePointerUp(e) {
+        if (!isDragging) return;
+
+        isDragging = false;
+        modeIndicator.classList.remove('dragging');
+        modeIndicator.style.transition = ''; // Re-enable transition
+
+        // Determine which button the indicator is closest to
+        let closestMode = currentMode;
+        let minDistance = Infinity;
+
+        modeButtons.forEach(button => {
+            const buttonRect = button.getBoundingClientRect();
+            const buttonCenterX = buttonRect.left + (buttonRect.width / 2);
+            const indicatorCenterX = modeIndicator.getBoundingClientRect().left + (modeIndicator.offsetWidth / 2);
+            
+            const distance = Math.abs(buttonCenterX - indicatorCenterX);
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestMode = button.dataset.mode;
+            }
+        });
+
+        if (closestMode !== currentMode) {
+            switchMode(closestMode, true); // Pass true to indicate it's from a drag
+        } else {
+            // If the mode hasn't changed, snap back to current mode's position
+            updateModeIndicatorPosition(); 
+        }
+
+        document.removeEventListener('pointermove', handlePointerMove);
+        document.removeEventListener('pointerup', handlePointerUp);
+    }
+
 
     function setupEventListeners() {
         if (startButton) {
@@ -285,6 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // --- Theme & Language selectors ---
         themeToggleButton.addEventListener('click', (e) => {
             e.stopPropagation();
             themeSelector.classList.toggle('visible');
@@ -329,10 +412,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Recalculate indicator position on window resize to handle responsiveness
         window.addEventListener('resize', () => {
-            if (document.getElementById('minutes-tens')) { // Only if timer elements are present
+            if (document.getElementById('minutes-tens')) {
                 updateModeIndicatorPosition();
             }
         });
+
+        // --- Drag Listeners for modeIndicator ---
+        if (modeIndicator) {
+            modeIndicator.addEventListener('pointerdown', handlePointerDown);
+        }
     }
 
     function init() {
@@ -357,8 +445,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setLanguage(savedLang);
 
         if (document.getElementById('minutes-tens')) {
-            switchMode(currentMode);
-            updateModeIndicatorPosition(); // Ensure indicator is positioned correctly on load
+            updateModeIndicatorPosition(false); // Initial position without animation
+            switchMode(currentMode); // This sets up the correct timer duration and ensures indicator is positioned
         }
         updateTotalFocusDisplay();
     }
