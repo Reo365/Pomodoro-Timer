@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Elements ---
     const htmlElement = document.getElementById('app-html');
@@ -18,22 +19,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const backgroundPomodoro = document.querySelector('.background-pomodoro');
     const backgroundShortBreak = document.querySelector('.background-short-break');
 
-    // --- Theme Variables ---
-    const THEMES = ['auto', 'light', 'dark'];
+    // --- App State ---
+    let intervalId = null;
+    let isPaused = true;
+    let currentMode = 'pomodoro';
+    let totalSeconds = 0;
+    let totalFocusedSeconds = 0;
+    let lastResetDate = '';
     let currentThemePreference = 'auto'; // 'auto', 'light', 'dark'
+    const THEMES = ['auto', 'light', 'dark'];
 
-    // --- Language Variables ---
+    const DURATIONS = {
+        pomodoro: 25 * 60,
+        shortBreak: 5 * 60,
+    };
+
     const TRANSLATIONS = {
         'ko': {
             'home': '홈',
             'themeToggle': '테마 전환',
+            'themeAuto': '테마: 자동',
+            'themeLight': '테마: 라이트',
+            'themeDark': '테마: 다크',
             'pomodoro': '집중',
             'shortBreak': '휴식',
             'start': '시작',
             'pause': '일시정지',
             'reset': '초기화',
             'timeUp': '시간이 종료되었습니다!',
-            'totalFocusTime': '오늘 총 집중 시간:',
+            'totalFocusTimePrefix': '오늘 총 집중 시간: ',
             'minutes': '분',
             'seconds': '초',
             'about': '소개',
@@ -45,13 +59,16 @@ document.addEventListener('DOMContentLoaded', () => {
         'en': {
             'home': 'Home',
             'themeToggle': 'Toggle Theme',
+            'themeAuto': 'Theme: Auto',
+            'themeLight': 'Theme: Light',
+            'themeDark': 'Theme: Dark',
             'pomodoro': 'Focus',
             'shortBreak': 'Break',
             'start': 'Start',
             'pause': 'Pause',
             'reset': 'Reset',
             'timeUp': 'Time is up!',
-            'totalFocusTime': 'Total focus time today:',
+            'totalFocusTimePrefix': 'Total focus time today: ',
             'minutes': 'min',
             'seconds': 'sec',
             'about': 'About',
@@ -62,44 +79,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // --- Theme Functions ---
+    // --- Core Functions ---
+
     function getSystemTheme() {
         return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
 
     function applyTheme(themePreference) {
         currentThemePreference = themePreference;
-        let themeToApply = themePreference;
-
-        if (themePreference === 'auto') {
-            themeToApply = getSystemTheme();
-        }
-
-        htmlElement.dataset.theme = themeToApply;
-        
-        // Update button text
-        let buttonText = '';
-        switch (themePreference) {
-            case 'auto':
-                buttonText = '테마: 자동';
-                break;
-            case 'light':
-                buttonText = '테마: 라이트';
-                break;
-            case 'dark':
-                buttonText = '테마: 다크';
-                break;
-        }
-        themeToggleButton.textContent = buttonText;
-        saveThemePreference(themePreference);
-    }
-
-    function saveThemePreference(themePreference) {
         localStorage.setItem('themePreference', themePreference);
-    }
-
-    function getSavedThemePreference() {
-        return localStorage.getItem('themePreference');
+        const themeToApply = themePreference === 'auto' ? getSystemTheme() : themePreference;
+        htmlElement.dataset.theme = themeToApply;
+        translateElements(htmlElement.lang); // Re-translate to update theme button text
     }
 
     function cycleTheme() {
@@ -108,110 +99,73 @@ document.addEventListener('DOMContentLoaded', () => {
         applyTheme(THEMES[nextIndex]);
     }
 
-    // --- Language Functions ---
     function setLanguage(lang) {
         htmlElement.lang = lang;
         localStorage.setItem('langPreference', lang);
         translateElements(lang);
     }
 
-    function getSavedLanguagePreference() {
-        return localStorage.getItem('langPreference') || 'ko'; // Default to Korean
-    }
-
-    function toggleLanguage() {
-        const currentLang = htmlElement.lang;
-        const newLang = currentLang === 'ko' ? 'en' : 'ko';
-        setLanguage(newLang);
-    }
-
     function translateElements(lang) {
+        const t = TRANSLATIONS[lang];
         // Header
-        document.querySelector('.about-link').textContent = TRANSLATIONS[lang]['home'];
-        themeToggleButton.textContent = TRANSLATIONS[lang]['themeToggle']; // This will be overwritten by applyTheme
-        langToggleButton.textContent = lang === 'ko' ? '🌐' : '🌐'; // Globe icon remains the same
+        document.querySelector('.about-link').textContent = t.home;
+        let themeKey;
+        if (currentThemePreference === 'auto') themeKey = 'themeAuto';
+        else if (currentThemePreference === 'light') themeKey = 'themeLight';
+        else themeKey = 'themeDark';
+        themeToggleButton.textContent = t[themeKey];
 
-        // Timer Modes
-        document.querySelector('.mode-btn[data-mode="pomodoro"]').textContent = TRANSLATIONS[lang]['pomodoro'];
-        document.querySelector('.mode-btn[data-mode="shortBreak"]').textContent = TRANSLATIONS[lang]['shortBreak'];
+        // Timer
+        document.querySelector('.mode-btn[data-mode="pomodoro"]').textContent = t.pomodoro;
+        document.querySelector('.mode-btn[data-mode="shortBreak"]').textContent = t.shortBreak;
+        startButton.title = isPaused ? t.start : t.pause;
+        resetButton.title = t.reset;
+        totalFocusDisplay.parentElement.firstChild.textContent = t.totalFocusTimePrefix;
 
-        // Timer Controls
-        // startButton.title = TRANSLATIONS[lang][isPaused ? 'start' : 'pause']; // This logic is more complex, handle in start/pause funcs
-        resetButton.title = TRANSLATIONS[lang]['reset'];
+        // Footer & Page Title
+        document.querySelector('footer nav a[href="about.html"]').textContent = t.about;
+        document.querySelector('footer nav a[href="privacy.html"]').textContent = t.privacy;
+        document.querySelector('footer nav a[href="terms.html"]').textContent = t.terms;
+        document.querySelector('footer nav a[href="contact.html"]').textContent = t.contact;
+        document.querySelector('footer p').textContent = t.copyright;
 
-        // Footer
-        document.querySelector('footer nav a[href="about.html"]').textContent = TRANSLATIONS[lang]['about'];
-        document.querySelector('footer nav a[href="privacy.html"]').textContent = TRANSLATIONS[lang]['privacy'];
-        document.querySelector('footer nav a[href="terms.html"]').textContent = TRANSLATIONS[lang]['terms'];
-        document.querySelector('footer nav a[href="contact.html"]').textContent = TRANSLATIONS[lang]['contact'];
-        document.querySelector('footer p').textContent = TRANSLATIONS[lang]['copyright'];
+        const baseTitle = lang === 'ko' ? '뽀모도로 타이머' : 'Deep Focus Pomodoro';
+        const pageSpecificTitles = {
+            'about.html': t.about,
+            'privacy.html': t.privacy,
+            'terms.html': t.terms,
+            'contact.html': t.contact,
+        };
+        const filename = window.location.pathname.split('/').pop();
+        const specificTitle = pageSpecificTitles[filename];
+        document.title = specificTitle ? `${specificTitle} | ${baseTitle}` : baseTitle;
 
-        // Update page title
-        document.title = lang === 'ko' ? '초집중 뽀모도로 타이머' : 'Hyperfocus Pomodoro Timer';
+        // Update displays
+        updateTotalFocusDisplay();
     }
 
 
-    // --- State Variables ---
-    let intervalId = null;
-    let isPaused = true;
-    let currentMode = localStorage.getItem('currentMode') || 'pomodoro'; // Load from localStorage
-    let totalFocusedSeconds = parseInt(localStorage.getItem('totalFocusedSeconds')) || 0;
-    let lastResetDate = localStorage.getItem('lastResetDate') || '';
-
-    const DURATIONS = {
-        pomodoro: 25 * 60,
-        shortBreak: 5 * 60,
-    };
-
-    // --- Core Functions ---
-
-    function getTodayDateString() {
-        const today = new Date();
-        return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    }
-
-    function checkAndResetDaily() {
-        const todayDateString = getTodayDateString();
-        if (lastResetDate !== todayDateString) {
-            totalFocusedSeconds = 0;
-            localStorage.setItem('totalFocusedSeconds', totalFocusedSeconds);
-            lastResetDate = todayDateString;
-            localStorage.setItem('lastResetDate', lastResetDate);
-        }
-    }
-
-    /**
-     * Creates the number reels (0-9) inside the digit containers.
-     * This is a one-time setup to avoid DOM manipulation during timer updates.
-     */
     function createDigitReels() {
         digitContainers.forEach(container => {
             const reel = document.createElement('div');
             reel.className = 'digit-reel';
-            // For minutes-tens, we only need 0-5. For seconds-tens, 0-5.
-            const limit = container.id.includes('tens') ? 6 : 10;
+            const limit = container.id.includes('seconds-tens') || container.id.includes('minutes-tens') ? 6 : 10;
             for (let i = 0; i < limit; i++) {
                 const digit = document.createElement('span');
                 digit.textContent = i;
-                reel.appendChild(digit); // Corrected line
+                reel.appendChild(digit);
             }
             container.appendChild(reel);
         });
     }
 
-    /**
-     * Updates the display by transforming the digit reels.
-     * This is highly performant as it only changes the CSS transform property.
-     */
-    function updateDisplay() {
-        const minutes = Math.floor(totalSeconds / 60);
-        const seconds = totalSeconds % 60;
-
+    function updateDisplay(secondsValue) {
+        const minutes = Math.floor(secondsValue / 60);
+        const seconds = secondsValue % 60;
         const mTens = Math.floor(minutes / 10);
         const mOnes = minutes % 10;
         const sTens = Math.floor(seconds / 10);
         const sOnes = seconds % 10;
-
         const digitHeight = M_TENS.clientHeight;
 
         M_TENS.firstElementChild.style.transform = `translateY(-${mTens * digitHeight}px)`;
@@ -221,45 +175,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startTimer() {
-        console.log('startTimer called. Initial totalSeconds:', totalSeconds);
-        if (isPaused === false) return;
+        if (!isPaused) return;
         isPaused = false;
         startButton.classList.add('paused');
         startButton.title = TRANSLATIONS[htmlElement.lang]['pause'];
 
-        // More robust timing with Date.now()
-        let expected = Date.now() + 1000; // Keep expected for context if needed later
-        intervalId = setTimeout(step, 1000);
+        let remainingTime = totalSeconds;
+        let startTime = Date.now();
 
-        function step() {
-            console.log('step executed. totalSeconds before decrement:', totalSeconds);
-            // Simplified: remove drift compensation for testing
+        intervalId = setInterval(() => {
+            const elapsedTime = Math.round((Date.now() - startTime) / 1000);
+            totalSeconds = remainingTime - elapsedTime;
+
             if (currentMode === 'pomodoro') {
                 totalFocusedSeconds++;
                 localStorage.setItem('totalFocusedSeconds', totalFocusedSeconds);
+                updateTotalFocusDisplay();
             }
-            totalSeconds--;
-
-            updateDisplay();
-            updateTotalFocusDisplay(); // Update total focus display every second
 
             if (totalSeconds < 0) {
                 pauseTimer();
-                // Handle timer completion
                 alert(TRANSLATIONS[htmlElement.lang]['timeUp']);
                 switchMode(currentMode === 'pomodoro' ? 'shortBreak' : 'pomodoro');
-            } else {
-                // Reschedule for next second without drift compensation for testing
-                intervalId = setTimeout(step, 1000);
+                return;
             }
-        }
+
+            updateDisplay(totalSeconds);
+        }, 1000);
     }
 
     function pauseTimer() {
-        console.log('pauseTimer called. totalSeconds:', totalSeconds, 'isPaused:', isPaused);
-        if (isPaused === true) return;
+        if (isPaused) return;
         isPaused = true;
-        clearTimeout(intervalId);
+        clearInterval(intervalId);
+        intervalId = null;
         startButton.classList.remove('paused');
         startButton.title = TRANSLATIONS[htmlElement.lang]['start'];
     }
@@ -267,14 +216,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function resetTimer() {
         pauseTimer();
         totalSeconds = DURATIONS[currentMode];
-        updateDisplay();
-        updateBackgroundClass(true);
+        updateDisplay(totalSeconds);
+        updateBackground();
     }
 
     function switchMode(mode) {
-        console.log('switchMode called. New mode:', mode, 'totalSeconds:', totalSeconds);
         currentMode = mode;
-        localStorage.setItem('currentMode', currentMode); // Save to localStorage
+        localStorage.setItem('currentMode', currentMode);
         modeButtons.forEach(btn => {
             btn.classList.toggle('active', btn.dataset.mode === mode);
         });
@@ -285,50 +233,37 @@ document.addEventListener('DOMContentLoaded', () => {
         const lang = htmlElement.lang;
         const minutes = Math.floor(totalFocusedSeconds / 60);
         const seconds = totalFocusedSeconds % 60;
-        // Update the parent <p> element's text content, including the prefix
-        totalFocusDisplay.parentElement.textContent = `${TRANSLATIONS[lang]['totalFocusTime']} ${minutes}${TRANSLATIONS[lang]['minutes']} ${seconds}${TRANSLATIONS[lang]['seconds']}`;
+        totalFocusDisplay.textContent = `${minutes}${TRANSLATIONS[lang]['minutes']} ${seconds}${TRANSLATIONS[lang]['seconds']}`;
     }
 
-    // --- Performance Optimizations ---
-
-    function updateBackgroundClass(isReset = false) {
-        console.log('updateBackgroundClass called. currentMode:', currentMode);
+    function updateBackground() {
         backgroundPomodoro.classList.toggle('active', currentMode === 'pomodoro');
         backgroundShortBreak.classList.toggle('active', currentMode === 'shortBreak');
-        console.log('backgroundPomodoro active:', backgroundPomodoro.classList.contains('active'));
-        console.log('backgroundShortBreak active:', backgroundShortBreak.classList.contains('active'));
     }
 
-    // --- Performance Optimizations ---
-    /**
-     * Subtle background interaction with mouse movement.
-     * Uses requestAnimationFrame for efficiency.
-     */
     function handleMouseInteraction() {
         let mouseX = 0;
         let targetX = 0;
         const windowHalfX = window.innerWidth / 2;
 
         function onMouseMove(e) {
-            mouseX = (e.clientX - windowHalfX) / windowHalfX; // -1 to 1
+            mouseX = (e.clientX - windowHalfX) / windowHalfX;
         }
-        
-        function animate() {
-            targetX += (mouseX - targetX) * 0.02; // Reduced multiplier for less sensitivity
-            const bgX = 50 + (targetX * 10); // Max 10% movement
-            
-            // Apply to both background layers
-            backgroundPomodoro.style.backgroundPosition = `${bgX}% 50%`;
-            backgroundShortBreak.style.backgroundPosition = `${bgX}% 50%`;
 
+        function animate() {
+            targetX += (mouseX - targetX) * 0.02;
+            const bgX = 50 + (targetX * 10);
+            const activeBg = document.querySelector('.background.active');
+            if (activeBg) {
+                activeBg.style.backgroundPosition = `${bgX}% 50%`;
+            }
             requestAnimationFrame(animate);
         }
-        
+
         document.addEventListener('mousemove', onMouseMove);
         animate();
     }
 
-    // --- Event Listeners ---
     function setupEventListeners() {
         startButton.addEventListener('click', () => {
             if (isPaused) startTimer();
@@ -339,28 +274,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
         modeButtons.forEach(button => {
             button.addEventListener('click', (e) => {
-                if (e.target.dataset.mode !== currentMode) {
-                    switchMode(e.target.dataset.mode);
-                }
+                const mode = e.target.dataset.mode;
+                if (mode && mode !== currentMode) {
+                    switchMode(mode);
+}
             });
         });
 
         themeToggleButton.addEventListener('click', cycleTheme);
-        
+
         langToggleButton.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent immediate closing
+            e.stopPropagation();
             languageSelector.classList.toggle('visible');
         });
 
         langOptionButtons.forEach(button => {
             button.addEventListener('click', (e) => {
-                const lang = e.target.dataset.lang;
-                setLanguage(lang);
-                languageSelector.classList.remove('visible'); // Hide selector after selection
+                setLanguage(e.target.dataset.lang);
+                languageSelector.classList.remove('visible');
             });
         });
 
-        // Close language selector if clicking outside
         document.addEventListener('click', (e) => {
             if (!languageSelector.contains(e.target) && !langToggleButton.contains(e.target)) {
                 languageSelector.classList.remove('visible');
@@ -374,28 +308,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Initialization ---
     function init() {
-        checkAndResetDaily(); // Check and reset total focus time daily
-        createDigitReels();
-        resetTimer(); // Initialize totalSeconds and update display based on currentMode
+        // Load preferences
+        currentMode = localStorage.getItem('currentMode') || 'pomodoro';
+        totalFocusedSeconds = parseInt(localStorage.getItem('totalFocusedSeconds')) || 0;
+        lastResetDate = localStorage.getItem('lastResetDate') || '';
+        const savedTheme = localStorage.getItem('themePreference') || 'auto';
+        const savedLang = localStorage.getItem('langPreference') || 'ko';
 
-        updateBackgroundClass(false); // Initial background without transition
+        // Daily reset check
+        const today = new Date().toISOString().slice(0, 10);
+        if (lastResetDate !== today) {
+            totalFocusedSeconds = 0;
+            localStorage.setItem('totalFocusedSeconds', '0');
+            lastResetDate = today;
+            localStorage.setItem('lastResetDate', today);
+        }
+
+        createDigitReels();
         setupEventListeners();
         handleMouseInteraction();
 
-        // Initial theme setup
-        const savedTheme = getSavedThemePreference();
-        applyTheme(savedTheme || 'auto');
-
-        // Initial language setup
-        const savedLang = getSavedLanguagePreference();
-        setLanguage(savedLang); // This will also call translateElements
-        updateTotalFocusDisplay(); // Call after language is set
-        startButton.title = TRANSLATIONS[htmlElement.lang][isPaused ? 'start' : 'pause'];
+        // Apply initial settings
+        applyTheme(savedTheme);
+        setLanguage(savedLang); // This also calls translateElements and updates displays
+        switchMode(currentMode); // This sets up the correct timer duration and initial display
+        updateTotalFocusDisplay(); // Final check on focus display
     }
 
     init();
 });
-
-
