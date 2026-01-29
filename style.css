@@ -412,6 +412,58 @@ body {
     margin-bottom: 0.7rem; /* Adjusted margin */
 }
 
+/* Glow Border Effect */
+.has-glow-border {
+    position: relative; /* Needed for pseudo-element positioning */
+    --glow-angle: 0;
+    --glow-spread: 90; /* degrees for the conic-gradient width */
+    --glow-blur: 8;   /* blur in px */
+    --glow-color: rgba(0, 150, 255, 0.8); /* Default glow color */
+    --glow-opacity: 0; /* Default hidden */
+    --glow-size: 1.2; /* Scale factor for pseudo-element size */
+    overflow: hidden; /* Important to clip the glow inside the border */
+    /* Ensure the element itself has a z-index if it needs to be above other content */
+    z-index: 1; /* Example, adjust as needed */
+}
+
+.has-glow-border::before {
+    content: '';
+    position: absolute;
+    top: calc(50% - (100% * var(--glow-size)) / 2); /* Center the pseudo-element */
+    left: calc(50% - (100% * var(--glow-size)) / 2);
+    width: calc(100% * var(--glow-size));
+    height: calc(100% * var(--glow-size));
+    pointer-events: none; /* Allows mouse events to pass through to the element */
+    background: conic-gradient(
+        from calc(var(--glow-angle) * 1deg),
+        var(--glow-color) 0deg,
+        transparent calc(var(--glow-spread) * 1deg),
+        transparent
+    );
+    filter: blur(calc(var(--glow-blur) * 1px));
+    opacity: var(--glow-opacity);
+    transform: rotate(calc(var(--glow-angle) * 1deg)); /* Rotate the glow with the angle */
+    transition: opacity 0.3s ease, transform 0s; /* Smooth fade in/out, no transform transition for angle */
+    z-index: -1; /* Place behind content */
+}
+
+/* For browsers that support mask-composite */
+@supports (mask-composite: intersect) or (-webkit-mask-composite: intersect) {
+    .has-glow-border::before {
+        mask-composite: intersect;
+        -webkit-mask-composite: intersect;
+        mask-clip: padding-box, border-box;
+        -webkit-mask-clip: padding-box, border-box;
+        mask-image:
+            linear-gradient(#0000, #0000),
+            conic-gradient(from calc(var(--glow-angle) * 1deg), #000 0deg, #fff, #0000 calc(var(--glow-spread) * 1deg));
+        -webkit-mask-image:
+            linear-gradient(#0000, #0000),
+            conic-gradient(from calc(var(--glow-angle) * 1deg), #000 0deg, #fff, #0000 calc(var(--glow-spread) * 1deg));
+        background: var(--glow-color); /* The actual color of the glow */
+    }
+}
+
 .about-section p {
     font-size: 1rem;
     line-height: 1.7;
