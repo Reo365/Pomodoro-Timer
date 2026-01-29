@@ -18,13 +18,6 @@
     --button-bg-dark: rgba(255, 255, 255, 0.1);
     --button-active-bg-dark: rgba(255, 255, 255, 0.15); /* Slightly less opaque for active state */
 
-    /* General Variables mapped to current theme */
-    --text-color: var(--primary-text-color-light);
-    --glass-bg: var(--card-bg-light);
-    --glass-border: var(--card-border-light);
-    --button-bg: var(--button-bg-light);
-    --button-active-bg: var(--button-active-bg-light);
-
     --font-family: 'Pretendard', sans-serif;
     --digit-height: clamp(4rem, 20vw, 6rem);
 }
