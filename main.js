@@ -199,8 +199,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (activeButton) {
             const modeContainerRect = timerModesContainer.getBoundingClientRect();
             const buttonRect = activeButton.getBoundingClientRect();
+            const indicatorLeftOffset = parseFloat(getComputedStyle(modeIndicator).left); // Get the 'left' CSS property of the indicator
 
-            indicatorTranslateX = buttonRect.left - modeContainerRect.left;
+            indicatorTranslateX = (buttonRect.left - modeContainerRect.left) - indicatorLeftOffset;
             const indicatorWidth = buttonRect.width;
 
             if (animate) {
@@ -340,7 +341,6 @@ document.addEventListener('DOMContentLoaded', () => {
         langToggleButton.addEventListener('click', (e) => {
             e.stopPropagation();
             languageSelector.classList.toggle('visible');
-            themeSelector.classList.remove('visible');
         });
 
         langOptionButtons.forEach(button => {
