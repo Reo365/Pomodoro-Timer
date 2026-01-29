@@ -322,7 +322,7 @@ body {
 .language-selector {
     position: absolute;
     top: calc(100% + 8px); /* Adjusted space from button */
-    right: 0;
+    left: 50%; /* Center horizontally */
     background: var(--glass-bg);
     backdrop-filter: blur(20px) saturate(180%); /* Deeper blur */
     -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -337,14 +337,14 @@ body {
     min-width: 130px;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-10px);
+    transform: translateX(-50%) translateY(-10px); /* Add translateX for centering */
     transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .language-selector.visible {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0); /* Add translateX for centering */
 }
 
 .lang-option-btn {
@@ -483,6 +483,7 @@ footer {
     backdrop-filter: blur(15px) saturate(180%);
     -webkit-backdrop-filter: blur(15px) saturate(180%);
     border-top: 1px solid var(--glass-border);
+    border-bottom: 3px solid var(--glass-border); /* Added bottom border */
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1), inset 0 1px 0px rgba(255,255,255,0.05); /* Enhanced shadow */
     color: var(--text-color);
     text-align: center;
@@ -541,13 +542,13 @@ footer {
 
 
     .language-selector {
-        right: 50%; /* Center the language selector */
-        transform: translateX(50%) translateY(-10px); /* Adjust for centering */
+        left: 50%; /* Center the language selector */
+        transform: translateX(-50%) translateY(-10px); /* Adjust for centering */
         top: calc(100% + 5px); /* Closer to the button */
     }
     
     .language-selector.visible {
-        transform: translateX(50%) translateY(0);
+        transform: translateX(-50%) translateY(0);
     }
 
     .timer-card {
