@@ -18,6 +18,12 @@
             }
         })();
     </script>
+    <script>
+        (function() {
+            const savedLang = localStorage.getItem('langPreference') || 'ko';
+            document.documentElement.lang = savedLang;
+        })();
+    </script>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

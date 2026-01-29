@@ -441,8 +441,9 @@ document.addEventListener('DOMContentLoaded', () => {
         createDigitReels();
         setupEventListeners();
 
-        applyTheme(savedTheme);
-        setLanguage(savedLang);
+        // Theme and language are now applied by the early scripts in the head to prevent FOUC.
+        // applyTheme(savedTheme);
+        // setLanguage(savedLang);
 
         if (document.getElementById('minutes-tens')) {
             updateModeIndicatorPosition(false); // Initial position without animation
