@@ -1,12 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Elements ---
     const htmlElement = document.getElementById('app-html');
-    const langToggleButton = document.getElementById('lang-toggle-btn');
+    const langToggleButton = document.querySelector('.lang-toggle-btn');
     const languageSelector = document.getElementById('language-selector');
     const langOptionButtons = document.querySelectorAll('.lang-option-btn');
-    const headerModeSelector = document.querySelector('.header-mode-selector');
-    const headerModeButtons = document.querySelectorAll('.header-mode-btn');
-    const headerModeIndicator = document.querySelector('.header-mode-indicator');
 
     const M_TENS = document.getElementById('minutes-tens');
     const M_ONES = document.getElementById('minutes-ones');
@@ -223,33 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function updateHeaderModeIndicatorPosition(animate = true) {
-        if (!headerModeIndicator || headerModeButtons.length === 0 || !headerModeSelector) return;
-
-        // Find the active button in the header (home or lang)
-        const activeHeaderButton = document.querySelector('.header-mode-btn.active'); // Assuming 'home' is active by default or set dynamically
-        if (activeHeaderButton) {
-            const headerContainerRect = headerModeSelector.getBoundingClientRect();
-            const buttonRect = activeHeaderButton.getBoundingClientRect();
-            const indicatorLeftOffset = parseFloat(getComputedStyle(headerModeIndicator).left);
-
-            const headerIndicatorTranslateX = (buttonRect.left - headerContainerRect.left) - indicatorLeftOffset;
-            const headerIndicatorWidth = buttonRect.width;
-
-            if (animate) {
-                headerModeIndicator.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-            } else {
-                headerModeIndicator.style.transition = 'none';
-            }
-            headerModeIndicator.style.transform = `translateX(${headerIndicatorTranslateX}px)`;
-            headerModeIndicator.style.width = `${headerIndicatorWidth}px`;
-
-            // Update active class on buttons
-            headerModeButtons.forEach(btn => {
-                btn.classList.toggle('active', btn === activeHeaderButton);
-            });
-        }
-    }
 
 
     function switchMode(mode, fromDrag = false) {
@@ -408,18 +378,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- Language selectors ---
 
-        if (headerModeButtons.length) {
-            headerModeButtons.forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const mode = e.currentTarget.dataset.mode;
-                    if (mode === 'home') {
-                        window.location.href = 'index.html'; // Navigate to home page
-                    } else if (mode === 'lang') {
-                        e.stopPropagation(); // Prevent document click listener from immediately closing it
-                        languageSelector.classList.toggle('visible');
-                        updateHeaderModeIndicatorPosition(); // Update indicator for active language button
-                    }
-                });
+        if (langToggleButton) {
+            langToggleButton.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent document click listener from immediately closing it
+                languageSelector.classList.toggle('visible');
             });
         }
 
@@ -473,7 +435,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Theme and language are now applied by the early scripts in the head to prevent FOUC.
         // applyTheme(savedTheme);
         // setLanguage(savedLang);
-        updateHeaderModeIndicatorPosition(false); // Initial position for header mode indicator
+
 
         if (document.getElementById('minutes-tens')) {
             updateModeIndicatorPosition(false); // Initial position without animation

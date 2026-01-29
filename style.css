@@ -173,54 +173,9 @@ body {
     gap: 1.5rem;
 }
 
-/* New Header Mode Selector Styles (similar to timer-modes) */
-.header-mode-selector {
-    position: relative;
-    display: flex;
-    background-color: var(--button-bg);
-    border-radius: 30px;
-    padding: 0.4rem;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: inset 0 0 0 0.5px var(--glass-border), 0 2px 8px rgba(0,0,0,0.1);
-    height: 3.5rem;
-    margin-right: 10px; /* Space between this and lang selector */
-}
 
-.header-mode-btn {
-    flex-grow: 1;
-    background: transparent;
-    border: none;
-    color: var(--text-color);
-    font-family: var(--font-family);
-    font-size: 0.95rem;
-    padding: 0 1.2rem;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: color 0.2s ease;
-    font-weight: 700;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 80px;
-    text-decoration: none; /* For the home link */
-}
 
-.header-mode-btn.active {
-    /* No specific color change for active state in light theme */
-}
 
-.header-mode-indicator {
-    position: absolute;
-    top: 0.4rem;
-    left: 0.4rem;
-    height: calc(100% - 0.8rem);
-    background-color: rgba(255, 255, 255, 0.95);
-    border-radius: 25px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 0 0 0.5px rgba(255, 255, 255, 0.4);
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    z-index: 0;
-}
 
 .control-btn {
     background: var(--glass-bg);
@@ -317,7 +272,7 @@ body {
     left: 0; /* Add left:0 for full width sticky */
     width: 100%;
     display: flex;
-    justify-content: space-between; /* Changed to space-between */
+    justify-content: flex-end; /* Changed to flex-end to align buttons to the right */
     gap: 10px; /* Adjusted gap */
     z-index: 1000;
     align-items: center;
@@ -328,6 +283,39 @@ body {
     border-bottom: 1px solid var(--glass-border);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.home-btn,
+.lang-toggle-btn {
+    background: var(--button-bg);
+    border: none;
+    color: var(--text-color);
+    font-family: var(--font-family);
+    font-size: 0.95rem;
+    padding: 0.4rem 1.2rem; /* Adjusted padding for individual buttons */
+    border-radius: 25px;
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 80px;
+    text-decoration: none; /* For the home link */
+    height: 3.5rem; /* Match previous header-mode-selector height */
+    box-shadow: inset 0 0 0 0.5px var(--glass-border), 0 2px 8px rgba(0,0,0,0.1); /* Add back the shadow */
+}
+
+.home-btn:hover,
+.lang-toggle-btn:hover {
+    background-color: var(--button-active-bg);
+}
+
+.lang-selector-container {
+    position: relative; /* Crucial for absolute positioning of the dropdown */
+    display: flex;
+    align-items: center;
+    height: 3.5rem; /* Ensure consistent height with home-btn */
 }
 
 /* Language Selector Styles */
@@ -531,10 +519,11 @@ footer {
     }
 
     .header-controls {
-        flex-direction: column; /* Stack controls vertically */
+        flex-direction: row; /* Keep buttons in a row */
+        justify-content: flex-end; /* Align to the right */
         align-items: center;
         padding: 0.5rem;
-        position: static; /* No longer sticky on small screens to prevent overlap */
+        /* position: static; Removed this override */
         border-bottom: none;
         box-shadow: none;
         background: transparent; /* Make header controls background transparent for better blending */
@@ -542,16 +531,14 @@ footer {
         -webkit-backdrop-filter: none;
     }
 
-    .header-mode-selector {
-        width: 100%; /* Full width for mode selector */
-        margin-right: 0; /* Remove right margin */
-        margin-bottom: 10px; /* Space between stacked controls */
-    }
-
-    .header-mode-btn {
+    .home-btn,
+    .lang-toggle-btn {
         min-width: unset; /* Remove min-width constraint */
         padding: 0 0.8rem; /* Adjust padding */
+        height: 3rem; /* Adjust height for smaller screens */
     }
+
+
 
     .language-selector {
         right: 50%; /* Center the language selector */
