@@ -13,10 +13,17 @@
     /* Dark Theme Variables */
     --primary-text-color-dark: #E0E0E0;
     --secondary-text-color-dark: #A0A0A0;
-    --card-bg-dark: rgba(30, 30, 30, 0.9); /* More opaque and brighter for dark mode glass */
-    --card-border-dark: rgba(100, 100, 100, 0.7); /* More opaque */
+    --card-bg-dark: rgba(30, 30, 30, 0.9);
+    --card-border-dark: rgba(100, 100, 100, 0.7);
     --button-bg-dark: rgba(255, 255, 255, 0.1);
-    --button-active-bg-dark: rgba(255, 255, 255, 0.15); /* Slightly less opaque for active state */
+    --button-active-bg-dark: rgba(255, 255, 255, 0.15);
+
+    /* Default (Light) Theme Fallback */
+    --text-color: var(--primary-text-color-light);
+    --glass-bg: var(--card-bg-light);
+    --glass-border: var(--card-border-light);
+    --button-bg: var(--button-bg-light);
+    --button-active-bg: var(--button-active-bg-light);
 
     --font-family: 'Pretendard', sans-serif;
     --digit-height: clamp(4rem, 20vw, 6rem);
