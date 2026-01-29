@@ -46,6 +46,7 @@ html[data-theme="dark"] {
     --text-color: var(--primary-text-color-dark);
     --glass-bg: var(--card-bg-dark);
     --glass-border: var(--card-border-dark);
+    --button-bg: var(--button-bg-dark);
     --button-active-bg: var(--button-active-bg-dark);
     background-color: var(--bg-dark);
 }
@@ -165,7 +166,7 @@ body {
 }
 
 .mode-btn.active {
-    color: #333; /* Dark text for active button, visible against white indicator */
+    color: var(--primary-text-color-light);
 }
 
 
