@@ -275,7 +275,7 @@ body {
     gap: 10px; /* Adjusted gap */
     z-index: 1000;
     align-items: center;
-    padding: 0 1rem; /* Adjusted padding to remove top padding */
+    padding: 0.5rem 1rem; /* Adjusted padding to increase top/bottom padding */
     backdrop-filter: blur(15px) saturate(180%); /* Deeper blur */
     -webkit-backdrop-filter: blur(15px) saturate(180%);
     background: var(--glass-bg);
