@@ -34,6 +34,7 @@ html {
 body {
     font-family: var(--font-family);
     color: var(--text-color);
+    background-color: var(--bg-light); /* Explicitly set background color for body */
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
