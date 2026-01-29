@@ -43,8 +43,8 @@ body {
     /* Remove explicit background from body, let html[data-theme] handle it */
     /* background: #1a1a1a;  */
     transition: color 0.3s ease; /* Removed background-color from transition */
-    padding-bottom: 1rem; /* Reduced padding */
-    padding-top: 1rem; /* Reduced padding */
+    /* padding-bottom: 1rem; Removed padding */
+    /* padding-top: 1rem; Removed padding */
 }
 
 .app-container {
@@ -276,7 +276,7 @@ body {
     gap: 10px; /* Adjusted gap */
     z-index: 1000;
     align-items: center;
-    padding: 0.5rem 1rem; /* Adjusted padding */
+    padding: 0 1rem; /* Adjusted padding to remove top padding */
     backdrop-filter: blur(15px) saturate(180%); /* Deeper blur */
     -webkit-backdrop-filter: blur(15px) saturate(180%);
     background: var(--glass-bg);
