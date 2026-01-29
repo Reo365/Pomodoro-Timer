@@ -318,52 +318,7 @@ body {
     width: max-content; /* Ensure container only takes width of its content */
 }
 
-/* Language Selector Styles */
-.language-selector {
-    position: absolute;
-    top: 100%; /* Changed from calc(100% + 8px) to remove extra space */
-    left: 50%; /* Center horizontally */
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px) saturate(180%); /* Deeper blur */
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    padding: 0.7rem; /* Adjusted padding */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* More prominent shadow */
-    z-index: 1001;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem; /* Adjusted gap */
-    min-width: 130px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateX(-50%) translateY(-10px); /* Add translateX for centering */
-    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-}
 
-.language-selector.visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0); /* Add translateX for centering */
-}
-
-.lang-option-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-color);
-    padding: 0.6rem 1rem; /* Adjusted padding */
-    border-radius: 15px; /* Rounder */
-    cursor: pointer;
-    font-family: var(--font-family);
-    font-size: 0.95rem;
-    text-align: left;
-    transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
-}
-
-.lang-option-btn:hover {
-    background-color: var(--button-bg);
-    transform: translateX(5px); /* More pronounced slide on hover */
-}
 
 /* About Section Styling */
 .about-section {
@@ -541,15 +496,7 @@ footer {
 
 
 
-    .language-selector {
-        left: 50%; /* Center the language selector */
-        transform: translateX(-50%) translateY(-10px); /* Adjust for centering */
-        top: 100%; /* Changed from calc(100% + 5px) to remove extra space */
-    }
-    
-    .language-selector.visible {
-        transform: translateX(-50%) translateY(0);
-    }
+
 
     .timer-card {
         padding: 1.5rem; /* Reduce padding inside timer card */

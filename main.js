@@ -2,8 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Elements ---
     const htmlElement = document.getElementById('app-html');
     const langToggleButton = document.querySelector('.lang-toggle-btn');
-    const languageSelector = document.getElementById('language-selector');
-    const langOptionButtons = document.querySelectorAll('.lang-option-btn');
 
     const M_TENS = document.getElementById('minutes-tens');
     const M_ONES = document.getElementById('minutes-ones');
@@ -376,27 +374,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // --- Language selectors ---
-
+        // --- Language selector toggle ---
         if (langToggleButton) {
-            langToggleButton.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent document click listener from immediately closing it
-                languageSelector.classList.toggle('visible');
+            langToggleButton.addEventListener('click', () => {
+                const currentLang = htmlElement.lang;
+                const newLang = currentLang === 'ko' ? 'en' : 'ko';
+                setLanguage(newLang);
             });
         }
-
-        langOptionButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                setLanguage(e.target.dataset.lang);
-                languageSelector.classList.remove('visible');
-            });
-        });
-
-        document.addEventListener('click', (e) => {
-            if (languageSelector && !languageSelector.contains(e.target) && !document.querySelector('.header-mode-btn[data-mode="lang"]').contains(e.target)) {
-                languageSelector.classList.remove('visible');
-            }
-        });
 
         // Recalculate indicator position on window resize to handle responsiveness
         window.addEventListener('resize', () => {
