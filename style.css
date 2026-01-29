@@ -1,6 +1,5 @@
 :root {
     --bg-light: #f0f2f5; /* A light grey background */
-    --bg-dark: #1c1c1e; /* Darker grey background for a deeper contrast */
 
     /* Light Theme Variables */
     --primary-text-color-light: #333333;
@@ -9,16 +8,8 @@
     --card-border-light: rgba(200, 200, 200, 0.7); /* More opaque */
     --button-bg-light: rgba(0, 0, 0, 0.1);
     --button-active-bg-light: rgba(0, 0, 0, 0.15); /* Slightly less opaque for active state */
-
-    /* Dark Theme Variables */
-    --primary-text-color-dark: #E0E0E0;
-    --secondary-text-color-dark: #A0A0A0;
-    --card-bg-dark: rgba(30, 30, 30, 0.9);
-    --card-border-dark: rgba(100, 100, 100, 0.7);
-    --button-bg-dark: rgba(255, 255, 255, 0.1);
-    --button-active-bg-dark: rgba(255, 255, 255, 0.15);
-
-    /* Default (Light) Theme Fallback */
+    
+    /* General Variables mapped to current theme (now effectively Light Theme) */
     --text-color: var(--primary-text-color-light);
     --glass-bg: var(--card-bg-light);
     --glass-border: var(--card-border-light);
@@ -32,24 +23,6 @@
 html {
     height: 100%; /* Ensure html takes full height */
     background-color: var(--bg-light); /* Set a default background */
-}
-
-html[data-theme="light"] {
-    --text-color: var(--primary-text-color-light);
-    --glass-bg: var(--card-bg-light);
-    --glass-border: var(--card-border-light);
-    --button-bg: var(--button-bg-light);
-    --button-active-bg: var(--button-active-bg-light);
-    background-color: var(--bg-light);
-}
-
-html[data-theme="dark"] {
-    --text-color: var(--primary-text-color-dark);
-    --glass-bg: var(--card-bg-dark);
-    --glass-border: var(--card-border-dark);
-    --button-bg: var(--button-bg-dark);
-    --button-active-bg: var(--button-active-bg-dark);
-    background-color: var(--bg-dark);
 }
 
 * {
@@ -68,7 +41,7 @@ body {
     min-height: 100vh;
     /* Remove explicit background from body, let html[data-theme] handle it */
     /* background: #1a1a1a;  */
-    transition: color 0.3s ease, background-color 0.3s ease;
+    transition: color 0.3s ease; /* Removed background-color from transition */
     padding-bottom: 1rem; /* Reduced padding */
     padding-top: 1rem; /* Reduced padding */
 }
@@ -168,7 +141,7 @@ body {
 }
 
 .mode-btn.active {
-    color: var(--primary-text-color-light);
+    /* No longer need to change color for active state as there's no dark mode contrast issue */
 }
 
 
@@ -288,35 +261,6 @@ body {
     transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.theme-toggle-btn,
-.lang-toggle-btn {
-    position: relative;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    color: var(--text-color);
-    padding: 0.6rem 1rem; /* Adjusted padding */
-    border-radius: 20px; /* Rounder */
-    cursor: pointer;
-    font-family: var(--font-family);
-    font-size: 0.9rem;
-    z-index: 1000;
-    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-.theme-toggle-btn:hover,
-.lang-toggle-btn:hover {
-    background-color: var(--button-active-bg);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Lift on hover */
-    transform: translateY(-1px);
-}
-.theme-toggle-btn:active,
-.lang-toggle-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-
 .header-controls {
     position: sticky;
     top: 0;
@@ -336,8 +280,7 @@ body {
     transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
 }
 
-/* Theme Selector Styles */
-.theme-selector,
+/* Language Selector Styles */
 .language-selector {
     position: absolute;
     top: calc(100% + 8px); /* Adjusted space from button */
@@ -360,14 +303,12 @@ body {
     transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.theme-selector.visible,
 .language-selector.visible {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
-.theme-option-btn,
 .lang-option-btn {
     background: transparent;
     border: none;
@@ -381,7 +322,6 @@ body {
     transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
 }
 
-.theme-option-btn:hover,
 .lang-option-btn:hover {
     background-color: var(--button-bg);
     transform: translateX(5px); /* More pronounced slide on hover */

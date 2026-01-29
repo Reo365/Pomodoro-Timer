@@ -10,17 +10,6 @@
     <title>뽀모도로 타이머</title>
     <script>
         (function() {
-            const themePreference = localStorage.getItem('themePreference') || 'auto';
-            const htmlElement = document.documentElement;
-            if (themePreference === 'auto') {
-                htmlElement.dataset.theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            } else {
-                htmlElement.dataset.theme = themePreference;
-            }
-        })();
-    </script>
-    <script>
-        (function() {
             const savedLang = localStorage.getItem('langPreference') || 'ko';
             document.documentElement.lang = savedLang;
         })();
@@ -34,12 +23,6 @@
 <body>
     <div class="header-controls">
         <a href="index.html" class="about-link">홈</a>
-        <button id="theme-toggle-btn" class="theme-toggle-btn">테마 전환</button>
-        <div id="theme-selector" class="theme-selector">
-            <button class="theme-option-btn" data-theme-pref="auto">자동</button>
-            <button class="theme-option-btn" data-theme-pref="light">라이트</button>
-            <button class="theme-option-btn" data-theme-pref="dark">다크</button>
-        </div>
         <button id="lang-toggle-btn" class="lang-toggle-btn">🌐</button>
         <div id="language-selector" class="language-selector">
             <button class="lang-option-btn" data-lang="ko">한국어</button>

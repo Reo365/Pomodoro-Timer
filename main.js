@@ -1,12 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Elements ---
     const htmlElement = document.getElementById('app-html');
-    const themeToggleButton = document.getElementById('theme-toggle-btn');
     const langToggleButton = document.getElementById('lang-toggle-btn');
     const languageSelector = document.getElementById('language-selector');
     const langOptionButtons = document.querySelectorAll('.lang-option-btn');
-    const themeSelector = document.getElementById('theme-selector');
-    const themeOptionButtons = document.querySelectorAll('.theme-option-btn');
 
     const M_TENS = document.getElementById('minutes-tens');
     const M_ONES = document.getElementById('minutes-ones');
@@ -28,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let totalSeconds = 0;
     let totalFocusedSeconds = 0;
     let lastResetDate = '';
-    let currentThemePreference = 'auto';
 
     // Drag state
     let isDragging = false;
@@ -44,10 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const TRANSLATIONS = {
         'ko': {
             'home': '홈',
-            'themeToggle': '테마 전환',
-            'themeAuto': '자동',
-            'themeLight': '라이트',
-            'themeDark': '다크',
             'pomodoro': '집중',
             'shortBreak': '휴식',
             'start': '시작',
@@ -65,10 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         'en': {
             'home': 'Home',
-            'themeToggle': 'Toggle Theme',
-            'themeAuto': 'Auto',
-            'themeLight': 'Light',
-            'themeDark': 'Dark',
             'pomodoro': 'Focus',
             'shortBreak': 'Break',
             'start': 'Start',
@@ -88,18 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Core Functions ---
 
-    function getSystemTheme() {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-
-    function applyTheme(themePreference) {
-        currentThemePreference = themePreference;
-        localStorage.setItem('themePreference', themePreference);
-        const themeToApply = themePreference === 'auto' ? getSystemTheme() : themePreference;
-        htmlElement.dataset.theme = themeToApply;
-        translateElements(htmlElement.lang);
-    }
-
     function setLanguage(lang) {
         htmlElement.lang = lang;
         localStorage.setItem('langPreference', lang);
@@ -109,14 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function translateElements(lang) {
         const t = TRANSLATIONS[lang];
         document.querySelector('.about-link').textContent = t.home;
-        themeToggleButton.textContent = t.themeToggle;
-
-        themeOptionButtons.forEach(button => {
-            const themePref = button.dataset.themePref;
-            if (themePref === 'auto') button.textContent = t.themeAuto;
-            else if (themePref === 'light') button.textContent = t.themeLight;
-            else if (themePref === 'dark') button.textContent = t.themeDark;
-        });
         
         const pomodoroModeBtn = document.querySelector('.mode-btn[data-mode="pomodoro"]');
         if (pomodoroModeBtn) pomodoroModeBtn.textContent = t.pomodoro;
@@ -367,20 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // --- Theme & Language selectors ---
-        themeToggleButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            themeSelector.classList.toggle('visible');
-            languageSelector.classList.remove('visible');
-        });
-
-        themeOptionButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                const themePref = e.target.dataset.themePref;
-                applyTheme(themePref);
-                themeSelector.classList.remove('visible');
-            });
-        });
+        // --- Language selectors ---
 
         langToggleButton.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -396,17 +351,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         document.addEventListener('click', (e) => {
-            if (themeSelector && !themeSelector.contains(e.target) && !themeToggleButton.contains(e.target)) {
-                themeSelector.classList.remove('visible');
-            }
             if (languageSelector && !languageSelector.contains(e.target) && !langToggleButton.contains(e.target)) {
                 languageSelector.classList.remove('visible');
-            }
-        });
-
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-            if (currentThemePreference === 'auto') {
-                applyTheme('auto');
             }
         });
 
@@ -427,7 +373,6 @@ document.addEventListener('DOMContentLoaded', () => {
         currentMode = localStorage.getItem('currentMode') || 'pomodoro';
         totalFocusedSeconds = parseInt(localStorage.getItem('totalFocusedSeconds')) || 0;
         lastResetDate = localStorage.getItem('lastResetDate') || '';
-        const savedTheme = localStorage.getItem('themePreference') || 'auto';
         const savedLang = localStorage.getItem('langPreference') || 'ko';
 
         const today = new Date().toISOString().slice(0, 10);
