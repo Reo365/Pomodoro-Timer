@@ -21,8 +21,11 @@
 </head>
 <body>
     <div class="header-controls">
-        <a href="index.html" class="about-link">홈</a>
-        <button id="lang-toggle-btn" class="lang-toggle-btn">🌐</button>
+        <div class="header-mode-selector">
+            <div class="header-mode-indicator"></div>
+            <a href="index.html" class="header-mode-btn active" data-mode="home">홈</a>
+            <button id="lang-toggle-btn" class="header-mode-btn" data-mode="lang">🌐</button>
+        </div>
         <div id="language-selector" class="language-selector">
             <button class="lang-option-btn" data-lang="ko">한국어</button>
             <button class="lang-option-btn" data-lang="en">English</button>
