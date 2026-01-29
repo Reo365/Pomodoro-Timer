@@ -141,10 +141,6 @@ body {
     min-width: 80px; /* Ensure minimum width */
 }
 
-.mode-btn.active {
-    /* No longer need to change color for active state as there's no dark mode contrast issue */
-}
-
 
 /* Floating White Pill Indicator */
 .mode-indicator {
@@ -321,7 +317,7 @@ body {
 /* Language Selector Styles */
 .language-selector {
     position: absolute;
-    top: calc(100% + 8px); /* Adjusted space from button */
+    top: 100%; /* Changed from calc(100% + 8px) to remove extra space */
     left: 50%; /* Center horizontally */
     background: var(--glass-bg);
     backdrop-filter: blur(20px) saturate(180%); /* Deeper blur */
@@ -478,12 +474,11 @@ body {
 
 /* Footer Styling */
 footer {
-    padding: 1rem 0.5rem 0; /* Adjusted padding - bottom padding removed */
+    padding: 1rem 0.5rem 0.5rem; /* Increased padding-bottom to provide more space */
     background: var(--glass-bg);
     backdrop-filter: blur(15px) saturate(180%);
     -webkit-backdrop-filter: blur(15px) saturate(180%);
     border-top: 1px solid var(--glass-border);
-    border-bottom: 3px solid var(--glass-border); /* Added bottom border */
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1), inset 0 1px 0px rgba(255,255,255,0.05); /* Enhanced shadow */
     color: var(--text-color);
     text-align: center;
@@ -544,7 +539,7 @@ footer {
     .language-selector {
         left: 50%; /* Center the language selector */
         transform: translateX(-50%) translateY(-10px); /* Adjust for centering */
-        top: calc(100% + 5px); /* Closer to the button */
+        top: 100%; /* Changed from calc(100% + 5px) to remove extra space */
     }
     
     .language-selector.visible {
