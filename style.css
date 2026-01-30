@@ -113,848 +113,11 @@ body:has(input[value="dim"]:checked) {
 
 .switcher {
   position: fixed;
-<<<<<<< HEAD
-  z-index: 1;
-  top: 40px;
-=======
-  z-index: 1001;
-  top: 80px;
->>>>>>> 10c199f (fix: Fix UI issues with theme switcher and buttons)
-  left: 50%;
-  translate: -50%;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 244px;
-  max-width: 244px;
-  height: 70px;
-  box-sizing: border-box;
-  padding: 8px 12px 10px;
-  margin: 0 auto;
-  border: none;
-  border-radius: 99em;
-  font-size: var(--fz);
-  background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-  backdrop-filter: blur(8px) url(#switcher) saturate(var(--saturation));
-  -webkit-backdrop-filter: blur(8px) saturate(var(--saturation));
-  box-shadow: 
-    inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-    inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
-    inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
-    inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
-    inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
-    inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-    inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-    inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-    0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-    0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-  transition: 
-    background-color 400ms 
-      cubic-bezier(1, 0.0, 0.4, 1),
-    box-shadow 400ms
-      cubic-bezier(1, 0.0, 0.4, 1);
-}
-
-.switcher__legend {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  border: 0;
-  padding: 0;
-  white-space: nowrap;
-  clip-path: inset(100%);
-  clip: rect(0 0 0 0);
-  overflow: hidden;
-}
-
-.switcher__input {
-  clip: rect(0 0 0 0);
-  clip-path: inset(100%);
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-}
-
-.switcher__icon {
-  display: block;
-  width: 100%;
-  transition: scale 200ms cubic-bezier(0.5, 0, 0, 1);
-}
-
-.switcher__filter {
-  position: absolute;
-  width: 0;
-  height: 0;
-  z-index: -1;
-}
-
-.switcher__option {
-  --c: var(--c-content);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 16px;
-  width: 68px;
-  height: 100%;
-  box-sizing: border-box;
-  border-radius: 99em;
-  opacity: 1;
-  transition: all 160ms;
-}
-
-.switcher__option:hover {
-  --c: var(--c-action);
-  cursor: pointer;
-}
-
-.switcher__option:hover .switcher__icon {
-  scale: 1.2;
-}
-
-.switcher__option:has(input:checked) {
-  --c: var(--c-content);
-  cursor: auto;
-}
-
-.switcher__option:has(input:checked) .switcher__icon {
-  scale: 1;
-}
-
-.switcher::after {
-  content: '';
-  position: absolute;
-  left: 4px;
-  top: 4px;
-  display: block;
-  width: 84px;
-  height: calc(100% - 10px);
-  border-radius: 99em;
-  background-color: color-mix(in srgb, var(--c-glass) 36%, transparent);
-  z-index: -1;
-  box-shadow: 
-    inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-    inset 2px 1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
-    inset -1.5px -1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
-    inset -2px -6px 1px -5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
-    inset -1px 2px 3px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-    inset 0px -4px 1px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-    0px 3px 6px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-}
-
-.switcher:has(input[c-option="1"]:checked)::after {
-  translate: 0 0;
-  transform-origin: right;
-  transition: 
-    background-color 400ms 
-      cubic-bezier(1, 0.0, 0.4, 1),
-    box-shadow 400ms
-      cubic-bezier(1, 0.0, 0.4, 1),
-    translate 400ms 
-      cubic-bezier(1, 0.0, 0.4, 1);
-  animation: scaleToggle 440ms ease; 
-}
-
-.switcher:has(input[c-option="2"]:checked)::after {
-  translate: 76px 0;
-  transition: 
-    background-color 400ms 
-      cubic-bezier(1, 0.0, 0.4, 1),
-    box-shadow 400ms
-      cubic-bezier(1, 0.0, 0.4, 1),
-    translate 400ms 
-      cubic-bezier(1, 0.0, 0.4, 1);
-  animation: scaleToggle2 440ms ease; 
-}
-
-.switcher[c-previous="1"]:has(input[c-option="2"]:checked)::after {
-  transform-origin: left;
-}
-
-.switcher[c-previous="3"]:has(input[c-option="2"]:checked)::after {
-  transform-origin: right;
-}
-
-.switcher:has(input[c-option="3"]:checked)::after {
-  translate: 152px 0;
-  transform-origin: left;
-  transition: 
-    background-color 400ms 
-      cubic-bezier(1, 0.0, 0.4, 1),
-    box-shadow 400ms
-      cubic-bezier(1, 0.0, 0.4, 1),
-    translate 400ms 
-      cubic-bezier(1, 0.0, 0.4, 1);
-  animation: scaleToggle3 440ms ease; 
-}
-
-
- @keyframes scaleToggle {
-  0% { scale: 1 1; }
-  50% { scale: 1.1 1; }
-  100% { scale: 1 1; }
-}
-
- @keyframes scaleToggle2{
-  0% { scale: 1 1; }
-  50% { scale: 1.2 1; }
-  100% { scale: 1 1; }
-} 
-
- @keyframes scaleToggle3 {
-  0% { scale: 1 1; }
-  50% { scale: 1.1 1; }
-  100% { scale: 1 1; }
-}
-
-.app-container {
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    flex-grow: 1; /* Pushes the footer to the bottom */
-}
-
-.timer-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(30px) saturate(180%); /* Deeper blur, more vibrant effect */
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
-    border: 1px solid var(--glass-border);
-    border-radius: 35px; /* Rounder */
-    padding: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0px rgba(255,255,255,0.1); /* More prominent and liquid shadow */
-    width: clamp(320px, 90vw, 420px);
-    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.timer-display {
-    display: flex;
-    align-items: center;
-    font-size: var(--digit-height);
-    font-weight: 700;
-    letter-spacing: -2px;
-    margin: 1rem 0 2rem;
-    height: var(--digit-height);
-    overflow: hidden;
-    /* Adding subtle text shadow for depth */
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-}
-
-.digit-container {
-    height: 100%;
-}
-
-.digit-reel {
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smoother, less bouncy */
-}
-
-.digit-reel span {
-    display: block;
-    height: var(--digit-height);
-    line-height: var(--digit-height);
-}
-
-.divider {
-    margin: 0 0.5rem;
-    animation: blink 1.5s infinite ease-in-out;
-}
-
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-}
-
-.timer-modes {
-    position: relative; /* For positioning the indicator */
-    display: flex;
-    background-color: var(--button-bg); /* Use base button bg for container */
-    border-radius: 30px; /* Rounder segmented control container */
-    padding: 0.4rem;
-    margin-bottom: 2.5rem;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: inset 0 0 0 0.5px var(--glass-border), 0 2px 8px rgba(0,0,0,0.1); /* Subtle inner border/shadow */
-    height: 3.5rem; /* Fixed height for consistent look */
-}
-
-.mode-btn {
-    flex-grow: 1; /* Distribute space evenly */
-    background: transparent; /* Background will be handled by indicator */
-    border: none;
-    color: var(--text-color); /* Default text color */
-    font-family: var(--font-family);
-    font-size: 0.95rem;
-    padding: 0 1.2rem; /* No vertical padding, let container handle it */
-    border-radius: 25px; /* Rounder */
-    cursor: pointer;
-    transition: color 0.2s ease;
-    font-weight: 700;
-    z-index: 1; /* Above the indicator */
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    min-width: 80px; /* Ensure minimum width */
-}
-
-
-/* Floating White Pill Indicator */
-.mode-indicator {
-    position: absolute;
-    top: 0.4rem; /* Match parent padding */
-    left: 0.4rem; /* Match parent padding */
-    height: calc(100% - 0.8rem); /* Adjust height to fill segmented control */
-    background-color: rgba(255, 255, 255, 0.95); /* White pill, slightly opaque */
-    border-radius: 25px; /* Pill shape */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 0 0 0.5px rgba(255, 255, 255, 0.4); /* Soft shadows, high gloss edge */
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    z-index: 0; /* Behind the buttons */
-    cursor: grab; /* Indicate draggable */
-}
-.mode-indicator.dragging {
-    cursor: grabbing;
-    /* Optional: Add a subtle visual feedback when dragging, e.g., a slight scale or shadow change */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 0 0 0.5px rgba(255, 255, 255, 0.5);
-    transform: scale(1.02); /* Slight scale for liquid glass effect */
-}
-
-
-.timer-controls {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-
-
-
-
-.control-btn {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 50%; /* Keep circular */
-    width: 75px;
-    height: 75px;
-    cursor: pointer;
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 0 0 0.5px rgba(255, 255, 255, 0.4); /* Enhanced shadow and gloss */
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.control-btn:hover {
-    background-color: var(--glass-border); /* Hover effect using border color */
-    transform: scale(1.03); /* Subtle scale */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 0 0 0.5px rgba(255, 255, 255, 0.5); /* More prominent shadow on hover */
-}
-
-.control-btn:active {
-    transform: scale(0.97); /* Subtle press effect */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Flatter on active */
-}
-
-.play-btn::before {
-    content: '';
-    display: block;
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 18px solid var(--text-color);
-    margin-left: 5px;
-    transition: all 0.2s ease;
-}
-
-.play-btn.paused::before {
-    border: none;
-    width: 16px;
-    height: 18px;
-    border-left: 6px solid var(--text-color);
-    border-right: 6px solid var(--text-color);
-    margin-left: 0;
-}
-
-.reset-btn {
-    background: transparent;
-    box-shadow: none; /* No shadow for reset button */
-}
-.reset-btn:hover {
-    background-color: transparent; /* Keep transparent */
-    box-shadow: none; /* Keep no shadow */
-}
-.reset-btn:active {
-    transform: scale(0.95);
-    box-shadow: none;
-}
-
-.reset-btn::before {
-    content: '';
-    display: block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid var(--text-color);
-    border-radius: 50%;
-    border-right-color: transparent;
-    transition: transform 0.4s ease;
-}
-
-.reset-btn:hover::before {
-    transform: rotate(-180deg) scale(1.1);
-}
-
-.total-focus-time {
-    margin-top: 2rem;
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid var(--glass-border);
-    border-radius: 30px; /* Rounder */
-    padding: 1rem 1.5rem; /* More padding */
-    font-size: 0.95rem; /* Slightly larger */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 0 0 0.5px rgba(255, 255, 255, 0.4);
-    color: var(--text-color);
-    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.header-controls {
-    position: sticky;
-    top: 0;
-    left: 0; /* Add left:0 for full width sticky */
-    width: 100%;
-    max-width: 100%; /* Ensure it does not overflow horizontally */
-    display: flex;
-    justify-content: flex-end; /* Changed to flex-end to align buttons to the right */
-    gap: 10px; /* Adjusted gap */
-    z-index: 1000;
-    align-items: center;
-    padding: 0.5rem 1rem; /* Adjusted padding to increase top/bottom padding */
-    backdrop-filter: blur(15px) saturate(180%); /* Deeper blur */
-    -webkit-backdrop-filter: blur(15px) saturate(180%);
-    background: var(--glass-bg);
-    border-bottom: 1px solid var(--glass-border);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
-}
-
-.home-btn,
-.lang-toggle-btn {
-    background: var(--button-bg);
-    border: none;
-    color: var(--text-color);
-    font-family: var(--font-family);
-    font-size: 0.95rem;
-    padding: 0.4rem 1.2rem; /* Adjusted padding for individual buttons */
-    border-radius: 25px;
-    cursor: pointer;
-    transition: color 0.2s ease, background-color 0.2s ease;
-    font-weight: 700;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 80px;
-    text-decoration: none; /* For the home link */
-    height: 3.5rem; /* Match previous header-mode-selector height */
-    box-shadow: inset 0 0 0 0.5px var(--glass-border), 0 2px 8px rgba(0,0,0,0.1); /* Add back the shadow */
-}
-
-.home-btn:hover,
-.lang-toggle-btn:hover {
-    background-color: var(--button-active-bg);
-}
-
-.lang-selector-container {
-    position: relative; /* Crucial for absolute positioning of the dropdown */
-    display: flex;
-    align-items: center;
-    height: 3.5rem; /* Ensure consistent height with home-btn */
-    width: max-content; /* Ensure container only takes width of its content */
-}
-
-
-
-/* About Section Styling */
-.about-section {
-    width: 90%;
-    max-width: 650px;
-    margin: 2rem auto 1.5rem auto; /* Adjusted margins */
-    background: var(--glass-bg);
-    backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
-    border: 1px solid var(--glass-border);
-    border-radius: 35px;
-    padding: 2rem 2.5rem; /* Adjusted padding */
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255,255,255,0.1);
-    color: var(--text-color);
-    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.about-section h2,
-.about-section h3 {
-    color: var(--text-color);
-    margin-bottom: 1rem;
-    font-weight: 700;
-}
-
-.about-section h2 {
-    font-size: 2rem;
-    text-align: center;
-    margin-bottom: 1.5rem;
-}
-
-.about-section h3 {
-    font-size: 1.5rem;
-    margin-top: 1.8rem; /* Adjusted margin */
-    margin-bottom: 0.7rem; /* Adjusted margin */
-}
-
-/* Glow Border Effect */
-.has-glow-border {
-    position: relative; /* Needed for pseudo-element positioning */
-    --glow-angle: 0;
-    --glow-spread: 90; /* degrees for the conic-gradient width */
-    --glow-blur: 8;   /* blur in px */
-    --glow-color: rgba(0, 150, 255, 0.8); /* Default glow color */
-    --glow-opacity: 0; /* Default hidden */
-    --glow-size: 1.2; /* Scale factor for pseudo-element size */
-    overflow: hidden; /* Important to clip the glow inside the border */
-    /* Ensure the element itself has a z-index if it needs to be above other content */
-    z-index: 1; /* Example, adjust as needed */
-}
-
-.has-glow-border::before {
-    content: '';
-    position: absolute;
-    top: calc(50% - (100% * var(--glow-size)) / 2); /* Center the pseudo-element */
-    left: calc(50% - (100% * var(--glow-size)) / 2);
-    width: calc(100% * var(--glow-size));
-    height: calc(100% * var(--glow-size));
-    pointer-events: none; /* Allows mouse events to pass through to the element */
-    background: conic-gradient(
-        from calc(var(--glow-angle) * 1deg),
-        var(--glow-color) 0deg,
-        transparent calc(var(--glow-spread) * 1deg),
-        transparent
-    );
-    filter: blur(calc(var(--glow-blur) * 1px));
-    opacity: var(--glow-opacity);
-    transform: rotate(calc(var(--glow-angle) * 1deg)); /* Rotate the glow with the angle */
-    transition: opacity 0.3s ease, transform 0s; /* Smooth fade in/out, no transform transition for angle */
-    z-index: -1; /* Place behind content */
-}
-
-/* For browsers that support mask-composite */
-@supports (mask-composite: intersect) or (-webkit-mask-composite: intersect) {
-    .has-glow-border::before {
-        mask-composite: intersect;
-        -webkit-mask-composite: intersect;
-        mask-clip: padding-box, border-box;
-        -webkit-mask-clip: padding-box, border-box;
-        mask-image:
-            linear-gradient(#0000, #0000),
-            conic-gradient(from calc(var(--glow-angle) * 1deg), #000 0deg, #fff, #0000 calc(var(--glow-spread) * 1deg));
-        -webkit-mask-image:
-            linear-gradient(#0000, #0000),
-            conic-gradient(from calc(var(--glow-angle) * 1deg), #000 0deg, #fff, #0000 calc(var(--glow-spread) * 1deg));
-        background: var(--glow-color); /* The actual color of the glow */
-    }
-}
-
-.about-section p {
-    font-size: 1rem;
-    line-height: 1.7;
-    margin-bottom: 1rem;
-    color: var(--text-color);
-}
-
-.about-section ul {
-    list-style: inside;
-    margin-bottom: 1rem;
-    padding-left: 1.2rem;
-}
-
-.about-section ul li {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 0.5rem;
-    color: var(--text-color);
-}
-
-.about-section ul li strong {
-    color: var(--text-color);
-}
-
-/* Footer Styling */
-footer {
-    padding: 1rem 0.5rem 1rem; /* Increased padding-bottom to provide more space */
-    background: var(--glass-bg);
-    backdrop-filter: blur(15px) saturate(180%);
-    -webkit-backdrop-filter: blur(15px) saturate(180%);
-    border-top: 1px solid var(--glass-border);
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1), inset 0 1px 0px rgba(255,255,255,0.05); /* Enhanced shadow */
-    color: var(--text-color);
-    text-align: center;
-    font-size: 0.85rem;
-    z-index: 1000;
-    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
-    margin-top: 1rem; /* Adjusted margin from main content */
-    width: 100%;
-    max-width: 100%; /* Ensure it does not overflow horizontally */
-}
-
-.footer-nav {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem; /* Adjusted gap */
-    margin-bottom: 0.5rem; /* Adjusted margin */
-}
-
-.footer-nav a {
-    color: var(--text-color);
-    text-decoration: none;
-    transition: color 0.2s ease, transform 0.1s ease;
-}
-
-.footer-nav a:hover {
-    color: #A7BFE8;
-    transform: translateY(-1px); /* Subtle lift on hover */
-}
-
-/* --- Responsive Adjustments --- */
-@media (max-width: 768px) {
-    body {
-        padding: 0.5rem; /* Reduce overall padding on smaller screens */
-    }
-
-    .header-controls {
-        flex-direction: row; /* Keep buttons in a row */
-        justify-content: flex-end; /* Align to the right */
-        align-items: center;
-        padding: 0.5rem;
-        /* position: static; Removed this override */
-        border-bottom: none;
-        box-shadow: none;
-        background: transparent; /* Make header controls background transparent for better blending */
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-    }
-
-    .home-btn,
-    .lang-toggle-btn {
-        min-width: unset; /* Remove min-width constraint */
-        padding: 0 0.8rem; /* Adjust padding */
-        height: 3rem; /* Adjust height for smaller screens */
-    }
-
-
-
-
-
-    .timer-card {
-        padding: 1.5rem; /* Reduce padding inside timer card */
-        width: 95vw; /* Slightly larger on smaller screens */
-        max-width: 380px; /* Max width to prevent it from becoming too large */
-    }
-
-    .timer-display {
-        font-size: clamp(3rem, 18vw, 5rem); /* Adjust font size for timer digits */
-        margin: 0.8rem 0 1.5rem;
-        height: clamp(3rem, 18vw, 5rem);
-    }
-
-    .timer-modes {
-        padding: 0.3rem;
-        height: 3rem; /* Slightly smaller height */
-        margin-bottom: 2rem;
-    }
-
-    .mode-btn {
-        font-size: 0.9rem;
-        padding: 0 0.8rem;
-    }
-
-    .control-btn {
-        width: 60px; /* Smaller control buttons */
-        height: 60px;
-    }
-
-    .play-btn::before {
-        border-top: 8px solid transparent;
-        border-bottom: 8px solid transparent;
-        border-left: 14px solid var(--text-color);
-        margin-left: 4px;
-    }
-
-    .play-btn.paused::before {
-        width: 12px;
-        height: 14px;
-        border-left: 5px solid var(--text-color);
-        border-right: 5px solid var(--text-color);
-    }
-
-    .reset-btn::before {
-        width: 18px;
-        height: 18px;
-        border-width: 2px;
-    }
-
-    .total-focus-time {
-        margin-top: 1.5rem;
-        padding: 0.8rem 1.2rem;
-        font-size: 0.9rem;
-    }
-
-    .about-section {
-        width: 95%;
-        padding: 1.5rem;
-        margin-top: 1.5rem;
-        margin-bottom: 1rem;
-        border-radius: 25px; /* Slightly less rounded */
-    }
-
-    .about-section h2 {
-        font-size: 1.7rem;
-        margin-bottom: 1rem;
-    }
-
-    .about-section h3 {
-        font-size: 1.3rem;
-        margin-top: 1.5rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .about-section p,
-    .about-section ul li {
-        font-size: 0.9rem;
-        line-height: 1.6;
-    }
-
-    footer {
-        padding: 0.8rem 0.5rem 0.5rem; /* Adjust footer padding */
-        font-size: 0.75rem;
-    }
-
-    .footer-nav {
-        gap: 0.8rem;
-        margin-bottom: 0.3rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .header-mode-selector {
-        height: 3rem; /* Even smaller header controls */
-        padding: 0.3rem;
-    }
-
-    .header-mode-btn {
-        font-size: 0.85rem;
-        padding: 0 0.6rem;
-    }
-
-    .header-mode-indicator {
-        height: calc(100% - 0.6rem);
-    }
-
-    .language-selector {
-        min-width: 110px;
-        padding: 0.5rem;
-        border-radius: 15px;
-    }
-
-    .lang-option-btn {
-        padding: 0.5rem 0.8rem;
-        font-size: 0.85rem;
-    }
-
-    .timer-card {
-        padding: 1rem;
-        border-radius: 25px;
-    }
-
-    .timer-display {
-        font-size: clamp(2.5rem, 15vw, 4rem);
-        height: clamp(2.5rem, 15vw, 4rem);
-    }
-
-    .divider {
-        margin: 0 0.3rem;
-    }
-
-    .timer-modes {
-        height: 2.8rem;
-        padding: 0.2rem;
-    }
-
-    .mode-btn {
-        font-size: 0.8rem;
-        padding: 0 0.5rem;
-    }
-
-    .control-btn {
-        width: 50px;
-        height: 50px;
-    }
-
-    .play-btn::before {
-        border-top: 7px solid transparent;
-        border-bottom: 7px solid transparent;
-        border-left: 12px solid var(--text-color);
-        margin-left: 3px;
-    }
-
-    .play-btn.paused::before {
-        width: 10px;
-        height: 12px;
-        border-left: 4px solid var(--text-color);
-        border-right: 4px solid var(--text-color);
-    }
-
-    .reset-btn::before {
-        width: 16px;
-        height: 16px;
-    }
-
-    .total-focus-time {
-        font-size: 0.85rem;
-        padding: 0.7rem 1rem;
-    }
-
-    .about-section {
-        padding: 1rem;
-        border-radius: 20px;
-    }
-
-    .about-section h2 {
-        font-size: 1.5rem;
-    }
-
-    .about-section h3 {
-        font-size: 1.2rem;
-    }
-
-    .about-section p,
-    .about-section ul li {
-        font-size: 0.85rem;
-    }
-
-    footer {
-        font-size: 0.7rem;
-    }
-.switcher {
-  position: fixed;
   z-index: 1001;
   top: 80px;
   left: 0;
   right: 0;
-  margin: 0 auto;
+  margin: auto;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1142,3 +305,643 @@ footer {
   50% { scale: 1.1 1; }
   100% { scale: 1 1; }
 }
+
+.app-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    flex-grow: 1; /* Pushes the footer to the bottom */
+}
+
+.timer-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px) saturate(180%); /* Deeper blur, more vibrant effect */
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: 35px; /* Rounder */
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0px rgba(255,255,255,0.1); /* More prominent and liquid shadow */
+    width: clamp(320px, 90vw, 420px);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timer-display {
+    display: flex;
+    align-items: center;
+    font-size: var(--digit-height);
+    font-weight: 700;
+    letter-spacing: -2px;
+    margin: 1rem 0 2rem;
+    height: var(--digit-height);
+    overflow: hidden;
+    /* Adding subtle text shadow for depth */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.digit-container {
+    height: 100%;
+}
+
+.digit-reel {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smoother, less bouncy */
+}
+
+.digit-reel span {
+    display: block;
+    height: var(--digit-height);
+    line-height: var(--digit-height);
+}
+
+.divider {
+    margin: 0 0.5rem;
+    animation: blink 1.5s infinite ease-in-out;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.timer-modes {
+    position: relative; /* For positioning the indicator */
+    display: flex;
+    background-color: var(--button-bg); /* Use base button bg for container */
+    border-radius: 30px; /* Rounder segmented control container */
+    padding: 0.4rem;
+    margin-bottom: 2.5rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: inset 0 0 0 0.5px var(--glass-border), 0 2px 8px rgba(0,0,0,0.1); /* Subtle inner border/shadow */
+    height: 3.5rem; /* Fixed height for consistent look */
+}
+
+.mode-btn {
+    flex-grow: 1; /* Distribute space evenly */
+    background: transparent; /* Background will be handled by indicator */
+    border: none;
+    color: var(--c-content); /* Default text color */
+    font-family: var(--font-family);
+    font-size: 0.95rem;
+    padding: 0 1.2rem; /* No vertical padding, let container handle it */
+    border-radius: 25px; /* Rounder */
+    cursor: pointer;
+    transition: color 0.2s ease;
+    font-weight: 700;
+    z-index: 1; /* Above the indicator */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    min-width: 80px; /* Ensure minimum width */
+}
+
+
+/* Floating White Pill Indicator */
+.mode-indicator {
+    position: absolute;
+    top: 0.4rem; /* Match parent padding */
+    left: 0.4rem; /* Match parent padding */
+    height: calc(100% - 0.8rem); /* Adjust height to fill segmented control */
+    background-color: rgba(255, 255, 255, 0.95); /* White pill, slightly opaque */
+    border-radius: 25px; /* Pill shape */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 0 0 0.5px rgba(255, 255, 255, 0.4); /* Soft shadows, high gloss edge */
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 0; /* Behind the buttons */
+    cursor: grab; /* Indicate draggable */
+}
+.mode-indicator.dragging {
+    cursor: grabbing;
+    /* Optional: Add a subtle visual feedback when dragging, e.g., a slight scale or shadow change */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 0 0 0.5px rgba(255, 255, 255, 0.5);
+    transform: scale(1.02); /* Slight scale for liquid glass effect */
+}
+
+
+.timer-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+
+
+
+
+.control-btn {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%; /* Keep circular */
+    width: 75px;
+    height: 75px;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 0 0 0.5px rgba(255, 255, 255, 0.4); /* Enhanced shadow and gloss */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.control-btn:hover {
+    background-color: var(--glass-border); /* Hover effect using border color */
+    transform: scale(1.03); /* Subtle scale */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 0 0 0.5px rgba(255, 255, 255, 0.5); /* More prominent shadow on hover */
+}
+
+.control-btn:active {
+    transform: scale(0.97); /* Subtle press effect */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Flatter on active */
+}
+
+.play-btn::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 18px solid var(--c-content);
+    margin-left: 5px;
+    transition: all 0.2s ease;
+}
+
+.play-btn.paused::before {
+    border: none;
+    width: 16px;
+    height: 18px;
+    border-left: 6px solid var(--c-content);
+    border-right: 6px solid var(--c-content);
+    margin-left: 0;
+}
+
+.reset-btn {
+    background: transparent;
+    box-shadow: none; /* No shadow for reset button */
+}
+.reset-btn:hover {
+    background-color: transparent; /* Keep transparent */
+    box-shadow: none; /* Keep no shadow */
+}
+.reset-btn:active {
+    transform: scale(0.95);
+    box-shadow: none;
+}
+
+.reset-btn::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--c-content);
+    border-radius: 50%;
+    border-right-color: transparent;
+    transition: transform 0.4s ease;
+}
+
+.reset-btn:hover::before {
+    transform: rotate(-180deg) scale(1.1);
+}
+
+.total-focus-time {
+    margin-top: 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: 30px; /* Rounder */
+    padding: 1rem 1.5rem; /* More padding */
+    font-size: 0.95rem; /* Slightly larger */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 0 0 0.5px rgba(255, 255, 255, 0.4);
+    color: var(--c-content);
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header-controls {
+    position: sticky;
+    top: 0;
+    left: 0; /* Add left:0 for full width sticky */
+    width: 100%;
+    max-width: 100%; /* Ensure it does not overflow horizontally */
+    display: flex;
+    justify-content: flex-end; /* Changed to flex-end to align buttons to the right */
+    gap: 10px; /* Adjusted gap */
+    z-index: 1000;
+    align-items: center;
+    padding: 0.5rem 1rem; /* Adjusted padding to increase top/bottom padding */
+    backdrop-filter: blur(15px) saturate(180%); /* Deeper blur */
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    background: var(--glass-bg);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.home-btn,
+.lang-toggle-btn {
+    background: var(--button-bg);
+    border: none;
+    color: var(--c-content);
+    font-family: var(--font-family);
+    font-size: 0.95rem;
+    padding: 0.4rem 1.2rem; /* Adjusted padding for individual buttons */
+    border-radius: 25px;
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 80px;
+    text-decoration: none; /* For the home link */
+    height: 3.5rem; /* Match previous header-mode-selector height */
+    box-shadow: inset 0 0 0 0.5px var(--glass-border), 0 2px 8px rgba(0,0,0,0.1); /* Add back the shadow */
+}
+
+.home-btn:hover,
+.lang-toggle-btn:hover {
+    background-color: var(--button-active-bg);
+}
+
+.lang-selector-container {
+    position: relative; /* Crucial for absolute positioning of the dropdown */
+    display: flex;
+    align-items: center;
+    height: 3.5rem; /* Ensure consistent height with home-btn */
+    width: max-content; /* Ensure container only takes width of its content */
+}
+
+
+
+/* About Section Styling */
+.about-section {
+    width: 90%;
+    max-width: 650px;
+    margin: 2rem auto 1.5rem auto; /* Adjusted margins */
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: 35px;
+    padding: 2rem 2.5rem; /* Adjusted padding */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255,255,255,0.1);
+    color: var(--c-content);
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-section h2,
+.about-section h3 {
+    color: var(--c-content);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.about-section h2 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.about-section h3 {
+    font-size: 1.5rem;
+    margin-top: 1.8rem; /* Adjusted margin */
+    margin-bottom: 0.7rem; /* Adjusted margin */
+}
+
+/* Glow Border Effect */
+.has-glow-border {
+    position: relative; /* Needed for pseudo-element positioning */
+    --glow-angle: 0;
+    --glow-spread: 90; /* degrees for the conic-gradient width */
+    --glow-blur: 8;   /* blur in px */
+    --glow-color: rgba(0, 150, 255, 0.8); /* Default glow color */
+    --glow-opacity: 0; /* Default hidden */
+    --glow-size: 1.2; /* Scale factor for pseudo-element size */
+    overflow: hidden; /* Important to clip the glow inside the border */
+    /* Ensure the element itself has a z-index if it needs to be above other content */
+    z-index: 1; /* Example, adjust as needed */
+}
+
+.has-glow-border::before {
+    content: '';
+    position: absolute;
+    top: calc(50% - (100% * var(--glow-size)) / 2); /* Center the pseudo-element */
+    left: calc(50% - (100% * var(--glow-size)) / 2);
+    width: calc(100% * var(--glow-size));
+    height: calc(100% * var(--glow-size));
+    pointer-events: none; /* Allows mouse events to pass through to the element */
+    background: conic-gradient(
+        from calc(var(--glow-angle) * 1deg),
+        var(--glow-color) 0deg,
+        transparent calc(var(--glow-spread) * 1deg),
+        transparent
+    );
+    filter: blur(calc(var(--glow-blur) * 1px));
+    opacity: var(--glow-opacity);
+    transform: rotate(calc(var(--glow-angle) * 1deg)); /* Rotate the glow with the angle */
+    transition: opacity 0.3s ease, transform 0s; /* Smooth fade in/out, no transform transition for angle */
+    z-index: -1; /* Place behind content */
+}
+
+/* For browsers that support mask-composite */
+@supports (mask-composite: intersect) or (-webkit-mask-composite: intersect) {
+    .has-glow-border::before {
+        mask-composite: intersect;
+        -webkit-mask-composite: intersect;
+        mask-clip: padding-box, border-box;
+        -webkit-mask-clip: padding-box, border-box;
+        mask-image:
+            linear-gradient(#0000, #0000),
+            conic-gradient(from calc(var(--glow-angle) * 1deg), #000 0deg, #fff, #0000 calc(var(--glow-spread) * 1deg));
+        -webkit-mask-image:
+            linear-gradient(#0000, #0000),
+            conic-gradient(from calc(var(--glow-angle) * 1deg), #000 0deg, #fff, #0000 calc(var(--glow-spread) * 1deg));
+        background: var(--glow-color); /* The actual color of the glow */
+    }
+}
+
+.about-section p {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    color: var(--c-content);
+}
+
+.about-section ul {
+    list-style: inside;
+    margin-bottom: 1rem;
+    padding-left: 1.2rem;
+}
+
+.about-section ul li {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+    color: var(--c-content);
+}
+
+.about-section ul li strong {
+    color: var(--c-content);
+}
+
+/* Footer Styling */
+footer {
+    padding: 1rem 0.5rem 1rem; /* Increased padding-bottom to provide more space */
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    border-top: 1px solid var(--glass-border);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1), inset 0 1px 0px rgba(255,255,255,0.05); /* Enhanced shadow */
+    color: var(--c-content);
+    text-align: center;
+    font-size: 0.85rem;
+    z-index: 1000;
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+    margin-top: 1rem; /* Adjusted margin from main content */
+    width: 100%;
+    max-width: 100%; /* Ensure it does not overflow horizontally */
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem; /* Adjusted gap */
+    margin-bottom: 0.5rem; /* Adjusted margin */
+}
+
+.footer-nav a {
+    color: var(--c-content);
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.footer-nav a:hover {
+    color: #A7BFE8;
+    transform: translateY(-1px); /* Subtle lift on hover */
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    body {
+        padding: 0.5rem; /* Reduce overall padding on smaller screens */
+    }
+
+    .header-controls {
+        flex-direction: row; /* Keep buttons in a row */
+        justify-content: flex-end; /* Align to the right */
+        align-items: center;
+        padding: 0.5rem;
+        /* position: static; Removed this override */
+        border-bottom: none;
+        box-shadow: none;
+        background: transparent; /* Make header controls background transparent for better blending */
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    .home-btn,
+    .lang-toggle-btn {
+        min-width: unset; /* Remove min-width constraint */
+        padding: 0 0.8rem; /* Adjust padding */
+        height: 3rem; /* Adjust height for smaller screens */
+    }
+
+
+
+
+
+    .timer-card {
+        padding: 1.5rem; /* Reduce padding inside timer card */
+        width: 95vw; /* Slightly larger on smaller screens */
+        max-width: 380px; /* Max width to prevent it from becoming too large */
+    }
+
+    .timer-display {
+        font-size: clamp(3rem, 18vw, 5rem); /* Adjust font size for timer digits */
+        margin: 0.8rem 0 1.5rem;
+        height: clamp(3rem, 18vw, 5rem);
+    }
+
+    .timer-modes {
+        padding: 0.3rem;
+        height: 3rem; /* Slightly smaller height */
+        margin-bottom: 2rem;
+    }
+
+    .mode-btn {
+        font-size: 0.9rem;
+        padding: 0 0.8rem;
+    }
+
+    .control-btn {
+        width: 60px; /* Smaller control buttons */
+        height: 60px;
+    }
+
+    .play-btn::before {
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 14px solid var(--c-content);
+        margin-left: 4px;
+    }
+
+    .play-btn.paused::before {
+        width: 12px;
+        height: 14px;
+        border-left: 5px solid var(--c-content);
+        border-right: 5px solid var(--c-content);
+    }
+
+    .reset-btn::before {
+        width: 18px;
+        height: 18px;
+        border-width: 2px;
+    }
+
+    .total-focus-time {
+        margin-top: 1.5rem;
+        padding: 0.8rem 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    .about-section {
+        width: 95%;
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        border-radius: 25px; /* Slightly less rounded */
+    }
+
+    .about-section h2 {
+        font-size: 1.7rem;
+        margin-bottom: 1rem;
+    }
+
+    .about-section h3 {
+        font-size: 1.3rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .about-section p,
+    .about-section ul li {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    footer {
+        padding: 0.8rem 0.5rem 0.5rem; /* Adjust footer padding */
+        font-size: 0.75rem;
+    }
+
+    .footer-nav {
+        gap: 0.8rem;
+        margin-bottom: 0.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-mode-selector {
+        height: 3rem; /* Even smaller header controls */
+        padding: 0.3rem;
+    }
+
+    .header-mode-btn {
+        font-size: 0.85rem;
+        padding: 0 0.6rem;
+    }
+
+    .header-mode-indicator {
+        height: calc(100% - 0.6rem);
+    }
+
+    .language-selector {
+        min-width: 110px;
+        padding: 0.5rem;
+        border-radius: 15px;
+    }
+
+    .lang-option-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85rem;
+    }
+
+    .timer-card {
+        padding: 1rem;
+        border-radius: 25px;
+    }
+
+    .timer-display {
+        font-size: clamp(2.5rem, 15vw, 4rem);
+        height: clamp(2.5rem, 15vw, 4rem);
+    }
+
+    .divider {
+        margin: 0 0.3rem;
+    }
+
+    .timer-modes {
+        height: 2.8rem;
+        padding: 0.2rem;
+    }
+
+    .mode-btn {
+        font-size: 0.8rem;
+        padding: 0 0.5rem;
+    }
+
+    .control-btn {
+        width: 50px;
+        height: 50px;
+    }
+
+    .play-btn::before {
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+        border-left: 12px solid var(--c-content);
+        margin-left: 3px;
+    }
+
+    .play-btn.paused::before {
+        width: 10px;
+        height: 12px;
+        border-left: 4px solid var(--c-content);
+        border-right: 4px solid var(--c-content);
+    }
+
+    .reset-btn::before {
+        width: 16px;
+        height: 16px;
+    }
+
+    .total-focus-time {
+        font-size: 0.85rem;
+        padding: 0.7rem 1rem;
+    }
+
+    .about-section {
+        padding: 1rem;
+        border-radius: 20px;
+    }
+
+    .about-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .about-section h3 {
+        font-size: 1.2rem;
+    }
+
+    .about-section p,
+    .about-section ul li {
+        font-size: 0.85rem;
+    }
+
+    footer {
+        font-size: 0.7rem;
+    }
