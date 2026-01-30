@@ -303,6 +303,7 @@ body:has(input[value="dim"]:checked) {
     align-items: center;
     z-index: 1;
     flex-grow: 1; /* Pushes the footer to the bottom */
+    padding-top: 90px; /* Add padding to account for fixed header height */
 }
 
 .timer-card {
