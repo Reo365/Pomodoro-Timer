@@ -1,5 +1,17 @@
-I have completed the requested changes:
-1. The theme switcher has been moved into the header on all pages.
-2. The theme switcher is now present on all subpages (`about.html`, `contact.html`, `privacy.html`, `terms.html`).
-3. The active "Focus/Break" button color now changes with the selected theme.
-I have modified `index.html`, `about.html`, `contact.html`, `privacy.html`, `terms.html`, and `style.css`.
+네, 좋은 질문입니다. 현재 방식처럼 모든 페이지에 헤더와 푸터를 복사해서 붙여넣는 것은 번거롭고 유지보수가 어렵습니다. 말씀하신 것처럼, 헤더와 푸터를 한 파일에서 관리하고 다른 페이지에서 불러와 사용하는 것이 훨씬 효율적이며 웹 개발에서 일반적인 모범 사례입니다.
+
+하지만 순수 HTML 파일만으로는 다른 파일을 직접 불러오는 기능(include)이 내장되어 있지 않습니다. 이 문제를 해결하기 위한 몇 가지 주요 방법이 있습니다:
+
+### 1. 클라이언트 측 JavaScript 사용
+각 페이지의 `<script>` 태그를 사용하여 JavaScript로 `header.html`과 `footer.html` 같은 공통 파일의 내용을 가져와서 원하는 위치에 삽입할 수 있습니다.
+
+- **장점:** 별도의 개발 도구나 빌드 과정 없이 간단하게 구현할 수 있습니다.
+- **단점:** 페이지가 로드된 후 JavaScript가 실행되어 헤더/푸터를 삽입하므로, 화면이 잠시 깜박이는 것처럼 보일 수 있습니다. 또한, 검색 엔진 최적화(SEO)에 불리할 수 있고, 자바스크립트가 비활성화된 환경에서는 내용이 표시되지 않습니다.
+
+### 2. 빌드 도구(Build Tool) 또는 정적 사이트 생성기(SSG) 사용
+웹사이트를 배포하기 전에, HTML 조각들(예: `_header.html`, `_footer.html`)을 조립하여 완전한 HTML 페이지를 생성하는 "빌드" 단계를 거치는 방법입니다. `Webpack`, `Parcel`, `Gulp` 같은 빌드 도구나 `Jekyll`, `Eleventy`, `Hugo` 같은 정적 사이트 생성기들이 이런 기능을 제공합니다.
+
+- **장점:** 최종 결과물은 순수 HTML이므로 실행 속도가 빠르고, 깜박임 현상이 없으며, 검색 엔진 최적화에 매우 유리합니다. 가장 전문적이고 확장성 있는 방법입니다.
+- **단점:** 초기 설정이 필요하고, 웹사이트를 수정할 때마다 빌드 과정을 거쳐야 합니다.
+
+어떤 방식을 원하시는지 알려주시면 해당 방법으로 구조를 변경해 드릴 수 있습니다.

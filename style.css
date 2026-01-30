@@ -82,6 +82,7 @@ body:has(input[value="dim"]:checked) {
 }
 
 .switcher {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -473,7 +474,7 @@ body:has(input[value="dim"]:checked) {
     width: 100%;
     max-width: 100%; /* Ensure it does not overflow horizontally */
     display: flex;
-    justify-content: space-between; /* Changed to flex-end to align buttons to the right */
+    justify-content: space-between;
     gap: 10px; /* Adjusted gap */
     z-index: 1000;
     align-items: center;
