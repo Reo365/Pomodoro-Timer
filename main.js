@@ -105,9 +105,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setLanguage(lang) {
-        htmlElement.lang = lang;
-        localStorage.setItem('langPreference', lang);
-        translateElements(lang);
+        const elementsToAnimate = [
+            document.querySelector('.header-controls'),
+            document.querySelector('.app-container'),
+            document.querySelector('.total-focus-time'),
+            document.querySelector('footer')
+        ].filter(el => el); // Filter out any null elements if not found
+
+        // Add fade-out class
+        elementsToAnimate.forEach(el => el.classList.add('language-transition-fade'));
+
+        // Wait for the fade-out transition to complete (0.3s as defined in CSS)
+        setTimeout(() => {
+            htmlElement.lang = lang;
+            localStorage.setItem('langPreference', lang);
+            translateElements(lang);
+
+            // Remove fade-out class to trigger fade-in
+            elementsToAnimate.forEach(el => el.classList.remove('language-transition-fade'));
+        }, 300); // Match CSS transition duration
     }
 
     function translateElements(lang) {

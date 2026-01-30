@@ -669,7 +669,7 @@ body.theme-dim {
     color: var(--c-content);
     font-family: var(--font-family);
     font-size: 0.95rem;
-    padding: 0.4rem 1.2rem; /* Adjusted padding for individual buttons */
+    padding: 0; /* Adjusted padding to 0 */
     border-radius: 25px;
     cursor: pointer;
     transition: color 0.2s ease, background-color 0.2s ease;
@@ -677,7 +677,9 @@ body.theme-dim {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 80px;
+    width: 68px; /* Set explicit width to match .switcher__option */
+    height: 70px; /* Set explicit height to match .switcher__option */
+    /* min-width: 80px; - Removed */
     text-decoration: none; /* For the home link */
     /* Apply liquid glass effect */
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
@@ -710,9 +712,10 @@ body.theme-dim {
     position: relative; /* Crucial for absolute positioning of the dropdown */
     display: flex;
     align-items: center;
-    height: 3.5rem; /* Ensure consistent height with home-btn */
+    height: 70px; /* Adjusted to match the new button height */
     width: max-content; /* Ensure container only takes width of its content */
 }
+
 
 
 
@@ -899,18 +902,7 @@ footer {
         -webkit-backdrop-filter: none;
     }
 
-    .home-btn,
-    .lang-toggle-btn {
-        min-width: unset; /* Remove min-width constraint */
-        padding: 0 0.8rem; /* Adjust padding */
-        height: 3rem; /* Adjust height for smaller screens */
     }
-
-
-
-
-
-    .timer-card {
         padding: 1.5rem; /* Reduce padding inside timer card */
         width: 95vw; /* Slightly larger on smaller screens */
         max-width: 380px; /* Max width to prevent it from becoming too large */
@@ -1100,3 +1092,10 @@ footer {
     footer {
         font-size: 0.7rem;
     }
+
+/* Language transition animation */
+.language-transition-fade {
+    opacity: 0;
+    transform: translateY(10px); /* Subtle movement */
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
