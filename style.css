@@ -353,10 +353,24 @@ body:has(input[value="dim"]:checked) {
 }
 
 .mode-btn.active {
-    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+    /* No direct liquid glass styling, indicator handles it */
+}
+
+.mode-btn.active:hover {
+    /* No direct liquid glass styling, indicator handles it */
+}
+
+/* Floating White Pill Indicator */
+.mode-indicator {
+    position: absolute;
+    top: 0.4rem; /* Match parent padding */
+    left: 0.4rem; /* Match parent padding */
+    height: calc(100% - 0.8rem); /* Adjust height to fill segmented control */
+    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent); /* Liquid glass background */
     backdrop-filter: blur(8px) saturate(var(--saturation));
     -webkit-backdrop-filter: blur(8px) saturate(var(--saturation));
     border: 1px solid var(--glass-border);
+    border-radius: 25px; /* Pill shape */
     box-shadow: 
         inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
         inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
@@ -368,38 +382,11 @@ body:has(input[value="dim"]:checked) {
         inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
         0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
         0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-}
-
-.mode-btn.active:hover {
-    background-color: color-mix(in srgb, var(--c-glass) 25%, transparent); /* Slightly more opaque on hover */
-    box-shadow: 
-        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 15%), transparent),
-        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 95%), transparent), 
-        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 85%), transparent), 
-        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 65%), transparent), 
-        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 15%), transparent), 
-        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 25%), transparent), 
-        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 25%), transparent), 
-        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 15%), transparent), 
-        0px 2px 8px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 15%), transparent), 
-        0px 8px 20px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent);
-    transform: translateY(-2px); /* Slight lift on hover */
-}
-
-
-/* Floating White Pill Indicator */
-.mode-indicator {
-    position: absolute;
-    top: 0.4rem; /* Match parent padding */
-    left: 0.4rem; /* Match parent padding */
-    height: calc(100% - 0.8rem); /* Adjust height to fill segmented control */
-    background-color: var(--c-active-btn);
-    border-radius: 25px; /* Pill shape */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 0 0 0.5px rgba(255, 255, 255, 0.4); /* Soft shadows, high gloss edge */
     transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     z-index: 0; /* Behind the buttons */
     cursor: grab; /* Indicate draggable */
 }
+
 .mode-indicator.dragging {
     cursor: grabbing;
     /* Optional: Add a subtle visual feedback when dragging, e.g., a slight scale or shadow change */
