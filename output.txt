@@ -1,0 +1,1 @@
+The UI issues have been fixed in `style.css`. The theme switcher visibility and the start/reset buttons display issues should be resolved.

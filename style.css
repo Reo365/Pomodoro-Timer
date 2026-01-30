@@ -113,8 +113,13 @@ body:has(input[value="dim"]:checked) {
 
 .switcher {
   position: fixed;
+<<<<<<< HEAD
   z-index: 1;
   top: 40px;
+=======
+  z-index: 1001;
+  top: 80px;
+>>>>>>> 10c199f (fix: Fix UI issues with theme switcher and buttons)
   left: 50%;
   translate: -50%;
   display: flex;
@@ -943,13 +948,10 @@ footer {
     footer {
         font-size: 0.7rem;
     }
-}
-
 .switcher {
   position: fixed;
-  z-index: 1;
-  top: 40px;
-  left: 50%;
+  z-index: 1001;
+  top: 80px;  left: 50%;
   translate: -50%;
   display: flex;
   align-items: center;
