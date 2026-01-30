@@ -47,7 +47,7 @@ body {
     overflow-x: hidden; /* Retained layout property */
 }
 
-body:has(input[value="dark"]:checked) {
+body.theme-dark {
   --c-glass: #bbbbbc;
   --c-light: #fff;
   --c-dark: #000;
@@ -64,7 +64,7 @@ body:has(input[value="dark"]:checked) {
   --saturation: 150%;
 }
 
-body:has(input[value="dim"]:checked) {
+body.theme-dim {
   --c-light: #99deff;
   --c-dark: #20001b;
   --c-glass: hsl(335 250% 74% / 1);

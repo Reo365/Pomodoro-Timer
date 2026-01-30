@@ -74,6 +74,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Core Functions ---
 
+    // Add these helper functions for theme handling
+    function getSystemTheme() {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark';
+        }
+        return 'light';
+    }
+
+    function applyTheme(theme, save = true) {
+        // Remove existing theme classes
+        document.body.classList.remove('theme-light', 'theme-dark', 'theme-dim');
+
+        let themeToApply = theme;
+        if (theme === 'auto') {
+            themeToApply = getSystemTheme();
+        }
+
+        document.body.classList.add(`theme-${themeToApply}`);
+
+        // Update theme radio button visual state
+        const themeRadios = document.querySelectorAll('input[name="theme"]');
+        themeRadios.forEach(radio => {
+            radio.checked = (radio.value === theme);
+        });
+
+        if (save) {
+            localStorage.setItem('themePreference', theme);
+        }
+    }
+
     function setLanguage(lang) {
         htmlElement.lang = lang;
         localStorage.setItem('langPreference', lang);
@@ -383,6 +413,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // --- Theme switcher events ---
+        const themeRadios = document.querySelectorAll('input[name="theme"]');
+        themeRadios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                applyTheme(e.target.value);
+            });
+        });
+
         // Recalculate indicator position on window resize to handle responsiveness
         window.addEventListener('resize', () => {
             if (document.getElementById('minutes-tens')) {
@@ -405,6 +443,7 @@ document.addEventListener('DOMContentLoaded', () => {
         totalFocusedSeconds = parseInt(localStorage.getItem('totalFocusedSeconds')) || 0;
         lastResetDate = localStorage.getItem('lastResetDate') || '';
         const savedLang = localStorage.getItem('langPreference') || 'ko';
+        const savedTheme = localStorage.getItem('themePreference') || 'light'; // Load saved theme
 
         const today = new Date().toISOString().slice(0, 10);
         if (lastResetDate !== today) {
@@ -418,9 +457,11 @@ document.addEventListener('DOMContentLoaded', () => {
         setupEventListeners();
 
         // Theme and language are now applied by the early scripts in the head to prevent FOUC.
-        // applyTheme(savedTheme);
-        // setLanguage(savedLang);
+        // The early script already applied the class, here we ensure the radio buttons are checked
+        // and handle any initial theme logic not covered by the early script if needed.
+        applyTheme(savedTheme, false); // Apply theme (don't save again)
 
+        // setLanguage(savedLang); // Language is already set by early script in head
 
         if (document.getElementById('minutes-tens')) {
             updateModeIndicatorPosition(false); // Initial position without animation

@@ -11,6 +11,9 @@
         (function() {
             const savedLang = localStorage.getItem('langPreference') || 'ko';
             document.documentElement.lang = savedLang;
+
+            const savedTheme = localStorage.getItem('themePreference') || 'light'; // Default to light
+            document.body.classList.add(`theme-${savedTheme}`);
         })();
     </script>
     <link rel="stylesheet" href="style.css">
