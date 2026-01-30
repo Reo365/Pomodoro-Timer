@@ -1,1 +1,5 @@
-The changes have been committed locally. To push the changes to a remote repository, please provide the remote URL. For example: `git remote add origin https://github.com/user/repo.git`
+I have completed the requested changes:
+1. The theme switcher has been moved into the header on all pages.
+2. The theme switcher is now present on all subpages (`about.html`, `contact.html`, `privacy.html`, `terms.html`).
+3. The active "Focus/Break" button color now changes with the selected theme.
+I have modified `index.html`, `about.html`, `contact.html`, `privacy.html`, `terms.html`, and `style.css`.
