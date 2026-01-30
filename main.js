@@ -106,16 +106,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setLanguage(lang) {
         const elementsToAnimate = [
-            document.querySelector('.header-controls'),
-            document.querySelector('.app-container'),
-            document.querySelector('.total-focus-time'),
-            document.querySelector('footer')
+            document.querySelector('.home-btn'),
+            document.querySelector('.mode-btn[data-mode="pomodoro"]'),
+            document.querySelector('.mode-btn[data-mode="shortBreak"]'),
+            document.querySelector('.total-focus-time p'), // Animate the paragraph containing totalFocusDisplay
+            ...document.querySelectorAll('footer nav a'),
+            document.querySelector('footer p')
         ].filter(el => el); // Filter out any null elements if not found
 
         // Add fade-out class
         elementsToAnimate.forEach(el => el.classList.add('language-transition-fade'));
 
-        // Wait for the fade-out transition to complete (0.3s as defined in CSS)
+        // Wait for the fade-out transition to complete (0.4s as defined in CSS)
         setTimeout(() => {
             htmlElement.lang = lang;
             localStorage.setItem('langPreference', lang);
@@ -123,12 +125,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Remove fade-out class to trigger fade-in
             elementsToAnimate.forEach(el => el.classList.remove('language-transition-fade'));
-        }, 300); // Match CSS transition duration
+        }, 400); // Match CSS transition duration
     }
 
     function translateElements(lang) {
         const t = TRANSLATIONS[lang];
-        const homeButton = document.querySelector('.header-mode-btn[data-mode="home"]');
+        const homeButton = document.querySelector('.home-btn');
         if (homeButton) homeButton.textContent = t.home;
         
         const pomodoroModeBtn = document.querySelector('.mode-btn[data-mode="pomodoro"]');
