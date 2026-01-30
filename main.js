@@ -159,19 +159,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateDisplay(secondsValue) {
-        if (!M_TENS) return;
+        if (!M_TENS) return; // M_TENS is the first element in digitContainers, check once
         const minutes = Math.floor(secondsValue / 60);
         const seconds = secondsValue % 60;
-        const mTens = Math.floor(minutes / 10);
-        const mOnes = minutes % 10;
-        const sTens = Math.floor(seconds / 10);
-        const sOnes = seconds % 10;
-        const digitHeight = M_TENS.clientHeight;
 
-        M_TENS.firstElementChild.style.transform = `translateY(-${mTens * digitHeight}px)`;
-        M_ONES.firstElementChild.style.transform = `translateY(-${mOnes * digitHeight}px)`;
-        S_TENS.firstElementChild.style.transform = `translateY(-${sTens * digitHeight}px)`;
-        S_ONES.firstElementChild.style.transform = `translateY(-${sOnes * digitHeight}px)`;
+        const digits = [
+            Math.floor(minutes / 10), // M_TENS
+            minutes % 10,           // M_ONES
+            Math.floor(seconds / 10), // S_TENS
+            seconds % 10            // S_ONES
+        ];
+        const digitHeight = digitContainers[0].clientHeight; // Assume all digit containers have the same height
+
+        digitContainers.forEach((container, index) => {
+            container.firstElementChild.style.transform = `translateY(-${digits[index] * digitHeight}px)`;
+        });
     }
 
     function startTimer() {
@@ -233,10 +235,10 @@ document.addEventListener('DOMContentLoaded', () => {
             indicatorTranslateX = (buttonRect.left - modeContainerRect.left) - indicatorLeftOffset;
             const indicatorWidth = buttonRect.width;
 
-            if (animate) {
-                modeIndicator.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-            } else {
+            if (!animate) {
                 modeIndicator.style.transition = 'none'; // Disable transition for instant positioning
+            } else {
+                modeIndicator.style.transition = ''; // Re-enable CSS transition
             }
             modeIndicator.style.transform = `translateX(${indicatorTranslateX}px)`;
             modeIndicator.style.width = `${indicatorWidth}px`;
@@ -456,12 +458,9 @@ document.addEventListener('DOMContentLoaded', () => {
         createDigitReels();
         setupEventListeners();
 
-        // Theme and language are now applied by the early scripts in the head to prevent FOUC.
         // The early script already applied the class, here we ensure the radio buttons are checked
         // and handle any initial theme logic not covered by the early script if needed.
         applyTheme(savedTheme, false); // Apply theme (don't save again)
-
-        // setLanguage(savedLang); // Language is already set by early script in head
 
         if (document.getElementById('minutes-tens')) {
             updateModeIndicatorPosition(false); // Initial position without animation
