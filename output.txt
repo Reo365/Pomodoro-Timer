@@ -1,1 +1,1 @@
-The UI issues have been fixed in `style.css`. The theme switcher visibility and the start/reset buttons display issues should be resolved.
+The changes have been committed locally. To push the changes to a remote repository, please provide the remote URL. For example: `git remote add origin https://github.com/user/repo.git`
