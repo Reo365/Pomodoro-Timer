@@ -545,7 +545,12 @@ body:has(input[value="dim"]:checked) {
     border-bottom: 10px solid transparent;
     border-left: 18px solid var(--c-content);
     margin-left: 5px;
-    transition: all 0.2s ease;
+    transition: all 0.2s ease, transform 0.2s ease; /* Add transform to transition */
+}
+
+/* New rule for play button icon hover effect */
+.play-btn:hover::before {
+    transform: scale(1.1); /* Slightly enlarge the icon on hover */
 }
 
 .play-btn.paused::before {
