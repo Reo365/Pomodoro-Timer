@@ -205,13 +205,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function translateMainPageElements(lang) {
         const t = TRANSLATIONS[lang];
-        const pomodoroModeBtn = document.querySelector('.mode-btn[data-mode="pomodoro"]');
-        if (pomodoroModeBtn) pomodoroModeBtn.textContent = t.pomodoro;
-        const shortBreakModeBtn = document.querySelector('.mode-btn[data-mode="shortBreak"]');
-        if (shortBreakModeBtn) shortBreakModeBtn.textContent = t.shortBreak;
         if (startButton) startButton.title = isPaused ? t.start : t.pause;
         if (resetButton) resetButton.title = t.reset;
-        if (totalFocusDisplay) totalFocusDisplay.parentElement.firstChild.textContent = t.totalFocusTimePrefix;
 
         updateTotalFocusDisplay();
     }
