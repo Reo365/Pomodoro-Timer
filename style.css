@@ -781,9 +781,11 @@ body.theme-dim {
 }
 
 .about-section h2 {
-    font-size: 1.8rem; /* Adjusted for more uniform hierarchy */
-    text-align: center;
-    width: 100%; /* Ensure full width for text-align to be effective */
+    font-size: 1.8rem;
+    display: block; /* Ensure it's a block-level element */
+    width: 100%; /* Ensure it takes full width */
+    margin: 0 auto; /* Center the block itself */
+    text-align: center; /* Center the text within the block */
     margin-bottom: 1.5rem;
 }
 
