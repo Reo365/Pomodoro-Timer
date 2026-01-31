@@ -845,9 +845,15 @@ body.theme-dim {
 }
 
 .about-section p {
-    font-size: 1rem;
+    font-size: 1.1rem; /* Slightly increased for better readability */
     line-height: 1.7;
     margin-bottom: 1rem;
+    color: var(--c-content);
+}
+
+.about-section p strong,
+.about-section ul li strong {
+    font-weight: bold; /* Ensure strong text is always bold */
     color: var(--c-content);
 }
 
@@ -858,13 +864,9 @@ body.theme-dim {
 }
 
 .about-section ul li {
-    font-size: 0.95rem;
+    font-size: 1rem; /* Slightly increased for better readability */
     line-height: 1.6;
     margin-bottom: 0.5rem;
-    color: var(--c-content);
-}
-
-.about-section ul li strong {
     color: var(--c-content);
 }
 
