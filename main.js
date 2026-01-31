@@ -24,6 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let totalFocusedSeconds = 0;
     let lastResetDate = '';
 
+    // Drag state
+    let isDragging = false;
+    let dragStartX = 0;
+    let initialIndicatorX = 0;
+    let indicatorTranslateX = 0; // Current translateX value
+
 
 
     const DURATIONS = {
@@ -62,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'about_h3_2': '이 뽀모도로 타이머의 차별점과 기능',
             'about_p_4': '저희 \'뽀모도로 타이머\'는 뽀모도로 테크닉을 일상에 쉽고 효과적으로 통합할 수 있도록 최적화된 웹 기반 애플리케이션입니다. 단순한 타이머를 넘어, 사용자의 생산성 여정을 지원하는 다양한 기능을 제공합니다:',
             'feature_1': '<strong>직관적인 인터페이스:</strong> 최소한의 디자인으로 타이머 본연의 기능에 집중할 수 있도록 깔끔하게 설계되었습니다. 복잡한 설정 없이 바로 시작할 수 있습니다.',
-            'feature_2': '<strong>유연한 모드 전환:</strong> 25분의 \'집중\' 모드와 5분의 \'휴식\' 모드를 버튼 클릭 한 번으로 쉽게 전환할 수 있습니다. 각 모드에 맞춰 배경색이 부드럽게 전환되어 현재 상태를 시각적으로 명확히 알려줍니다.',
+            'feature_2': '<strong>Flexible Mode Switching:</strong> Easily switch between 25-minute \'Focus\' mode and 5-minute \'Break\' mode with a single button click. The background color smoothly transitions with each mode, visually indicating the current state.',
             'feature_3': '<strong>세련된 숫자 애니메이션:</strong> 시간이 흘러가는 모습을 시각적으로 아름답게 표현하는 숫자 애니메이션은 사용자가 시간에 대한 감각을 더 잘 인지하고 몰입하는 데 도움을 줍니다.',
             'feature_4': '<strong>다크/라이트 모드 지원:</strong> 사용자의 시각적 피로도를 줄이고 어떤 환경에서도 편안하게 사용할 수 있도록 다크/라이트 테마를 완벽하게 지원합니다. 시스템 설정을 자동으로 감지하며, 수동으로 \'자동\', \'라이트\', \'다크\' 모드를 자유롭게 전환할 수 있습니다.',
             'feature_5': '<strong>총 집중 시간 추적 및 일간 초기화:</strong> 오늘 하루 동안 순수하게 작업에 집중한 총 시간을 분과 초 단위로 정확하게 기록하고 표시합니다. 이 기록은 매일 자정을 기준으로 자동으로 초기화되어, 매일 새로운 마음으로 집중 목표를 설정하고 달성하는 데 동기를 부여합니다. 모든 데이터는 사용자의 로컬 브라우저에 저장되므로 개인 정보 유출 위험이 없습니다.',
@@ -386,185 +392,81 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    // --- Mode Indicator Dragging ---
-    function setupModeIndicatorDragging() {
-        if (!modeIndicator || !timerModesContainer || modeButtons.length === 0) {
-            console.warn('Mode indicator, container, or buttons not found for dragging setup.');
-            return;
-        }
 
-        let isDraggingLocal = false;
-        let dragStartXLocal = 0;
-        let initialIndicatorXLocal = 0;
-        let indicatorTranslateXLocal = 0;
 
-        function handlePointerDownLocal(e) {
-            if (e.target !== modeIndicator) return;
 
-            isDraggingLocal = true;
-            modeIndicator.classList.add('dragging');
-            dragStartXLocal = e.clientX;
-            
-            const transformMatch = window.getComputedStyle(modeIndicator).transform.match(/translateX\(([^)]+)px\)/);
-            initialIndicatorXLocal = transformMatch ? parseFloat(transformMatch[1]) : 0;
-            indicatorTranslateXLocal = initialIndicatorXLocal;
 
-            modeIndicator.style.transition = 'none';
-            
-            document.addEventListener('pointermove', handlePointerMoveLocal);
-            document.addEventListener('pointerup', handlePointerUpLocal);
-        }
 
-        function handlePointerMoveLocal(e) {
-            if (!isDraggingLocal) return;
 
-            e.preventDefault();
-            const dragDelta = e.clientX - dragStartXLocal;
-            let newTranslateX = initialIndicatorXLocal + dragDelta;
+    // --- Drag functionality ---
+    function handlePointerDown(e) {
+        if (!modeIndicator || e.target !== modeIndicator) return;
 
-            const modeContainerRect = timerModesContainer.getBoundingClientRect();
-            const indicatorWidth = modeIndicator.offsetWidth;
+        isDragging = true;
+        modeIndicator.classList.add('dragging');
+        dragStartX = e.clientX;
+        // Get the current translateX value
+        const transformMatch = window.getComputedStyle(modeIndicator).transform.match(/translateX\(([^)]+)px\)/);
+        initialIndicatorX = transformMatch ? parseFloat(transformMatch[1]) : 0;
+        indicatorTranslateX = initialIndicatorX; // Initialize current translateX
 
-            // Calculate min/max for translateX based on button positions
-            const firstButtonRect = modeButtons[0].getBoundingClientRect();
-            const lastButtonRect = modeButtons[modeButtons.length - 1].getBoundingClientRect();
-            const indicatorLeftOffset = parseFloat(getComputedStyle(modeIndicator).left);
-
-            // minX for translateX is when the indicator is aligned with the first button
-            const minAllowedTranslateX = (firstButtonRect.left - modeContainerRect.left) - indicatorLeftOffset;
-            // maxX for translateX is when the indicator is aligned with the last button
-            const maxAllowedTranslateX = (lastButtonRect.left - modeContainerRect.left) - indicatorLeftOffset;
-            
-            indicatorTranslateXLocal = Math.max(minAllowedTranslateX, Math.min(newTranslateX, maxAllowedTranslateX));
-            modeIndicator.style.transform = `translateX(${indicatorTranslateXLocal}px)`;
-        }
-
-        function handlePointerUpLocal(e) {
-            if (!isDraggingLocal) return;
-
-            isDraggingLocal = false;
-            modeIndicator.classList.remove('dragging');
-            modeIndicator.style.transition = '';
-
-            let closestMode = currentMode;
-            let minDistance = Infinity;
-
-            modeButtons.forEach(button => {
-                const buttonRect = button.getBoundingClientRect();
-                const buttonCenterX = buttonRect.left + (buttonRect.width / 2);
-                const indicatorCenterX = modeIndicator.getBoundingClientRect().left + (modeIndicator.offsetWidth / 2);
-                
-                const distance = Math.abs(buttonCenterX - indicatorCenterX);
-
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closestMode = button.dataset.mode;
-                }
-            });
-
-            if (closestMode !== currentMode) {
-                switchMode(closestMode, true);
-            } else {
-                updateModeIndicatorPosition(); 
-            }
-
-            document.removeEventListener('pointermove', handlePointerMoveLocal);
-            document.removeEventListener('pointerup', handlePointerUpLocal);
-        }
-
-        modeIndicator.addEventListener('pointerdown', handlePointerDownLocal);
+        modeIndicator.style.transition = 'none'; // Disable transition during drag
+        
+        document.addEventListener('pointermove', handlePointerMove);
+        document.addEventListener('pointerup', handlePointerUp);
     }
 
+    function handlePointerMove(e) {
+        if (!isDragging) return;
 
-    // --- Theme Switcher Dragging ---
-    function setupThemeSwitcherDragging() {
-        const switcherForm = document.querySelector('.switcher');
-        const themeRadios = document.querySelectorAll('input[name="theme"]');
-        const switcherOptions = document.querySelectorAll('.switcher__option');
+        e.preventDefault(); // Prevent text selection etc.
+        const dragDelta = e.clientX - dragStartX;
+        let newTranslateX = initialIndicatorX + dragDelta;
 
-        if (!switcherForm || themeRadios.length === 0 || switcherOptions.length === 0) {
-            console.warn('Theme switcher elements not found for dragging setup.');
-            return;
-        }
+        const modeContainerRect = timerModesContainer.getBoundingClientRect();
+        const indicatorWidth = modeIndicator.offsetWidth;
 
-        let isDraggingLocal = false;
-        let dragStartXLocal = 0;
-        let initialPseudoTranslateX = 0;
-        let currentPseudoTranslateX = 0;
+        // Constrain movement within the parent (.timer-modes)
+        const minX = 0;
+        const maxX = modeContainerRect.width - indicatorWidth;
 
-        const snapPoints = [0, 76, 152]; // These are the CSS translateX values for each option
+        indicatorTranslateX = Math.max(minX, Math.min(newTranslateX, maxX));
+        modeIndicator.style.transform = `translateX(${indicatorTranslateX}px)`;
+    }
 
-        function getPseudoElementTranslateX() {
-            const currentOption = switcherForm.querySelector('input[name="theme"]:checked');
-            if (currentOption) {
-                const optionValue = parseInt(currentOption.getAttribute('c-option'));
-                return snapPoints[optionValue - 1];
+    function handlePointerUp(e) {
+        if (!isDragging) return;
+
+        isDragging = false;
+        modeIndicator.classList.remove('dragging');
+        modeIndicator.style.transition = ''; // Re-enable transition
+
+        // Determine which button the indicator is closest to
+        let closestMode = currentMode;
+        let minDistance = Infinity;
+
+        modeButtons.forEach(button => {
+            const buttonRect = button.getBoundingClientRect();
+            const buttonCenterX = buttonRect.left + (buttonRect.width / 2);
+            const indicatorCenterX = modeIndicator.getBoundingClientRect().left + (modeIndicator.offsetWidth / 2);
+            
+            const distance = Math.abs(buttonCenterX - indicatorCenterX);
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestMode = button.dataset.mode;
             }
-            return 0; // Default to first option
+        });
+
+        if (closestMode !== currentMode) {
+            switchMode(closestMode, true); // Pass true to indicate it's from a drag
+        } else {
+            // If the mode hasn't changed, snap back to current mode's position
+            updateModeIndicatorPosition(); 
         }
 
-        function handlePointerDownTheme(e) {
-            // Check if the click is on the switcher form itself or one of its direct children (buttons/indicator)
-            if (!switcherForm.contains(e.target)) return;
-
-            isDraggingLocal = true;
-            switcherForm.classList.add('dragging');
-            switcherForm.classList.add('no-transition'); // Temporarily disable CSS transition
-            dragStartXLocal = e.clientX;
-            initialPseudoTranslateX = getPseudoElementTranslateX();
-            currentPseudoTranslateX = initialPseudoTranslateX;
-
-            switcherForm.style.setProperty('--pseudo-translate-x', `${initialPseudoTranslateX}px`);
-
-            document.addEventListener('pointermove', handlePointerMoveTheme);
-            document.addEventListener('pointerup', handlePointerUpTheme);
-        }
-
-        function handlePointerMoveTheme(e) {
-            if (!isDraggingLocal) return;
-            e.preventDefault();
-
-            const dragDelta = e.clientX - dragStartXLocal;
-            let newTranslateX = initialPseudoTranslateX + dragDelta;
-
-            newTranslateX = Math.max(snapPoints[0], Math.min(newTranslateX, snapPoints[snapPoints.length - 1]));
-            currentPseudoTranslateX = newTranslateX;
-            switcherForm.style.setProperty('--pseudo-translate-x', `${currentPseudoTranslateX}px`);
-        }
-
-        function handlePointerUpTheme(e) {
-            if (!isDraggingLocal) return;
-
-            isDraggingLocal = false;
-            switcherForm.classList.remove('dragging');
-            switcherForm.classList.remove('no-transition'); // Re-enable CSS transition
-
-            let closestSnapPoint = snapPoints[0];
-            let minDistance = Infinity;
-            let closestRadio = themeRadios[0];
-
-            snapPoints.forEach((point, index) => {
-                const distance = Math.abs(currentPseudoTranslateX - point);
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closestSnapPoint = point;
-                    closestRadio = themeRadios[index];
-                }
-            });
-
-            switcherForm.style.setProperty('--pseudo-translate-x', `${closestSnapPoint}px`);
-
-            if (closestRadio && !closestRadio.checked) {
-                closestRadio.click();
-            }
-
-            document.removeEventListener('pointermove', handlePointerMoveTheme);
-            document.removeEventListener('pointerup', handlePointerUpTheme);
-        }
-        
-        switcherForm.style.setProperty('--pseudo-translate-x', `${getPseudoElementTranslateX()}px`);
-
-        switcherForm.addEventListener('pointerdown', handlePointerDownTheme);
+        document.removeEventListener('pointermove', handlePointerMove);
+        document.removeEventListener('pointerup', handlePointerUp);
     }
 
 
@@ -617,6 +519,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+        // --- Drag Listeners for modeIndicator ---
+        if (modeIndicator) {
+            modeIndicator.addEventListener('pointerdown', handlePointerDown);
+        }
+
         // --- Glow effect listeners ---
         document.addEventListener('pointermove', updateGlow);
         document.addEventListener('pointerleave', hideGlow);
@@ -650,8 +557,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Only initialize timer-specific elements and functions if on the main page
         if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
             if (document.getElementById('minutes-tens')) {
-                setupModeIndicatorDragging(); // Call the setup for dragging here
-                setupThemeSwitcherDragging(); // Call the setup for theme switcher dragging
+
+
                 updateModeIndicatorPosition(false); // Initial position without animation
                 switchMode(currentMode); // This sets up the correct timer duration and ensures indicator is positioned
             }
