@@ -67,8 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'about_p_3': '이러한 반복적인 패턴은 두뇌가 정보를 효율적으로 처리하고, 장시간의 집중으로 인한 피로를 효과적으로 해소하여 학습 및 작업 효율을 극대화하는 데 도움을 줍니다.',
             'about_h3_2': '이 뽀모도로 타이머의 차별점과 기능',
             'about_p_4': '저희 \'뽀모도로 타이머\'는 뽀모도로 테크닉을 일상에 쉽고 효과적으로 통합할 수 있도록 최적화된 웹 기반 애플리케이션입니다. 단순한 타이머를 넘어, 사용자의 생산성 여정을 지원하는 다양한 기능을 제공합니다:',
-            'feature_1': '<strong>직관적인 인터페이스:</strong> 최소한의 디자인으로 타이머 본연의 기능에 집중할 수 있도록 깔끔하게 설계되었습니다. 복잡한 설정 없이 바로 시작할 수 있습니다.',
-            'feature_2': '<strong>Flexible Mode Switching:</strong> Easily switch between 25-minute \'Focus\' mode and 5-minute \'Break\' mode with a single button click. The background color smoothly transitions with each mode, visually indicating the current state.',
+            'feature_2': '<strong>유연한 모드 전환:</strong> 25분의 \'집중\' 모드와 5분의 \'휴식\' 모드를 버튼 클릭 한 번으로 쉽게 전환할 수 있습니다. 각 모드에 맞춰 배경색이 부드럽게 전환되어 현재 상태를 시각적으로 명확히 알려줍니다.',
             'feature_3': '<strong>세련된 숫자 애니메이션:</strong> 시간이 흘러가는 모습을 시각적으로 아름답게 표현하는 숫자 애니메이션은 사용자가 시간에 대한 감각을 더 잘 인지하고 몰입하는 데 도움을 줍니다.',
             'feature_4': '<strong>다크/라이트 모드 지원:</strong> 사용자의 시각적 피로도를 줄이고 어떤 환경에서도 편안하게 사용할 수 있도록 다크/라이트 테마를 완벽하게 지원합니다. 시스템 설정을 자동으로 감지하며, 수동으로 \'자동\', \'라이트\', \'다크\' 모드를 자유롭게 전환할 수 있습니다.',
             'feature_5': '<strong>총 집중 시간 추적 및 일간 초기화:</strong> 오늘 하루 동안 순수하게 작업에 집중한 총 시간을 분과 초 단위로 정확하게 기록하고 표시합니다. 이 기록은 매일 자정을 기준으로 자동으로 초기화되어, 매일 새로운 마음으로 집중 목표를 설정하고 달성하는 데 동기를 부여합니다. 모든 데이터는 사용자의 로컬 브라우저에 저장되므로 개인 정보 유출 위험이 없습니다.',
@@ -193,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('[data-translate-key]').forEach(el => {
             const key = el.getAttribute('data-translate-key');
             if (t[key]) {
-                el.textContent = t[key];
+                el.innerHTML = t[key];
             }
         });
         
