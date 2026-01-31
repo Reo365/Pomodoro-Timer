@@ -338,7 +338,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const lang = htmlElement.lang;
         const minutes = Math.floor(totalFocusedSeconds / 60);
         const seconds = totalFocusedSeconds % 60;
-        totalFocusDisplay.textContent = `${minutes}${TRANSLATIONS[lang]['minutes']} ${seconds}${TRANSLATIONS[lang]['seconds']}`;
+        const displayString = `${minutes}${TRANSLATIONS[lang]['minutes']} ${seconds}${TRANSLATIONS[lang]['seconds']}`;
+        totalFocusDisplay.textContent = displayString;
+        console.log(`updateTotalFocusDisplay called: totalFocusedSeconds=${totalFocusedSeconds}, displayString=${displayString}`);
     }
 
     // --- Glow Effect Functions ---
