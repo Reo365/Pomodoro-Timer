@@ -783,6 +783,7 @@ body.theme-dim {
 .about-section h2 {
     font-size: 1.8rem; /* Adjusted for more uniform hierarchy */
     text-align: center;
+    width: 100%; /* Ensure full width for text-align to be effective */
     margin-bottom: 1.5rem;
 }
 
