@@ -24,11 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let totalFocusedSeconds = 0;
     let lastResetDate = '';
 
-    // Drag state
-    let isDragging = false;
-    let dragStartX = 0;
-    let initialIndicatorX = 0;
-    let indicatorTranslateX = 0; // Current translateX value
+
 
     const DURATIONS = {
         pomodoro: 25 * 60,
@@ -51,7 +47,33 @@ document.addEventListener('DOMContentLoaded', () => {
             'privacy': '개인정보 처리방침',
             'terms': '이용 약관',
             'contact': '문의하기',
-            'copyright': '© 2026 뽀모도로 타이머. 모든 권리 보유.'
+            'copyright': '© 2026 뽀모도로 타이머. 모든 권리 보유.',
+            'about_h2_1': '뽀모도로 테크닉과 이 타이머가 제공하는 가치',
+            'about_p_1': '현대 사회에서 집중력은 가장 귀중한 자원 중 하나입니다. 수많은 정보와 알림 속에서 우리의 주의는 쉽게 분산되고, 이는 생산성 저하와 스트레스로 이어지기 쉽습니다. <strong data-translate-key="pomodoro_technique">뽀모도로 테크닉</strong>은 이러한 문제에 대한 효과적인 해결책으로, 짧고 집중적인 작업 시간과 그에 따른 짧은 휴식 시간을 반복하여 두뇌의 피로도를 관리하고 지속적인 집중력을 유지하도록 돕는 과학적인 시간 관리 방법론입니다.',
+            'pomodoro_technique': '뽀모도로 테크닉',
+            'about_h3_1': '뽀모도로 테크닉이란?',
+            'about_p_2': '1980년대 후반 프란체스코 시릴로(Francesco Cirillo)가 개발한 뽀모도로 테크닉은 간단하면서도 강력한 효과를 자랑합니다. 이 기법은 토마토 모양의 주방 타이머에서 이름을 따왔으며, 다음과 같은 기본적인 단계로 진행됩니다:',
+            'step_1': '<strong>작업 목록 선정:</strong> 오늘 처리할 작업을 명확히 정의합니다.',
+            'step_2': '<strong>타이머 설정:</strong> 25분(하나의 뽀모도로)으로 타이머를 설정합니다.',
+            'step_3': '<strong>집중 작업:</strong> 타이머가 울릴 때까지 오직 하나의 작업에만 집중합니다. 방해 요소를 철저히 차단합니다.',
+            'step_4': '<strong>짧은 휴식:</strong> 25분 후, 5분간 짧은 휴식을 취합니다. 이 시간 동안에는 작업을 완전히 잊고 몸과 마음을 편안하게 합니다.',
+            'step_5': '<strong>긴 휴식:</strong> 네 번의 뽀모도로를 마친 후에는 15~30분간의 긴 휴식을 취합니다.',
+            'about_p_3': '이러한 반복적인 패턴은 두뇌가 정보를 효율적으로 처리하고, 장시간의 집중으로 인한 피로를 효과적으로 해소하여 학습 및 작업 효율을 극대화하는 데 도움을 줍니다.',
+            'about_h3_2': '이 뽀모도로 타이머의 차별점과 기능',
+            'about_p_4': '저희 \'뽀모도로 타이머\'는 뽀모도로 테크닉을 일상에 쉽고 효과적으로 통합할 수 있도록 최적화된 웹 기반 애플리케이션입니다. 단순한 타이머를 넘어, 사용자의 생산성 여정을 지원하는 다양한 기능을 제공합니다:',
+            'feature_1': '<strong>직관적인 인터페이스:</strong> 최소한의 디자인으로 타이머 본연의 기능에 집중할 수 있도록 깔끔하게 설계되었습니다. 복잡한 설정 없이 바로 시작할 수 있습니다.',
+            'feature_2': '<strong>유연한 모드 전환:</strong> 25분의 \'집중\' 모드와 5분의 \'휴식\' 모드를 버튼 클릭 한 번으로 쉽게 전환할 수 있습니다. 각 모드에 맞춰 배경색이 부드럽게 전환되어 현재 상태를 시각적으로 명확히 알려줍니다.',
+            'feature_3': '<strong>세련된 숫자 애니메이션:</strong> 시간이 흘러가는 모습을 시각적으로 아름답게 표현하는 숫자 애니메이션은 사용자가 시간에 대한 감각을 더 잘 인지하고 몰입하는 데 도움을 줍니다.',
+            'feature_4': '<strong>다크/라이트 모드 지원:</strong> 사용자의 시각적 피로도를 줄이고 어떤 환경에서도 편안하게 사용할 수 있도록 다크/라이트 테마를 완벽하게 지원합니다. 시스템 설정을 자동으로 감지하며, 수동으로 \'자동\', \'라이트\', \'다크\' 모드를 자유롭게 전환할 수 있습니다.',
+            'feature_5': '<strong>총 집중 시간 추적 및 일간 초기화:</strong> 오늘 하루 동안 순수하게 작업에 집중한 총 시간을 분과 초 단위로 정확하게 기록하고 표시합니다. 이 기록은 매일 자정을 기준으로 자동으로 초기화되어, 매일 새로운 마음으로 집중 목표를 설정하고 달성하는 데 동기를 부여합니다. 모든 데이터는 사용자의 로컬 브라우저에 저장되므로 개인 정보 유출 위험이 없습니다.',
+            'feature_6': '<strong>강력하고 직관적인 컨트롤:</strong> \'시작\', \'일시정지\', \'재설정\' 버튼으로 타이머를 완벽하게 제어할 수 있습니다. 예상치 못한 방해나 급한 일 발생 시에도 유연하게 대응할 수 있습니다.',
+            'about_h3_3': '어떻게 사용해야 할까요?',
+            'about_p_5': '이 타이머를 최대한 활용하려면 다음 팁을 따르는 것이 좋습니다:',
+            'tip_1': '<strong>방해 요소 제거:</strong> 뽀모도로 세션 시작 전에 알림을 끄고, 방해될 만한 요소를 미리 제거합니다.',
+            'tip_2': '<strong>한 가지 작업에 집중:</strong> 25분 동안은 오직 한 가지 작업에만 몰두합니다. 다른 생각이 떠오르면 잠시 메모해두고 세션 후에 처리합니다.',
+            'tip_3': '<strong>휴식은 휴식답게:</strong> 5분 휴식 시간에는 작업과 관련된 것을 피하고, 스트레칭, 물 마시기, 창밖 바라보기 등 가벼운 활동으로 재충전합니다.',
+            'tip_4': '<strong>꾸준함이 핵심:</strong> 매일 꾸준히 뽀모도로 테크닉을 적용하여 집중하는 습관을 형성합니다.',
+            'about_p_6': '저희 \'뽀모도로 타이머\'와 함께라면 당신의 생산성은 한 단계 더 성장할 것입니다. 지금 바로 시작하여 집중의 마법을 경험해 보세요!'
         },
         'en': {
             'home': 'Home',
@@ -68,7 +90,33 @@ document.addEventListener('DOMContentLoaded', () => {
             'privacy': 'Privacy Policy',
             'terms': 'Terms of Service',
             'contact': 'Contact Us',
-            'copyright': '© 2026 Pomodoro Timer. All rights reserved.'
+            'copyright': '© 2026 Pomodoro Timer. All rights reserved.',
+            'about_h2_1': 'The Value of Pomodoro Technique and This Timer',
+            'about_p_1': 'In modern society, focus is one of our most valuable resources. Amidst countless information and notifications, our attention is easily dispersed, leading to decreased productivity and stress. The <strong>Pomodoro Technique</strong> is an effective solution to this problem, a scientific time management methodology that helps manage brain fatigue and maintain continuous focus by alternating short, concentrated work periods with short breaks.',
+            'pomodoro_technique': 'Pomodoro Technique',
+            'about_h3_1': 'What is the Pomodoro Technique?',
+            'about_p_2': 'Developed in the late 1980s by Francesco Cirillo, the Pomodoro Technique is simple yet powerful. Named after a tomato-shaped kitchen timer, this method proceeds through the following basic steps:',
+            'step_1': '<strong>Select Tasks:</strong> Clearly define the tasks to be completed today.',
+            'step_2': '<strong>Set the Timer:</strong> Set the timer for 25 minutes (one Pomodoro).',
+            'step_3': '<strong>Focused Work:</strong> Concentrate solely on one task until the timer rings. Strictly eliminate distractions.',
+            'step_4': '<strong>Short Break:</strong> After 25 minutes, take a 5-minute short break. During this time, completely forget about work and relax your body and mind.',
+            'step_5': '<strong>Long Break:</strong> After completing four Pomodoros, take a long break of 15-30 minutes.',
+            'about_p_3': 'This repetitive pattern helps the brain process information efficiently, effectively relieve fatigue from prolonged concentration, and maximize learning and work efficiency.',
+            'about_h3_2': 'Distinguishing Features and Functions of This Pomodoro Timer',
+            'about_p_4': 'Our \'Pomodoro Timer\' is a web-based application optimized to easily and effectively integrate the Pomodoro Technique into your daily life. Beyond a simple timer, it offers various features to support your productivity journey:',
+            'feature_1': '<strong>Intuitive Interface:</strong> Cleanly designed with a minimalist approach to focus on the timer\'s core functionality. Start immediately without complex settings.',
+            'feature_2': '<strong>Flexible Mode Switching:</strong> Easily switch between 25-minute \'Focus\' mode and 5-minute \'Break\' mode with a single button click. The background color smoothly transitions with each mode, visually indicating the current state.',
+            'feature_3': '<strong>Stylish Number Animation:</strong> The visually appealing number animation showing time passing helps users better perceive time and immerse themselves.',
+            'feature_4': '<strong>Dark/Light Mode Support:</strong> Fully supports dark/light themes to reduce eye strain and ensure comfortable use in any environment. It automatically detects system settings, and you can freely switch between \'Auto\', \'Light\', and \'Dark\' modes manually.',
+            'feature_5': '<strong>Total Focus Time Tracking & Daily Reset:</strong> Accurately records and displays the total time purely focused on work today in minutes and seconds. This record automatically resets at midnight, motivating you to set and achieve new focus goals daily. All data is stored in your local browser, eliminating personal information leakage risks.',
+            'feature_6': '<strong>Powerful and Intuitive Controls:</strong> Fully control the timer with \'Start\', \'Pause\', and \'Reset\' buttons. Flexibly respond to unexpected interruptions or urgent matters.',
+            'about_h3_3': 'How to Use It?',
+            'about_p_5': 'To maximize the use of this timer, we recommend following these tips:',
+            'tip_1': '<strong>Eliminate Distractions:</strong> Before starting a Pomodoro session, turn off notifications and proactively remove any potential distractions.',
+            'tip_2': '<strong>Focus on One Task:</strong> For 25 minutes, concentrate solely on one task. If other thoughts arise, jot them down and deal with them after the session.',
+            'tip_3': '<strong>Break Like You Mean It:</strong> During the 5-minute break, avoid anything related to work and recharge with light activities like stretching, drinking water, or looking out the window.',
+            'tip_4': '<strong>Consistency is Key:</strong> Consistently apply the Pomodoro Technique daily to form a habit of concentration.',
+            'about_p_6': 'With our \'Pomodoro Timer\', your productivity will grow to the next level. Start now and experience the magic of focus!'
         }
     };
 
@@ -105,27 +153,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setLanguage(lang) {
-        const elementsToAnimate = [
-            document.querySelector('.home-btn'),
-            document.querySelector('.mode-btn[data-mode="pomodoro"]'),
-            document.querySelector('.mode-btn[data-mode="shortBreak"]'),
-            document.querySelector('.total-focus-time p'), // Animate the paragraph containing totalFocusDisplay
-            ...document.querySelectorAll('footer nav a'),
-            document.querySelector('footer p')
-        ].filter(el => el); // Filter out any null elements if not found
-
-        // Add fade-out class
-        elementsToAnimate.forEach(el => el.classList.add('language-transition-fade'));
-
-        // Wait for the fade-out transition to complete (0.4s as defined in CSS)
-        setTimeout(() => {
-            htmlElement.lang = lang;
-            localStorage.setItem('langPreference', lang);
-            translateElements(lang);
-
-            // Remove fade-out class to trigger fade-in
-            elementsToAnimate.forEach(el => el.classList.remove('language-transition-fade'));
-        }, 400); // Match CSS transition duration
+        htmlElement.lang = lang;
+        localStorage.setItem('langPreference', lang);
+        translateElements(lang);
     }
 
     function translateElements(lang) {
@@ -133,20 +163,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const homeButton = document.querySelector('.home-btn');
         if (homeButton) homeButton.textContent = t.home;
         
-        const pomodoroModeBtn = document.querySelector('.mode-btn[data-mode="pomodoro"]');
-        if (pomodoroModeBtn) pomodoroModeBtn.textContent = t.pomodoro;
-        const shortBreakModeBtn = document.querySelector('.mode-btn[data-mode="shortBreak"]');
-        if (shortBreakModeBtn) shortBreakModeBtn.textContent = t.shortBreak;
-        if (startButton) startButton.title = isPaused ? t.start : t.pause;
-        if (resetButton) resetButton.title = t.reset;
-        if (totalFocusDisplay) totalFocusDisplay.parentElement.firstChild.textContent = t.totalFocusTimePrefix;
+        // Common elements: footer nav links and copyright
+        document.querySelectorAll('footer nav a').forEach(link => {
+            const key = link.getAttribute('href').replace('.html', '');
+            if (t[key]) link.textContent = t[key];
+        });
+        const footerP = document.querySelector('footer p');
+        if (footerP) footerP.textContent = t.copyright;
 
-        document.querySelector('footer nav a[href="about.html"]').textContent = t.about;
-        document.querySelector('footer nav a[href="privacy.html"]').textContent = t.privacy;
-        document.querySelector('footer nav a[href="terms.html"]').textContent = t.terms;
-        document.querySelector('footer nav a[href="contact.html"]').textContent = t.contact;
-        document.querySelector('footer p').textContent = t.copyright;
-
+        // Update document title
         const baseTitle = lang === 'ko' ? '뽀모도로 타이머' : 'Deep Focus Pomodoro';
         const pageSpecificTitles = {
             'about.html': t.about,
@@ -157,6 +182,30 @@ document.addEventListener('DOMContentLoaded', () => {
         const filename = window.location.pathname.split('/').pop();
         const specificTitle = pageSpecificTitles[filename];
         document.title = specificTitle ? `${specificTitle} | ${baseTitle}` : baseTitle;
+
+        // Translate elements on subpages with data-translate-key
+        document.querySelectorAll('[data-translate-key]').forEach(el => {
+            const key = el.getAttribute('data-translate-key');
+            if (t[key]) {
+                el.textContent = t[key];
+            }
+        });
+        
+        // Update total focus display if present
+        if (totalFocusDisplay) {
+            updateTotalFocusDisplay();
+        }
+    }
+
+    function translateMainPageElements(lang) {
+        const t = TRANSLATIONS[lang];
+        const pomodoroModeBtn = document.querySelector('.mode-btn[data-mode="pomodoro"]');
+        if (pomodoroModeBtn) pomodoroModeBtn.textContent = t.pomodoro;
+        const shortBreakModeBtn = document.querySelector('.mode-btn[data-mode="shortBreak"]');
+        if (shortBreakModeBtn) shortBreakModeBtn.textContent = t.shortBreak;
+        if (startButton) startButton.title = isPaused ? t.start : t.pause;
+        if (resetButton) resetButton.title = t.reset;
+        if (totalFocusDisplay) totalFocusDisplay.parentElement.firstChild.textContent = t.totalFocusTimePrefix;
 
         updateTotalFocusDisplay();
     }
@@ -330,74 +379,192 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Drag functionality ---
-    function handlePointerDown(e) {
-        if (!modeIndicator || e.target !== modeIndicator) return;
 
-        isDragging = true;
-        modeIndicator.classList.add('dragging');
-        dragStartX = e.clientX;
-        // Get the current translateX value
-        const transformMatch = window.getComputedStyle(modeIndicator).transform.match(/translateX\(([^)]+)px\)/);
-        initialIndicatorX = transformMatch ? parseFloat(transformMatch[1]) : 0;
-        indicatorTranslateX = initialIndicatorX; // Initialize current translateX
 
-        modeIndicator.style.transition = 'none'; // Disable transition during drag
-        
-        document.addEventListener('pointermove', handlePointerMove);
-        document.addEventListener('pointerup', handlePointerUp);
-    }
 
-    function handlePointerMove(e) {
-        if (!isDragging) return;
 
-        e.preventDefault(); // Prevent text selection etc.
-        const dragDelta = e.clientX - dragStartX;
-        let newTranslateX = initialIndicatorX + dragDelta;
 
-        const modeContainerRect = timerModesContainer.getBoundingClientRect();
-        const indicatorWidth = modeIndicator.offsetWidth;
 
-        // Constrain movement within the parent (.timer-modes)
-        const minX = 0;
-        const maxX = modeContainerRect.width - indicatorWidth;
 
-        indicatorTranslateX = Math.max(minX, Math.min(newTranslateX, maxX));
-        modeIndicator.style.transform = `translateX(${indicatorTranslateX}px)`;
-    }
-
-    function handlePointerUp(e) {
-        if (!isDragging) return;
-
-        isDragging = false;
-        modeIndicator.classList.remove('dragging');
-        modeIndicator.style.transition = ''; // Re-enable transition
-
-        // Determine which button the indicator is closest to
-        let closestMode = currentMode;
-        let minDistance = Infinity;
-
-        modeButtons.forEach(button => {
-            const buttonRect = button.getBoundingClientRect();
-            const buttonCenterX = buttonRect.left + (buttonRect.width / 2);
-            const indicatorCenterX = modeIndicator.getBoundingClientRect().left + (modeIndicator.offsetWidth / 2);
-            
-            const distance = Math.abs(buttonCenterX - indicatorCenterX);
-
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestMode = button.dataset.mode;
-            }
-        });
-
-        if (closestMode !== currentMode) {
-            switchMode(closestMode, true); // Pass true to indicate it's from a drag
-        } else {
-            // If the mode hasn't changed, snap back to current mode's position
-            updateModeIndicatorPosition(); 
+    // --- Mode Indicator Dragging ---
+    function setupModeIndicatorDragging() {
+        if (!modeIndicator || !timerModesContainer || modeButtons.length === 0) {
+            console.warn('Mode indicator, container, or buttons not found for dragging setup.');
+            return;
         }
 
-        document.removeEventListener('pointermove', handlePointerMove);
-        document.removeEventListener('pointerup', handlePointerUp);
+        let isDraggingLocal = false;
+        let dragStartXLocal = 0;
+        let initialIndicatorXLocal = 0;
+        let indicatorTranslateXLocal = 0;
+
+        function handlePointerDownLocal(e) {
+            if (e.target !== modeIndicator) return;
+
+            isDraggingLocal = true;
+            modeIndicator.classList.add('dragging');
+            dragStartXLocal = e.clientX;
+            
+            const transformMatch = window.getComputedStyle(modeIndicator).transform.match(/translateX\(([^)]+)px\)/);
+            initialIndicatorXLocal = transformMatch ? parseFloat(transformMatch[1]) : 0;
+            indicatorTranslateXLocal = initialIndicatorXLocal;
+
+            modeIndicator.style.transition = 'none';
+            
+            document.addEventListener('pointermove', handlePointerMoveLocal);
+            document.addEventListener('pointerup', handlePointerUpLocal);
+        }
+
+        function handlePointerMoveLocal(e) {
+            if (!isDraggingLocal) return;
+
+            e.preventDefault();
+            const dragDelta = e.clientX - dragStartXLocal;
+            let newTranslateX = initialIndicatorXLocal + dragDelta;
+
+            const modeContainerRect = timerModesContainer.getBoundingClientRect();
+            const indicatorWidth = modeIndicator.offsetWidth;
+
+            // Calculate min/max for translateX based on button positions
+            const firstButtonRect = modeButtons[0].getBoundingClientRect();
+            const lastButtonRect = modeButtons[modeButtons.length - 1].getBoundingClientRect();
+            const indicatorLeftOffset = parseFloat(getComputedStyle(modeIndicator).left);
+
+            // minX for translateX is when the indicator is aligned with the first button
+            const minAllowedTranslateX = (firstButtonRect.left - modeContainerRect.left) - indicatorLeftOffset;
+            // maxX for translateX is when the indicator is aligned with the last button
+            const maxAllowedTranslateX = (lastButtonRect.left - modeContainerRect.left) - indicatorLeftOffset;
+            
+            indicatorTranslateXLocal = Math.max(minAllowedTranslateX, Math.min(newTranslateX, maxAllowedTranslateX));
+            modeIndicator.style.transform = `translateX(${indicatorTranslateXLocal}px)`;
+        }
+
+        function handlePointerUpLocal(e) {
+            if (!isDraggingLocal) return;
+
+            isDraggingLocal = false;
+            modeIndicator.classList.remove('dragging');
+            modeIndicator.style.transition = '';
+
+            let closestMode = currentMode;
+            let minDistance = Infinity;
+
+            modeButtons.forEach(button => {
+                const buttonRect = button.getBoundingClientRect();
+                const buttonCenterX = buttonRect.left + (buttonRect.width / 2);
+                const indicatorCenterX = modeIndicator.getBoundingClientRect().left + (modeIndicator.offsetWidth / 2);
+                
+                const distance = Math.abs(buttonCenterX - indicatorCenterX);
+
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestMode = button.dataset.mode;
+                }
+            });
+
+            if (closestMode !== currentMode) {
+                switchMode(closestMode, true);
+            } else {
+                updateModeIndicatorPosition(); 
+            }
+
+            document.removeEventListener('pointermove', handlePointerMoveLocal);
+            document.removeEventListener('pointerup', handlePointerUpLocal);
+        }
+
+        modeIndicator.addEventListener('pointerdown', handlePointerDownLocal);
+    }
+
+
+    // --- Theme Switcher Dragging ---
+    function setupThemeSwitcherDragging() {
+        const switcherForm = document.querySelector('.switcher');
+        const themeRadios = document.querySelectorAll('input[name="theme"]');
+        const switcherOptions = document.querySelectorAll('.switcher__option');
+
+        if (!switcherForm || themeRadios.length === 0 || switcherOptions.length === 0) {
+            console.warn('Theme switcher elements not found for dragging setup.');
+            return;
+        }
+
+        let isDraggingLocal = false;
+        let dragStartXLocal = 0;
+        let initialPseudoTranslateX = 0;
+        let currentPseudoTranslateX = 0;
+
+        const snapPoints = [0, 76, 152]; // These are the CSS translateX values for each option
+
+        function getPseudoElementTranslateX() {
+            const currentOption = switcherForm.querySelector('input[name="theme"]:checked');
+            if (currentOption) {
+                const optionValue = parseInt(currentOption.getAttribute('c-option'));
+                return snapPoints[optionValue - 1];
+            }
+            return 0; // Default to first option
+        }
+
+        function handlePointerDownTheme(e) {
+            // Check if the click is on the switcher form itself or one of its direct children (buttons/indicator)
+            if (!switcherForm.contains(e.target)) return;
+
+            isDraggingLocal = true;
+            switcherForm.classList.add('dragging');
+            switcherForm.classList.add('no-transition'); // Temporarily disable CSS transition
+            dragStartXLocal = e.clientX;
+            initialPseudoTranslateX = getPseudoElementTranslateX();
+            currentPseudoTranslateX = initialPseudoTranslateX;
+
+            switcherForm.style.setProperty('--pseudo-translate-x', `${initialPseudoTranslateX}px`);
+
+            document.addEventListener('pointermove', handlePointerMoveTheme);
+            document.addEventListener('pointerup', handlePointerUpTheme);
+        }
+
+        function handlePointerMoveTheme(e) {
+            if (!isDraggingLocal) return;
+            e.preventDefault();
+
+            const dragDelta = e.clientX - dragStartXLocal;
+            let newTranslateX = initialPseudoTranslateX + dragDelta;
+
+            newTranslateX = Math.max(snapPoints[0], Math.min(newTranslateX, snapPoints[snapPoints.length - 1]));
+            currentPseudoTranslateX = newTranslateX;
+            switcherForm.style.setProperty('--pseudo-translate-x', `${currentPseudoTranslateX}px`);
+        }
+
+        function handlePointerUpTheme(e) {
+            if (!isDraggingLocal) return;
+
+            isDraggingLocal = false;
+            switcherForm.classList.remove('dragging');
+            switcherForm.classList.remove('no-transition'); // Re-enable CSS transition
+
+            let closestSnapPoint = snapPoints[0];
+            let minDistance = Infinity;
+            let closestRadio = themeRadios[0];
+
+            snapPoints.forEach((point, index) => {
+                const distance = Math.abs(currentPseudoTranslateX - point);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestSnapPoint = point;
+                    closestRadio = themeRadios[index];
+                }
+            });
+
+            switcherForm.style.setProperty('--pseudo-translate-x', `${closestSnapPoint}px`);
+
+            if (closestRadio && !closestRadio.checked) {
+                closestRadio.click();
+            }
+
+            document.removeEventListener('pointermove', handlePointerMoveTheme);
+            document.removeEventListener('pointerup', handlePointerUpTheme);
+        }
+        
+        switcherForm.style.setProperty('--pseudo-translate-x', `${getPseudoElementTranslateX()}px`);
+
+        switcherForm.addEventListener('pointerdown', handlePointerDownTheme);
     }
 
 
@@ -448,10 +615,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // --- Drag Listeners for modeIndicator ---
-        if (modeIndicator) {
-            modeIndicator.addEventListener('pointerdown', handlePointerDown);
-        }
+
 
         // --- Glow effect listeners ---
         document.addEventListener('pointermove', updateGlow);
@@ -480,9 +644,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // and handle any initial theme logic not covered by the early script if needed.
         applyTheme(savedTheme, false); // Apply theme (don't save again)
 
-        if (document.getElementById('minutes-tens')) {
-            updateModeIndicatorPosition(false); // Initial position without animation
-            switchMode(currentMode); // This sets up the correct timer duration and ensures indicator is positioned
+        // Translate common elements on all pages
+        translateElements(savedLang);
+
+        // Only initialize timer-specific elements and functions if on the main page
+        if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
+            if (document.getElementById('minutes-tens')) {
+                setupModeIndicatorDragging(); // Call the setup for dragging here
+                setupThemeSwitcherDragging(); // Call the setup for theme switcher dragging
+                updateModeIndicatorPosition(false); // Initial position without animation
+                switchMode(currentMode); // This sets up the correct timer duration and ensures indicator is positioned
+            }
+            translateMainPageElements(savedLang); // Translate elements specific to index.html
         }
         updateTotalFocusDisplay();
     }
