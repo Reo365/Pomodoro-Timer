@@ -5,7 +5,6 @@
      crossorigin="anonymous"></script>
     <meta name="google-adsense-account" content="ca-pub-5876643721918901">
     <meta charset="UTF-8">
-    <meta name="description" content="뽀모도로 타이머 - 집중력 향상을 위한 간단하고 효율적인 시간 관리 도구. 25분 집중, 5분 휴식으로 생산성을 높여보세요.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>뽀모도로 타이머</title>
     <script>
@@ -17,14 +16,11 @@
             document.body.classList.add(`theme-${savedTheme}`);
         })();
     </script>
-    <link rel="preload" href="style.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="style.min.css"></noscript>
+    <link rel="stylesheet" href="style.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap"></noscript>
-    <link rel="preload" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript><link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" /></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 </head>
 <body>
     <div class="header-controls">
@@ -32,21 +28,21 @@
         <div class="header-right-controls">
             <form class="switcher" aria-label="Theme switcher">
                 <input type="radio" name="theme" id="theme-light" value="light" c-option="1" checked class="switcher__input">
-                <label for="theme-light" class="switcher__option" aria-label="Light theme">
+                <label for="theme-light" class="switcher__option">
                     <svg class="switcher__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="24" height="24">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 5h2v6h-2V5zm0 8h2v2h-2v-2zm0 4h2v2h-2v-2z"/>
                     </svg>
                 </label>
         
                 <input type="radio" name="theme" id="theme-dark" value="dark" c-option="2" class="switcher__input">
-                <label for="theme-dark" class="switcher__option" aria-label="Dark theme">
+                <label for="theme-dark" class="switcher__option">
                     <svg class="switcher__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="24" height="24">
                         <path d="M12 2a10 10 0 100 20 10 10 0 000-20zM5.5 12c0-3.5 2.5-6.4 5.8-6.9C10.6 8.8 12 11.2 12 14c0 2.8-1.4 5.2-3.2 6.7-3.3-.5-5.8-3.4-5.8-6.7z"/>
                     </svg>
                 </label>
         
                 <input type="radio" name="theme" id="theme-dim" value="dim" c-option="3" class="switcher__input">
-                <label for="theme-dim" class="switcher__option" aria-label="Dim theme">
+                <label for="theme-dim" class="switcher__option">
                     <svg class="switcher__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="24" height="24">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-4 6c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4 4-4-1.79-4-4z"/>
                     </svg>
@@ -61,7 +57,7 @@
                 </svg>
             </form>
             <div class="lang-selector-container">
-                <button id="lang-toggle-btn" class="lang-toggle-btn has-glow-border" data-mode="lang" aria-label="Toggle language selector">🌐</button>
+                <button id="lang-toggle-btn" class="lang-toggle-btn has-glow-border" data-mode="lang">🌐</button>
     
             </div>
         </div>
@@ -78,13 +74,13 @@
             
             <div class="timer-modes">
                 <div class="mode-indicator"></div>
-                <button class="mode-btn active" data-mode="pomodoro" data-translate-key="pomodoro" aria-label="Pomodoro mode">집중</button>
-                <button class="mode-btn" data-mode="shortBreak" data-translate-key="shortBreak" aria-label="Short break mode">휴식</button>
+                <button class="mode-btn active" data-mode="pomodoro" data-translate-key="pomodoro">집중</button>
+                <button class="mode-btn" data-mode="shortBreak" data-translate-key="shortBreak">휴식</button>
             </div>
 
             <div class="timer-controls">
-                <button id="start-btn" class="control-btn play-btn" aria-label="Start timer"></button>
-                <button id="reset-btn" class="control-btn reset-btn" aria-label="Reset timer"></button>
+                <button id="start-btn" class="control-btn play-btn"></button>
+                <button id="reset-btn" class="control-btn reset-btn"></button>
             </div>
         </div>
 
@@ -93,8 +89,7 @@
         </div>
     </main>
 
-    <script src="common.js" defer></script>
-    <script src="timer.js" defer></script>
+    <script src="main.min.js"></script>
     <footer class="has-glow-border">
         <nav class="footer-nav">
             <a href="about.html">소개</a>
