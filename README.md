@@ -2,9 +2,9 @@
 
 A simple and efficient web-based Pomodoro timer application designed to help you improve focus and productivity.
 
-## 🚀 Live Demo
+## 🌐 웹사이트
 
-Experience the Pomodoro Timer live at: [https://pomodoro.64bit.kr/](https://pomodoro.64bit.kr/)
+[https://pomodoro.64bit.kr/](https://pomodoro.64bit.kr/)
 
 ## 🌟 Features
 
