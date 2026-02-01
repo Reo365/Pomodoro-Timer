@@ -163,12 +163,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.updateTotalFocusDisplay = function() { // Make global
         if (!totalFocusDisplay) return;
-        const lang = window.htmlElement.lang;
         const minutes = Math.floor(window.totalFocusedSeconds / 60);
         const seconds = window.totalFocusedSeconds % 60;
-
         const formatTimeComponent = (value) => String(value).padStart(2, '0');
 
+        if (!window.htmlElement || !window.TRANSLATIONS || !window.TRANSLATIONS[window.htmlElement.lang]) {
+            // Fallback if translations are not yet loaded
+            totalFocusDisplay.textContent = `${formatTimeComponent(minutes)}:${formatTimeComponent(seconds)}`;
+            return;
+        }
+
+        const lang = window.htmlElement.lang;
         const displayString = `${formatTimeComponent(minutes)}${window.TRANSLATIONS[lang]['minutes']} ${formatTimeComponent(seconds)}${window.TRANSLATIONS[lang]['seconds']}`;
         totalFocusDisplay.textContent = displayString;
     }

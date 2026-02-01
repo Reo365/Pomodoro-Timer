@@ -26,32 +26,35 @@
     <div class="header-controls">
         <div class="header-left-controls">
             <a href="index.html" class="home-btn has-glow-border" data-mode="home">홈</a>
-            <a href="https://github.com/Reo365/Pomodoro-Timer" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository" class="has-glow-border github-link liquid-glass">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.08-.731.084-.716.084-.716 1.192.085 1.815 1.226 1.815 1.226 1.065 1.815 2.806 1.29 3.49.988.107-.775.418-1.29.762-1.583-2.665-.304-5.467-1.333-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.312 3.301 1.23.957-.266 1.983-.399 3.003-.399.006 0 .012 0 .018 0 1.02.001 2.046.133 3.003.399 2.295-1.542 3.301-1.23 3.301-1.23.653 1.652.242 2.873.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.922.43.37.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.563 21.796 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
-                </svg>
-            </a>
         </div>
         <div class="header-right-controls">
             <form class="switcher" aria-label="Theme switcher">
                 <input type="radio" name="theme" id="theme-light" value="light" c-option="1" checked class="switcher__input">
                 <label for="theme-light" class="switcher__option">
                     <svg class="switcher__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="24" height="24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 5h2v6h-2V5zm0 8h2v2h-2v-2zm0 4h2v2h-2v-2z"/>
+                        <path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
+                        <path d="M18.313 16.91l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.218 -1.567l.102 .07z" />
+                        <path d="M7.007 16.993a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l-.7 -.7a1 1 0 0 1 1.414 0z" />
+                        <path d="M4 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" />
+                        <path d="M21 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" />
+                        <path d="M6.213 4.81l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.217 -1.567l.102 .07z" />
+                        <path d="M19.107 4.893a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l-.7 -.7a1 1 0 0 1 1.414 0z" />
+                        <path d="M12 2a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
+                        <path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
                     </svg>
                 </label>
         
-                <input type="radio" name="theme" id="theme-dark" value="dark" c-option="2" class="switcher__input">
+                <input type="radio" name="theme" id="theme-dark" value="dark" c-option="3" class="switcher__input">
                 <label for="theme-dark" class="switcher__option">
                     <svg class="switcher__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="24" height="24">
-                        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zM5.5 12c0-3.5 2.5-6.4 5.8-6.9C10.6 8.8 12 11.2 12 14c0 2.8-1.4 5.2-3.2 6.7-3.3-.5-5.8-3.4-5.8-6.7z"/>
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
                     </svg>
                 </label>
         
-                <input type="radio" name="theme" id="theme-dim" value="dim" c-option="3" class="switcher__input">
+                <input type="radio" name="theme" id="theme-dim" value="dim" c-option="2" class="switcher__input">
                 <label for="theme-dim" class="switcher__option">
                     <svg class="switcher__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="24" height="24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-4 6c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4 4-4-1.79-4-4z"/>
+                        <path d="M18.5 14C19.3284 14 20 13.3284 20 12.5C20 11.6716 19.3284 11 18.5 11C18.0446 11 17.6311 11.2008 17.3504 11.5292C16.844 9.79052 15.2316 8.5 13.3333 8.5C11.7001 8.5 10.2809 9.46942 9.60001 10.9167C8.92083 10.5067 8.14917 10.25 7.33334 10.25C5.43501 10.25 3.82260 11.5405 3.31617 13.2792C3.03542 12.9508 2.62192 12.75 2.16667 12.75C1.33810 12.75 0.666672 13.4214 0.666672 14.25C0.666672 15.0786 1.33810 15.75 2.16667 15.75H18.5C19.3284 15.75 20 15.0786 20 14.25C20 13.4214 19.3284 12.75 18.5 12.75H18.5V14Z" fill="currentColor"/>
                     </svg>
                 </label>
         
