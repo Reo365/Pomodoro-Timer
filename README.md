@@ -2,6 +2,10 @@
 
 A simple and efficient web-based Pomodoro timer application designed to help you improve focus and productivity.
 
+## 🚀 Live Demo
+
+Experience the Pomodoro Timer live at: [https://pomodoro.64bit.kr/](https://pomodoro.64bit.kr/)
+
 ## 🌟 Features
 
 *   **Pomodoro & Short Break Modes:** Easily switch between 25-minute focus sessions and 5-minute short breaks.
