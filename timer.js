@@ -1,5 +1,11 @@
 // timer.js
+// This script contains the core logic for the Pomodoro timer functionality.
 document.addEventListener('DOMContentLoaded', () => {
+    // Check if on the main page where timer elements are present
+    if (!document.getElementById('minutes-tens')) {
+        return; // Exit if not on the timer page
+    }
+
     // --- DOM Elements ---
     const M_TENS = document.getElementById('minutes-tens');
     const M_ONES = document.getElementById('minutes-ones');
@@ -22,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.totalFocusedSeconds = 0; // Make global for access from common.js
     let lastResetDate = '';
 
-    // Drag state
+    // Drag state for mode indicator
     let isDragging = false;
     let dragStartX = 0;
     let initialIndicatorX = 0;
@@ -33,10 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
         shortBreak: 5 * 60,
     };
 
-    // --- Core Functions ---
+    // --- Core Timer Functions ---
 
     function createDigitReels() {
-        if (!M_TENS) return;
+        if (!M_TENS) return; // Ensure elements exist
         digitContainers.forEach(container => {
             const reel = document.createElement('div');
             reel.className = 'digit-reel';
@@ -51,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateDisplay(secondsValue) {
-        if (!M_TENS) return;
+        if (!M_TENS) return; // Ensure elements exist
         const minutes = Math.floor(secondsValue / 60);
         const seconds = secondsValue % 60;
 
@@ -61,16 +67,19 @@ document.addEventListener('DOMContentLoaded', () => {
             Math.floor(seconds / 10),
             seconds % 10
         ];
+        // digitHeight calculation needs to be dynamic or based on CSS.
+        // For now, assuming fixed height based on first container.
         const digitHeight = digitContainers[0].clientHeight;
 
         digitContainers.forEach((container, index) => {
-            container.firstElementChild.style.transform = `translateY(-${digits[index] * digitHeight}px)`;
+            if (container.firstElementChild) { // Ensure reel exists
+                container.firstElementChild.style.transform = `translateY(-${digits[index] * digitHeight}px)`;
+            }
         });
     }
 
     function startTimer() {
-        if (!startButton || !resetButton) return;
-        if (!isPaused) return;
+        if (!startButton || !isPaused) return; // Ensure elements exist and not already running
         isPaused = false;
         startButton.classList.add('paused');
         startButton.title = window.TRANSLATIONS[window.htmlElement.lang]['pause'];
@@ -109,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function resetTimer() {
-        if (!startButton || !resetButton) return;
+        if (!startButton) return; // Ensure element exists
         pauseTimer();
         totalSeconds = DURATIONS[currentMode];
         updateDisplay(totalSeconds);
@@ -162,10 +171,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const displayString = `${formatTimeComponent(minutes)}${window.TRANSLATIONS[lang]['minutes']} ${formatTimeComponent(seconds)}${window.TRANSLATIONS[lang]['seconds']}`;
         totalFocusDisplay.textContent = displayString;
-        console.log(`updateTotalFocusDisplay called: totalFocusedSeconds=${window.totalFocusedSeconds}, displayString=${displayString}`);
     }
 
-    // --- Drag functionality ---
+    // --- Drag functionality for mode indicator ---
     function handlePointerDown(e) {
         if (!modeIndicator || e.target !== modeIndicator) return;
 
@@ -256,9 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         window.addEventListener('resize', () => {
-            if (document.getElementById('minutes-tens')) {
-                updateModeIndicatorPosition();
-            }
+            updateModeIndicatorPosition();
         });
 
         if (modeIndicator) {
@@ -284,12 +290,9 @@ document.addEventListener('DOMContentLoaded', () => {
         setupTimerEventListeners();
 
         updateModeIndicatorPosition(false);
-        switchMode(currentMode);
+        switchMode(currentMode); // This sets up the correct timer duration and ensures indicator is positioned
         window.updateTotalFocusDisplay(); // Initial call
     }
 
-    // Only initialize timer-specific elements and functions if on the main page
-    if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
-        initTimer();
-    }
+    initTimer();
 });
