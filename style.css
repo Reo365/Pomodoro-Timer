@@ -685,6 +685,27 @@ body.theme-dim {
     gap: 10px;
 }
 
+.header-left-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.github-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 68px;
+    height: 70px;
+    border-radius: 25px;
+    color: var(--c-content);
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.github-link:hover {
+    background-color: var(--button-active-bg);
+}
+
 .home-btn,
 .lang-toggle-btn {
     background: var(--button-bg);
