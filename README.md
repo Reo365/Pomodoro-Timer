@@ -2,7 +2,7 @@
 
 A simple and efficient web-based Pomodoro timer application designed to help you improve focus and productivity.
 
-## 🌐 웹사이트
+## 🌐 Website
 
 [https://pomodoro.64bit.kr/](https://pomodoro.64bit.kr/)
 
