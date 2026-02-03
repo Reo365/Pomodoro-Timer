@@ -216,8 +216,6 @@
                 };
 
                 window.addEventListener('scroll', revealContentOnScroll);
-                // Also check on load in case the content is already in view
-                revealContentOnScroll();
             }
         }
     };
