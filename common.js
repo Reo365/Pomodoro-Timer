@@ -207,19 +207,13 @@
 
 
     window.setupCommonEventListeners = function() {
-        console.log("setupCommonEventListeners running");
         const langToggleButton = document.querySelector('.lang-toggle-btn');
         if (langToggleButton) {
-            console.log("langToggleButton found:", langToggleButton);
-            console.log("Attaching click listener to langToggleButton");
             langToggleButton.addEventListener('click', () => {
                 const currentLang = window.htmlElement.lang;
                 const newLang = currentLang === 'ko' ? 'en' : 'ko';
-                console.log("Language button clicked, new language:", newLang);
                 window.setLanguage(newLang);
             });
-        } else {
-            console.log("langToggleButton not found.");
         }
 
         const themeRadios = document.querySelectorAll('input[name="theme"]');
