@@ -259,7 +259,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (currentMode === 'pomodoro') {
                 totalFocusedSeconds++;
-                localStorage.setItem('totalFocusedSeconds', totalFocusedSeconds);
                 updateTotalFocusDisplay();
             }
 
@@ -281,6 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
         intervalId = null;
         startButton.classList.remove('paused');
         startButton.title = TRANSLATIONS[htmlElement.lang]['start'];
+        localStorage.setItem('totalFocusedSeconds', totalFocusedSeconds);
     }
 
     function resetTimer() {
@@ -288,6 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pauseTimer();
         totalSeconds = DURATIONS[currentMode];
         updateDisplay(totalSeconds);
+        localStorage.setItem('totalFocusedSeconds', totalFocusedSeconds);
     }
 
     function updateModeIndicatorPosition(animate = true) {
@@ -345,9 +346,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- Drag functionality ---
-
-
-
 
 
 
@@ -477,6 +475,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        window.addEventListener('beforeunload', () => {
+            if (!isPaused) {
+                localStorage.setItem('totalFocusedSeconds', totalFocusedSeconds);
+            }
+        });
 
 
         // --- Drag Listeners for modeIndicator ---
