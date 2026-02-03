@@ -131,41 +131,7 @@
         }
     };
     
-    window.GLOW_PROXIMITY_THRESHOLD = 150; // px
 
-    window.updateGlow = function(event) {
-        const glowElements = document.querySelectorAll('.has-glow-border');
-        glowElements.forEach(card => {
-            const rect = card.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-
-            const distanceX = event.clientX - centerX;
-            const distanceY = event.clientY - centerY;
-            const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-
-            if (distance < window.GLOW_PROXIMITY_THRESHOLD) {
-                const opacity = 1 - (distance / window.GLOW_PROXIMITY_THRESHOLD);
-                const blur = opacity * 10;
-                
-                let angle = Math.atan2(distanceY, distanceX) * 180 / Math.PI;
-                angle = angle < 0 ? angle + 360 : angle;
-
-                card.style.setProperty('--glow-angle', angle + 90);
-                card.style.setProperty('--glow-opacity', opacity);
-                card.style.setProperty('--glow-blur', blur);
-            } else {
-                card.style.setProperty('--glow-opacity', 0);
-            }
-        });
-    };
-
-    window.hideGlow = function(event) {
-        const glowElements = document.querySelectorAll('.has-glow-border');
-        glowElements.forEach(card => {
-            card.style.setProperty('--glow-opacity', 0);
-        });
-    };
 
     window.setupCommonEventListeners = function() {
         const langToggleButton = document.querySelector('.lang-toggle-btn');
@@ -184,9 +150,7 @@
             });
         });
 
-        document.addEventListener('pointermove', window.updateGlow);
-        document.addEventListener('pointerleave', window.hideGlow);
-    };
+            };
 
     window.initCommon = function() {
         const savedLang = localStorage.getItem('langPreference') || 'ko';

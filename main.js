@@ -342,43 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`updateTotalFocusDisplay called: totalFocusedSeconds=${totalFocusedSeconds}, displayString=${displayString}`);
     }
 
-    // --- Glow Effect Functions ---
-    const GLOW_PROXIMITY_THRESHOLD = 150; // px
 
-    function updateGlow(event) {
-        const glowElements = document.querySelectorAll('.has-glow-border');
-        glowElements.forEach(card => {
-            const rect = card.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-
-            const distanceX = event.clientX - centerX;
-            const distanceY = event.clientY - centerY;
-            const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-
-            // Proximity-based opacity and blur
-            if (distance < GLOW_PROXIMITY_THRESHOLD) {
-                const opacity = 1 - (distance / GLOW_PROXIMITY_THRESHOLD); // Max opacity at center, fades out
-                const blur = opacity * 10; // Max blur when close
-                
-                let angle = Math.atan2(distanceY, distanceX) * 180 / Math.PI;
-                angle = angle < 0 ? angle + 360 : angle; // Normalize angle to 0-360
-
-                card.style.setProperty('--glow-angle', angle + 90); // Adjust angle to start from top
-                card.style.setProperty('--glow-opacity', opacity);
-                card.style.setProperty('--glow-blur', blur);
-            } else {
-                card.style.setProperty('--glow-opacity', 0);
-            }
-        });
-    }
-
-    function hideGlow(event) {
-        const glowElements = document.querySelectorAll('.has-glow-border');
-        glowElements.forEach(card => {
-            card.style.setProperty('--glow-opacity', 0);
-        });
-    }
 
     // --- Drag functionality ---
 
@@ -520,10 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
             modeIndicator.addEventListener('pointerdown', handlePointerDown);
         }
 
-        // --- Glow effect listeners ---
-        document.addEventListener('pointermove', updateGlow);
-        document.addEventListener('pointerleave', hideGlow);
-    }
+            }
 
     function init() {
         currentMode = localStorage.getItem('currentMode') || 'pomodoro';

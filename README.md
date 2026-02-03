@@ -14,7 +14,7 @@ A simple and efficient web-based Pomodoro timer application designed to help you
 *   **Multi-language Support:** Toggle between Korean (한국어) and English (English) for a personalized experience.
 *   **Total Focus Time Tracking:** Keeps a record of your cumulative focus time, resetting daily to motivate new achievements.
 *   **Stylized Digit Animations:** Visually engaging animations for the timer digits.
-*   **Interactive Glow Effects:** Subtle glow effects on interactive elements enhance the user experience.
+
 *   **Customizable Durations:** (Implicitly from `timer.js` `DURATIONS` object, though not exposed in UI yet, good to mention potential).
 
 ## 🚀 Technologies Used
