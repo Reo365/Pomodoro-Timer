@@ -63,7 +63,75 @@
             'about_h3_get_started': 'Start Now!',
             'about_p_get_started': 'Unlock your focus with a single click, no complex settings required. With the \'Pomodoro Timer\', your every day will be more productive and satisfying.',
 
+            'privacy_h2': 'Privacy Policy',
+            'privacy_p_intro': 'Our <strong>\'Pomodoro Timer\'</strong> (hereinafter referred to as \'this service\') highly values your personal information and strictly adheres to relevant laws and regulations, including the 「Personal Information Protection Act」 and 「Act on Promotion of Information and Communications Network Utilization and Information Protection, etc.」. This Privacy Policy is established to clearly inform you about what information this service collects, how the collected information is used, and what efforts are made to protect personal information.',
+            'privacy_h3_collection': '1. Purpose of Personal Information Collection and Use',
+            'privacy_p_collection': 'This service is a web-based Pomodoro timer designed to help users improve productivity. <strong>We do not directly collect or store any personally identifiable information (e.g., name, email address, phone number, etc.).</strong> All functions of this service operate without personally identifiable information, prioritizing the protection of your privacy.',
+            'privacy_h3_non_personal': '2. Collection and Use of Non-Personal Information',
+            'privacy_p_non_personal_intro': 'This service stores the following non-personal information in your browser\'s Local Storage to improve user experience and provide functionality. This information cannot be used to identify or specify users and is maintained only within the browser.',
+            'privacy_li_theme': '<strong>Theme Settings:</strong> Your selected dark/light mode settings (auto, light, dark) are saved in Local Storage to help maintain the same theme settings when you revisit the website.',
+            'privacy_li_total_time': '<strong>Total Focus Time Record:</strong> The total time (in minutes and seconds) you have focused using this service is stored in Local Storage. This information is used solely for the purpose of providing productivity statistics and motivation for you, and is automatically reset at midnight based on your timezone. This information cannot identify you personally.',
+            'privacy_h3_cookies': '3. Cookies and Similar Technologies',
+            'privacy_p_cookies_intro': 'This service may use cookies and similar technologies to provide a better environment for users and to analyze website operations.',
+            'privacy_li_adsense': '<strong>Google AdSense:</strong> This service displays advertisements through Google AdSense. Google AdSense may use cookies to provide advertisements tailored to user interests. In this process, Google and its partners may display advertisements based on your website visit history and other website visit information. For more information on Google\'s use of cookies, please refer to the <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer">Google Advertising Policies & Terms</a>.',
+            'privacy_li_cookies_reject': 'Users can refuse cookie collection or use the cookie deletion function through their web browser settings. However, if you refuse cookie collection, there may be some inconvenience in using certain services.',
+            'privacy_h3_third_party': '4. Provision of Third-Party Services',
+            'privacy_p_third_party': 'This service does not provide or share any user information with third parties other than Google AdSense. Information collection and use through Google AdSense are subject to Google\'s policies.',
+            'privacy_h3_retention': '5. Retention and Destruction of Personal Information',
+            'privacy_p_retention': 'Since this service does not collect personally identifiable information, it does not have a separate personal information destruction procedure. Non-personal information stored in Local Storage can be deleted at any time by the user directly deleting data in their web browser settings or by resetting the browser.',
+            'privacy_h3_rights': '6. User Rights and How to Exercise Them',
+            'privacy_p_rights': 'Users have the right to access or delete non-personal information stored in this service\'s Local Storage at any time. This can be done directly through the web browser\'s developer tools or settings menu.',
+            'privacy_h3_security': '7. Efforts to Protect Personal Information',
+            'privacy_p_security_intro': 'This service makes the following technical and administrative efforts to prevent personal information infringement and ensure the security of user information:',
+            'privacy_li_no_pii': 'No collection of personally identifiable information: We fundamentally block the risk of information leakage by not collecting personally identifiable information in the first place.',
+            'privacy_li_secure_server': 'Secure server operation: The service uses standard security protocols to provide a secure web environment.',
+            'privacy_li_regular_check': 'Regular system inspection: We strive to check and improve the security vulnerabilities of the service.',
+            'privacy_h3_contact': '8. Inquiries',
+            'privacy_p_contact': 'If you have any questions or opinions about this Privacy Policy, please feel free to send an email to <a href="mailto:jeonggyeom01@gmail.com">jeonggyeom01@gmail.com</a>.',
+            'privacy_h3_notification': '9. Obligation to Notify',
+            'privacy_p_notification': 'This Privacy Policy may be changed due to changes in relevant laws and regulations, guidelines, or internal policies of this service. In the event of changes, we will immediately notify through this website, and significant changes will be clearly announced so that users can easily recognize them.',
+            'privacy_p_effective_date': 'This Privacy Policy is effective from <strong>January 28, 2026</strong>.',
 
+            'terms_h2': 'Terms of Service',
+            'terms_p_intro': 'Thank you for using our <strong>\'Pomodoro Timer\'</strong> (hereinafter referred to as \'this service\' or \'we\'). These Terms of Service (hereinafter referred to as \'these Terms\') aim to define the rights, obligations, and responsibilities between us and the users (hereinafter referred to as \'Members\') regarding the use of this service. Your use of this service is considered an acceptance and agreement to all conditions specified in these Terms and the Privacy Policy, so please read these Terms carefully before using the service.',
+            'terms_h3_service': '1. Provision of Service',
+            'terms_p_service': '1.1 This service primarily aims to provide web-based Pomodoro timer functions and related information.\n1.2 This service is provided free of charge to Members without a separate registration process.\n1.3 This service may change or terminate service content at any time, in which case it will be announced through this website.',
+            'terms_h3_agreement': '2. Agreement to Use of Service',
+            'terms_p_agreement': '2.1 Your use of this service is considered an acceptance and agreement to all conditions specified in these Terms and the Privacy Policy.\n2.2 If you do not agree to these Terms, you cannot use this service.',
+            'terms_h3_obligations': '3. Your Obligations',
+            'terms_p_obligations_intro': '3.1 Members must comply with relevant laws and regulations, the provisions of these Terms, usage guides, and precautions notified by this service, and must not engage in any act that interferes with the operations of this service.\n3.2 Members must not use this service for illegal or inappropriate purposes. The following acts are strictly prohibited:',
+            'terms_li_copyright': 'Infringement of copyrights or other rights of other Members or third parties',
+            'terms_li_defamation': 'Defamation or damage to the reputation of other Members or third parties',
+            'terms_li_falsehood': 'Dissemination of false information or acts that interfere with the business of others',
+            'terms_li_malware': 'Dissemination of malicious programs such as computer viruses',
+            'terms_li_interference': 'Acts that interfere with the operation of this service or pose a threat to the service',
+            'terms_li_illegal': 'Other acts deemed illegal or inappropriate',
+            'terms_h3_privacy': '4. Protection of Personal Information',
+            'terms_p_privacy': '4.1 This service does not directly collect or store any personally identifiable information of Members.\n4.2 Non-personal information (e.g., theme settings) generated during service use is stored in the Member\'s browser\'s Local Storage, and is used solely for the purpose of providing service functions and improving user convenience. This information cannot identify individuals.\n4.3 When displaying advertisements through Google AdSense, Google may collect information using cookies. For more details, please refer to the <a href="privacy.html">Privacy Policy</a>.',
+            'terms_h3_ip': '5. Intellectual Property Rights',
+            'terms_p_ip': '5.1 Copyrights and other intellectual property rights to all content (text, design, images, audio, video, etc.) included in this service belong to the service provider.\n5.2 Members may not copy, distribute, display, sell, publish, or use the content of this service for any other purpose without the prior written consent of this service.',
+            'terms_h3_disclaimer': '6. Disclaimer',
+            'terms_p_disclaimer': '6.1 This service is a web-based service, and unpredictable technical failures or service interruptions may cause damage to Members. We strive to resolve such issues to the best of our ability, but we do not make any express or implied warranties regarding the stability, accuracy, or reliability of the service.\n6.2 This service is provided \'as is\', and disclaims all warranties, including suitability for a particular purpose, freedom from viruses and errors.\n6.3 We are not responsible for any direct, indirect, incidental, punitive damages, etc., arising from the Member\'s use of this service. (However, this excludes cases where liability cannot be denied by relevant laws and regulations.)',
+            'terms_h3_changes': '7. Changes to Terms',
+            'terms_p_changes': '7.1 This service may revise these Terms as necessary for operational, technical, or legal reasons.\n7.2 If the terms are revised, we will announce it through this website at least 7 days before the effective date of the revised terms. However, if the terms are revised to be unfavorable to Members, we will notify at least 30 days in advance.\n7.3 If a Member does not explicitly reject the revised terms or continues to use this service after the effective date of the changed terms, it is considered that the Member has agreed to the revised terms.',
+            'terms_h3_governing_law': '8. Governing Law and Jurisdiction',
+            'terms_p_governing_law': '8.1 The laws of the Republic of Korea shall apply to the interpretation of these Terms and disputes arising between this service and Members.\n8.2 For lawsuits arising from the use of the service, the court according to the procedures prescribed by relevant laws and regulations shall have jurisdiction.',
+            'terms_h3_contact': '9. Inquiries',
+            'terms_p_contact': 'If you have any questions or opinions about these Terms, please feel free to send an email to <a href="mailto:jeonggyeom01@gmail.com">jeonggyeom01@gmail.com</a>.',
+            'terms_p_effective_date': 'These Terms of Service are effective from <strong>January 28, 2026</strong>.',
+
+            'contact_h2': 'Contact Us',
+            'contact_p_intro': 'If you have any questions, opinions, suggestions, or technical issues regarding our \'Pomodoro Timer\', please feel free to contact us. Your valuable feedback greatly helps us improve our service.',
+            'contact_h3_email': '1. Email Inquiry',
+            'contact_p_email_intro': 'The quickest and most efficient way to contact us is via email. Please send us detailed information to the email address below, and we will respond as quickly as possible after review.',
+            'contact_p_email_info': 'When making inquiries, including the following information will help us assist you more promptly:',
+            'contact_li_type': 'Inquiry type (e.g., feature suggestion, bug report, general inquiry, etc.)',
+            'contact_li_details': 'Detailed inquiry (screenshots or relevant information are helpful)',
+            'contact_h3_response_time': '2. Estimated Response Time',
+            'contact_p_response_time': 'We strive to respond to all inquiries within 24 business hours. Inquiries on weekends or holidays will be processed sequentially on the next business day.',
+            'contact_h3_feedback': '4. Feedback and Suggestions',
+            'contact_p_feedback': 'We always listen to your feedback and suggestions. If you have any ideas for making our service better, please let us know. Your opinions are a great strength in the development of this service.',
+            'contact_p_thanks': 'Thank you for using our service.'
         }
     };
 
@@ -139,13 +207,19 @@
 
 
     window.setupCommonEventListeners = function() {
+        console.log("setupCommonEventListeners running");
         const langToggleButton = document.querySelector('.lang-toggle-btn');
         if (langToggleButton) {
+            console.log("langToggleButton found:", langToggleButton);
+            console.log("Attaching click listener to langToggleButton");
             langToggleButton.addEventListener('click', () => {
                 const currentLang = window.htmlElement.lang;
                 const newLang = currentLang === 'ko' ? 'en' : 'ko';
+                console.log("Language button clicked, new language:", newLang);
                 window.setLanguage(newLang);
             });
+        } else {
+            console.log("langToggleButton not found.");
         }
 
         const themeRadios = document.querySelectorAll('input[name="theme"]');
