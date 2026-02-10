@@ -75,6 +75,7 @@
             'privacy_p_cookies_intro': 'This service may use cookies and similar technologies to provide a better environment for users and to analyze website operations.',
             'privacy_li_adsense': '<strong>Google AdSense:</strong> This service displays advertisements through Google AdSense. Google AdSense may use cookies to provide advertisements tailored to user interests. In this process, Google and its partners may display advertisements based on your website visit history and other website visit information. For more information on Google\'s use of cookies, please refer to the <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer">Google Advertising Policies & Terms</a>.',
             'privacy_li_cookies_reject': 'Users can refuse cookie collection or use the cookie deletion function through their web browser settings. However, if you refuse cookie collection, there may be some inconvenience in using certain services.',
+            'privacy_link_adsense': 'Google Advertising Policies & Terms',
             'privacy_h3_third_party': '4. Provision of Third-Party Services',
             'privacy_p_third_party': 'This service does not provide or share any user information with third parties other than Google AdSense. Information collection and use through Google AdSense are subject to Google\'s policies.',
             'privacy_h3_retention': '5. Retention and Destruction of Personal Information',
